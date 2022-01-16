@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 type TInput = {
   db: string;
 };
-export default ({ db }: TInput): any => {
-  const connect = () => {
+export default async ({ db }: TInput): Promise<void> => {
+  const connect = async () => {
     mongoose
       .connect(db)
       .then(() => {
@@ -16,7 +16,7 @@ export default ({ db }: TInput): any => {
         return process.exit(1);
       });
   };
-  connect();
+  await connect();
 
   mongoose.connection.on('disconnected', connect);
 };

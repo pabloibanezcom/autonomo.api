@@ -1,0 +1,154 @@
+[
+  {
+    "number": "JA-720-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pabloiveron@gmail.com",
+    "issuedDate": "2021-09-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "JA-721-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pepe.perez@autonomo.com",
+    "issuedDate": "2021-09-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "JA-722-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pabloiveron@gmail.com",
+    "issuedDate": "2021-10-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "JA-723-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pepe.perez@autonomo.com",
+    "issuedDate": "2021-10-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "JA-724-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pabloiveron@gmail.com",
+    "issuedDate": "2021-11-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "JA-725-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pepe.perez@autonomo.com",
+    "issuedDate": "2021-11-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "JA-726-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pabloiveron@gmail.com",
+    "issuedDate": "2021-12-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "JA-727-2021",
+    "issuer": "Garcia Accountants",
+    "client": "pepe.perez@autonomo.com",
+    "issuedDate": "2021-12-24T00:00:00.000Z",
+    "subtotal": {
+      "amount": 50,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.5,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.5,
+      "currency": "EUR"
+    }
+  }
+]

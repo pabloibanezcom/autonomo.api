@@ -1,9 +1,9 @@
 import { Person } from '@autonomo/common';
 import mongoose from 'mongoose';
 import supertest from 'supertest';
+import people from '../../mockData/people.json';
 import app from '../server';
 import { login } from './auth';
-import people from './data/mockData/people.json';
 import { generatePerson } from './data/person';
 import { endpointName, testName } from './util/names';
 
@@ -12,6 +12,7 @@ let personA: Person;
 beforeAll(async () => {
   await mongoose.connect(`${process.env.MONGODB_TEST_URI}-person`);
   token = await login();
+  console.log('token', token);
   personA = await generatePerson();
 });
 

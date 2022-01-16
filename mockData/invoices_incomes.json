@@ -1,0 +1,106 @@
+[
+  {
+    "number": "inv-001-2021",
+    "issuer": "pabloiveron@gmail.com",
+    "client": "Bradley's IT",
+    "issuedDate": "2021-09-30T00:00:00.000Z",
+    "subtotal": {
+      "amount": 1000,
+      "currency": "GBP"
+    },
+    "taxPct": 20,
+    "tax": {
+      "amount": 200,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 1200,
+      "currency": "GBP"
+    },
+    "totalOthers": [
+      {
+        "amount": 1380,
+        "currency": "EUR",
+        "primaryCurrencyRate": 1.15
+      }
+    ]
+  },
+  {
+    "number": "inv-002-2021",
+    "issuer": "pabloiveron@gmail.com",
+    "client": "Bradley's IT",
+    "issuedDate": "2021-10-31T00:00:00.000Z",
+    "subtotal": {
+      "amount": 1250,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 1250,
+      "currency": "GBP"
+    },
+    "totalOthers": [
+      {
+        "amount": 1437.5,
+        "currency": "EUR",
+        "primaryCurrencyRate": 1.15
+      }
+    ]
+  },
+  {
+    "number": "inv-003-2021",
+    "issuer": "pabloiveron@gmail.com",
+    "client": "Bradley's IT",
+    "issuedDate": "2021-11-30T00:00:00.000Z",
+    "subtotal": {
+      "amount": 1000,
+      "currency": "GBP"
+    },
+    "taxPct": 20,
+    "tax": {
+      "amount": 200,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 1200,
+      "currency": "GBP"
+    },
+    "totalOthers": [
+      {
+        "amount": 1380,
+        "currency": "EUR",
+        "primaryCurrencyRate": 1.15
+      }
+    ]
+  },
+  {
+    "number": "inv-004-2021",
+    "issuer": "pabloiveron@gmail.com",
+    "client": "Bradley's IT",
+    "issuedDate": "2021-12-31T00:00:00.000Z",
+    "subtotal": {
+      "amount": 1000,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 1000,
+      "currency": "GBP"
+    },
+    "totalOthers": [
+      {
+        "amount": 1150,
+        "currency": "EUR",
+        "primaryCurrencyRate": 1.15
+      }
+    ]
+  }
+]

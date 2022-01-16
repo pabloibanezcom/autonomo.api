@@ -5,18 +5,28 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "prestart": "npm run build && npm run environment-compile:dev",
+    "prestart": "npm run build",
     "start": "node .",
     "dev": "nodemon --watch src -e ts,ejs --exec npm run start",
-    "environment-compile:dev": "node tasks/environment-compile-dev.js",
-    "environment-compile:int": "node tasks/environment-compile-int.js",
     "test": "jest --verbose",
     "lint": "eslint src/**/*.{js,ts}",
-    "lint:fix": "eslint src/**/*.{js,ts} --quiet --fix"
+    "lint:fix": "eslint src/**/*.{js,ts} --quiet --fix",
+    "populate": "ts-node tasks/populateDB"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@autonomo/common": "^1.0.3",
+    "axios": "^0.21.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.1.0",
+    "jwks-rsa": "^2.0.4",
+    "mongoose": "^6.0.14"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-typescript": "^7.16.0",
@@ -37,17 +47,7 @@
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "supertest": "^6.1.6",
+    "ts-node": "^10.4.0",
     "typescript": "^4.3.5"
-  },
-  "dependencies": {
-    "@autonomo/common": "^1.0.0",
-    "axios": "^0.21.1",
-    "compression": "^1.7.4",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-jwt": "^6.1.0",
-    "jwks-rsa": "^2.0.4",
-    "mongoose": "^6.0.14"
   }
 }

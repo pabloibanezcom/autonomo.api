@@ -1,27 +1,35 @@
 import { Invoice } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
 
+const AmountCurrency = {
+  amount: { type: Number, required: true },
+  currency: { type: String, required: true },
+  primaryCurrencyRate: { type: Number }
+};
+
+const DescriptionElement = {
+  descriptionLine1: { type: String },
+  descriptionLine2: { type: String },
+  quantity: { type: String },
+  unitPrice: AmountCurrency
+};
+
 export const InvoiceSchema: Schema = new Schema({
   number: { type: String, required: true },
-  to: { type: Schema.Types.ObjectId, ref: 'Company', required: true },
-  issued_date: { type: Date, required: true },
-  payment_date: { type: Date },
-  description: {
-    description_line_1: { type: String },
-    description_line_2: { type: String },
-    quantity: { type: String },
-    unit_price: { type: Number },
-    unit_price_currency: { type: String }
-  },
-  tax_base: { type: Number, required: true },
-  tax_base_currency: { type: String, required: true },
-  tax_pct: { type: Number, required: true },
-  tax: { type: Number, required: true },
-  tax_currency: { type: String, required: true },
-  total: { type: Number, required: true },
-  total_currency: { type: String, required: true },
-  total_euro: { type: Number, required: true },
-  currency_rate: { type: Number }
+  issuer: { type: Schema.Types.ObjectId, refPath: 'issuerType', required: true },
+  issuerType: { type: String, required: true, enum: ['Company', 'Person'] },
+  client: { type: Schema.Types.ObjectId, refPath: 'clientType', required: true },
+  clientType: { type: String, required: true, enum: ['Company', 'Person'] },
+  issuedDate: { type: Date, required: true },
+  paymentDate: { type: Date },
+  description: [DescriptionElement],
+  subtotal: { type: AmountCurrency, required: true },
+  taxPct: { type: Number, required: true },
+  tax: { type: AmountCurrency, required: true },
+  deductibleTaxPct: { type: Number },
+  deductibleTax: { type: AmountCurrency },
+  total: { type: AmountCurrency, required: true },
+  totalOthers: [AmountCurrency]
 });
 
 export default mongoose.model<Invoice>('Invoice', InvoiceSchema);

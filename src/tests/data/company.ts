@@ -1,6 +1,6 @@
 import { Company } from '@autonomo/common';
+import companies from '../../../mockData/companies.json';
 import CompanyDB from '../../models/company';
-import companies from './mockData/companies.json';
 import { generatePerson } from './person';
 
 export const generateCompany = async (): Promise<Company> => {
