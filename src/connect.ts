@@ -6,6 +6,7 @@ type TInput = {
 };
 export default async ({ db }: TInput): Promise<void> => {
   const connect = async () => {
+    console.log(`Connecting to: ${db} ...`);
     mongoose
       .connect(db)
       .then(() => {
