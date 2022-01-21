@@ -1,5 +1,5 @@
 import { Invoice } from '@autonomo/common';
-import { UnauthorizedError } from '../httpError/httpErrors';
+import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
 import InvoiceDB from '../models/invoice';
 import { getUserFromAuthorizationHeader } from '../util/user';
 
@@ -13,6 +13,19 @@ export const getInvoices = async (
     throw new UnauthorizedError();
   }
   return await InvoiceDB.find({ [invoiceType === 'incomes' ? 'issuer' : 'client']: userId }).populate('issuer client');
+};
+
+export const getInvoice = async (authorizationHeader: string, invoiceId: string): Promise<Invoice> => {
+  const user = await getUserFromAuthorizationHeader(authorizationHeader);
+  const existingInvoice = await InvoiceDB.findById(invoiceId);
+  if (!existingInvoice) {
+    throw new NotFoundError();
+  }
+  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
+    throw new UnauthorizedError();
+  }
+
+  return existingInvoice;
 };
 
 export const addInvoice = async (authorizationHeader: string, invoice: Invoice): Promise<Invoice> => {
@@ -34,6 +47,9 @@ export const updateInvoice = async (
   }
 
   const existingInvoice = await InvoiceDB.findById(invoiceId);
+  if (!existingInvoice) {
+    throw new NotFoundError();
+  }
   if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
     throw new UnauthorizedError();
   }
@@ -44,6 +60,9 @@ export const updateInvoice = async (
 export const deleteInvoice = async (authorizationHeader: string, invoiceId: string): Promise<Invoice> => {
   const user = await getUserFromAuthorizationHeader(authorizationHeader);
   const existingInvoice = await InvoiceDB.findById(invoiceId);
+  if (!existingInvoice) {
+    throw new NotFoundError();
+  }
   if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
     throw new UnauthorizedError();
   }

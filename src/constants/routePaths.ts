@@ -5,6 +5,7 @@ const EXPENSES = '/expenses';
 const USER_GET = '/user';
 const PERSON = '/person';
 const SHAREHOLDING = '/shareholding';
+const TAX_PAYMENT = '/taxpayment';
 
 export default {
   COMPANY,
@@ -13,5 +14,6 @@ export default {
   EXPENSES,
   USER_GET,
   PERSON,
-  SHAREHOLDING
+  SHAREHOLDING,
+  TAX_PAYMENT
 };
