@@ -13,7 +13,7 @@ app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.get('/', (req, res) => {
-  res.status(200).send(process.env.WELCOME_MESSAGE);
+  res.status(200).send(`${process.env.WELCOME_MESSAGE} - v.${process.env.npm_package_version}`);
 });
 app.use(generateJWTAuthentication(process.env.AUTH0_JWKS_URI, process.env.AUTH0_AUDIENCE, process.env.AUTH0_DOMAIN));
 
