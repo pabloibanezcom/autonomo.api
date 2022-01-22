@@ -1,11 +1,6 @@
 import { Invoice } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
-
-const AmountCurrency = {
-  amount: { type: Number, required: true },
-  currency: { type: String, required: true },
-  primaryCurrencyRate: { type: Number }
-};
+import AmountCurrency from './amountCurrency';
 
 const DescriptionElement = {
   descriptionLine1: { type: String },

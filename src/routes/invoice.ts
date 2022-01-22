@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import routePaths from '../constants/routePaths';
 import { HttpError } from '../httpError/httpErrors';
 import transformGenericError from '../httpError/transformGenericError';
-import { addInvoice, deleteInvoice, getInvoices, updateInvoice } from '../services/invoice';
+import { addInvoice, deleteInvoice, getInvoice, getInvoices, updateInvoice } from '../services/invoice';
 import httpCode from './httpCode';
 
 const registerInvoiceRoutes = (router: express.Router): void => {
@@ -17,6 +17,12 @@ const registerInvoiceRoutes = (router: express.Router): void => {
   router.get(`/:userId${routePaths.EXPENSES}`, (req: Request, res: Response) => {
     getInvoices(req.headers.authorization, req.params.userId, 'expenses')
       .then((result: Invoice[]) => res.status(httpCode.GET).send(result))
+      .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
+  });
+
+  router.get(`${routePaths.INVOICE}/:id`, (req: Request, res: Response) => {
+    getInvoice(req.headers.authorization, req.params.id)
+      .then((result: Invoice) => res.status(httpCode.GET).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
