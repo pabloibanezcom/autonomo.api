@@ -14,6 +14,7 @@ const TaxDefinition = {
 };
 
 export const TaxYearSchema: Schema = new Schema({
+  name: { type: String, required: true },
   country: { type: String, required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
