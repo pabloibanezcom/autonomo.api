@@ -1,7 +1,7 @@
 import { BadRequestError, HttpError } from './httpErrors';
 
 const transformGenericError = (error: Error): HttpError => {
-  if (error.message.includes('validation failed')) {
+  if (['validation failed', 'Cast to ObjectId failed'].some(msg => error.message.includes(msg))) {
     return new BadRequestError();
   }
   return error;

@@ -6,6 +6,7 @@ const USER_GET = '/user';
 const PERSON = '/person';
 const SHAREHOLDING = '/shareholding';
 const TAX_PAYMENT = '/taxpayment';
+const TAX_YEAR = '/taxyear';
 
 export default {
   COMPANY,
@@ -15,5 +16,6 @@ export default {
   USER_GET,
   PERSON,
   SHAREHOLDING,
-  TAX_PAYMENT
+  TAX_PAYMENT,
+  TAX_YEAR
 };
