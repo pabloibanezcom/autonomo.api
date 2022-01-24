@@ -1,6 +1,7 @@
 import { Invoice } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
 import AmountCurrency from './amountCurrency';
+import File from './file';
 
 const DescriptionElement = {
   descriptionLine1: { type: String },
@@ -24,7 +25,8 @@ export const InvoiceSchema: Schema = new Schema({
   deductibleTaxPct: { type: Number },
   deductibleTax: { type: AmountCurrency },
   total: { type: AmountCurrency, required: true },
-  totalOthers: [AmountCurrency]
+  totalOthers: [AmountCurrency],
+  file: { type: File }
 });
 
 export default mongoose.model<Invoice>('Invoice', InvoiceSchema);
