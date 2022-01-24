@@ -19,6 +19,7 @@ export const InvoiceSchema: Schema = new Schema({
   issuedDate: { type: Date, required: true },
   paymentDate: { type: Date },
   description: [DescriptionElement],
+  categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   subtotal: { type: AmountCurrency, required: true },
   taxPct: { type: Number, required: true },
   tax: { type: AmountCurrency, required: true },

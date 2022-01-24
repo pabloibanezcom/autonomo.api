@@ -14,16 +14,18 @@ export const getInvoices = async (
   if (!user._id.equals(userId)) {
     throw new UnauthorizedError();
   }
-  return await InvoiceDB.find({ [invoiceType === 'incomes' ? 'issuer' : 'client']: userId }).populate('issuer client');
+  return await InvoiceDB.find({ [invoiceType === 'incomes' ? 'issuer' : 'client']: userId }).populate(
+    'issuer client categories'
+  );
 };
 
 export const getInvoice = async (authorizationHeader: string, invoiceId: string): Promise<Invoice> => {
   const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  const existingInvoice = await InvoiceDB.findById(invoiceId);
+  const existingInvoice = await InvoiceDB.findById(invoiceId).populate('issuer client categories');
   if (!existingInvoice) {
     throw new NotFoundError();
   }
-  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
+  if (!user._id.equals(existingInvoice.issuer._id) && !user._id.equals(existingInvoice.client._id)) {
     throw new UnauthorizedError();
   }
 

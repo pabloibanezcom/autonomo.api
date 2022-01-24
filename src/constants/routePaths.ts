@@ -1,3 +1,4 @@
+const CATEGORY = '/category';
 const COMPANY = '/company';
 const INVOICE = '/invoice';
 const INCOMES = '/incomes';
@@ -9,6 +10,7 @@ const TAX_PAYMENT = '/taxpayment';
 const TAX_YEAR = '/taxyear';
 
 export default {
+  CATEGORY,
   COMPANY,
   INVOICE,
   INCOMES,
