@@ -1,4 +1,5 @@
 import * as express from 'express';
+import registerCategoryRoutes from './category';
 import registerCompanyRoutes from './company';
 import registerInvoiceRoutes from './invoice';
 import registerPersonRoutes from './person';
@@ -8,6 +9,7 @@ import registerTaxYearRoutes from './taxYear';
 import registerUserRoutes from './user';
 
 const registerRoutes = (router: express.Router): void => {
+  registerCategoryRoutes(router);
   registerCompanyRoutes(router);
   registerInvoiceRoutes(router);
   registerPersonRoutes(router);
