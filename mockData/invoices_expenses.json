@@ -1,153 +1,1080 @@
 [
   {
-    "number": "JA-720-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pabloiveron@gmail.com",
-    "issuedDate": "2021-09-24T00:00:00.000Z",
+    "number": "I107121AA015998",
+    "file": "invoices/gasolina_01_06_2021.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-06-01T00:00:00.000Z",
+    "paymentDate": "2021-06-01T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 41.32,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 50,
       "currency": "EUR"
     }
   },
   {
-    "number": "JA-721-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pepe.perez@autonomo.com",
-    "issuedDate": "2021-09-24T00:00:00.000Z",
+    "number": "I107121AB014998",
+    "file": "invoices/gasolina_11_06_2021.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-06-11T00:00:00.000Z",
+    "paymentDate": "2021-06-11T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 41.32,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 50,
       "currency": "EUR"
     }
   },
   {
-    "number": "JA-722-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pabloiveron@gmail.com",
+    "number": "I107121AB015286",
+    "file": "invoices/gasolina_24_06_2021.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-06-24T00:00:00.000Z",
+    "paymentDate": "2021-06-24T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "438/21",
+    "file": "invoices/AE_Navarro_438_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-06-24T00:00:00.000Z",
+    "paymentDate": "2021-06-24T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 149.04,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 31.3,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 180.34,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "033848/D/21/001194",
+    "file": "invoices/gasolina_2021_07_01.pdf",
+    "issuer": "Energia Santa Ana SL",
+    "issuedDate": "2021-07-01T00:00:00.000Z",
+    "paymentDate": "2021-07-01T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "A106121A1011385",
+    "file": "invoices/gasolina_2021_07_14.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-07-14T00:00:00.000Z",
+    "paymentDate": "2021-07-14T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "A107121A1006850",
+    "file": "invoices/gasolina_2021_07_23.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-07-23T00:00:00.000Z",
+    "paymentDate": "2021-07-23T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "I095-3161",
+    "file": "invoices/gasolina_2021_07_25.pdf",
+    "issuer": "Inurritza SL",
+    "issuedDate": "2021-07-25T00:00:00.000Z",
+    "paymentDate": "2021-07-25T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "0000019008",
+    "file": "invoices/gasolina_2021_07_26.pdf",
+    "issuer": "EESSA-ES La Serna",
+    "issuedDate": "2021-07-26T00:00:00.000Z",
+    "paymentDate": "2021-07-26T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "I-5113",
+    "file": "invoices/gasolina_2021_08_06.pdf",
+    "issuer": "Maypa SL",
+    "issuedDate": "2021-08-06T00:00:00.000Z",
+    "paymentDate": "2021-08-06T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "CC-12549",
+    "file": "invoices/gasolina_2021_08_10.pdf",
+    "issuer": "Laboil SL",
+    "issuedDate": "2021-08-10T00:00:00.000Z",
+    "paymentDate": "2021-08-10T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 54.4,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 11.42,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.71,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 65.82,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "A107121A1007319",
+    "file": "invoices/gasolina_2021_08_17.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-08-17T00:00:00.000Z",
+    "paymentDate": "2021-08-17T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 41.32,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 50,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "033056/D/21/001266",
+    "file": "invoices/gasolina_2021_08_22.pdf",
+    "issuer": "Villa Huerta SL",
+    "issuedDate": "2021-08-22T00:00:00.000Z",
+    "paymentDate": "2021-08-22T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 52.89,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 11.11,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.55,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 64,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "I2-349",
+    "file": "invoices/gasolina_2021_08_29.pdf",
+    "issuer": "ES Cresmar SL",
+    "issuedDate": "2021-08-29T00:00:00.000Z",
+    "paymentDate": "2021-08-29T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 55,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 11.55,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.78,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 66.55,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "096320/D/21/001349",
+    "file": "invoices/gasolina_2021_09_12.pdf",
+    "issuer": "Martinez Sepulveda Nerea",
+    "issuedDate": "2021-09-12T00:00:00.000Z",
+    "paymentDate": "2021-09-12T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 49.88,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.47,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.24,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60.35,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "A107121A1008205",
+    "file": "invoices/gasolina_2021_09_30.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-09-30T00:00:00.000Z",
+    "paymentDate": "2021-09-30T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 49.59,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.41,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.21,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "524/21",
+    "file": "invoices/AE_Navarro_524_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-07-16T00:00:00.000Z",
+    "paymentDate": "2021-07-16T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 49.5,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.4,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 59.9,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "592/21",
+    "file": "invoices/AE_Navarro_592_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-08-13T00:00:00.000Z",
+    "paymentDate": "2021-08-13T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 49.5,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.4,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 59.9,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "662/21",
+    "file": "invoices/AE_Navarro_662_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-09-16T00:00:00.000Z",
+    "paymentDate": "2021-09-16T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 49.5,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.4,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 59.9,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "#442995",
+    "file": "invoices/Dante Labs _ Orders _ _442995 _ Shopify Plus.pdf",
+    "issuer": "Dante Labs",
+    "issuedDate": "2021-08-30T00:00:00.000Z",
+    "paymentDate": "2021-08-30T00:00:00.000Z",
+    "categories": ["Viajes"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 55.2,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 48,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 55.2,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "totalBaseCurrency": {
+      "amount": 48,
+      "currency": "GBP"
+    }
+  },
+  {
+    "number": "DD/2021/FS/234481",
+    "file": "invoices/democratest_2021_08_30.pdf",
+    "issuer": "Dante Labs",
+    "issuedDate": "2021-08-30T00:00:00.000Z",
+    "paymentDate": "2021-08-30T00:00:00.000Z",
+    "categories": ["Viajes"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 25,
+      "currency": "EUR"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 25,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "KQDLCJVB",
+    "file": "invoices/Ibis_Canning_Town_06_09_2021.pdf",
+    "issuer": "Ibis London Canning Town",
+    "issuedDate": "2021-09-02T00:00:00.000Z",
+    "paymentDate": "2021-09-02T00:00:00.000Z",
+    "categories": ["Viajes"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 353.34,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.17
+    },
+    "subtotalBaseCurrency": {
+      "amount": 302.7,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.17
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 353.34,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.17
+    },
+    "totalBaseCurrency": {
+      "amount": 302.7,
+      "currency": "GBP"
+    }
+  },
+  {
+    "number": "KQDLCJVB",
+    "file": "invoices/ryanair_08_30.pdf",
+    "issuer": "Ryanair",
+    "issuedDate": "2021-08-30T00:00:00.000Z",
+    "paymentDate": "2021-08-30T00:00:00.000Z",
+    "categories": ["Viajes"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 82.98,
+      "currency": "EUR"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 82.98,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "65700383",
+    "file": "invoices/direct_seguros_2021_07_21.pdf",
+    "issuer": "Direct Seguros",
+    "issuedDate": "2021-07-21T00:00:00.000Z",
+    "paymentDate": "2021-07-21T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 554.23,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 47.05,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 601.28,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "T2121509",
+    "file": "invoices/safauto_08_05.pdf",
+    "issuer": "Safautomoviles SA",
+    "issuedDate": "2021-08-05T00:00:00.000Z",
+    "paymentDate": "2021-08-05T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 284.89,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 59.83,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 344.72,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "738/21",
+    "file": "invoices/AE_Navarro_738_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-10-21T00:00:00.000Z",
+    "paymentDate": "2021-10-21T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 49.5,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.4,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 59.9,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "810/21",
+    "file": "invoices/AE_Navarro_810_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-11-17T00:00:00.000Z",
+    "paymentDate": "2021-11-17T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 49.5,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.4,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 59.9,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "890/21",
+    "file": "invoices/AE_Navarro_890_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-12-20T00:00:00.000Z",
+    "paymentDate": "2021-12-20T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 86.98,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 18.27,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 105.25,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "890/21-2",
+    "file": "invoices/AE_Navarro_890_21.pdf",
+    "issuer": "Mediser Consultores SLU",
+    "issuedDate": "2021-12-20T00:00:00.000Z",
+    "paymentDate": "2021-12-20T00:00:00.000Z",
+    "categories": ["Consultoria"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 12.55,
+      "currency": "EUR"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 12.55,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "033531/D/21/003854",
+    "file": "invoices/gasolina_2021_10_11.pdf",
+    "issuer": "ES Servimosa",
+    "issuedDate": "2021-10-11T00:00:00.000Z",
+    "paymentDate": "2021-10-11T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 49.26,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.35,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.17,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 59.61,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "033049/D/21/001328",
+    "file": "invoices/gasolina_2021_10_15.pdf",
+    "issuer": "ES Salas Gestion de carbura",
+    "issuedDate": "2021-10-15T00:00:00.000Z",
+    "paymentDate": "2021-10-15T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 24.88,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 5.23,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 2.61,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 30.11,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "015950021/00003709",
+    "file": "invoices/gasolina_2021_10_17.pdf",
+    "issuer": "CIA Espanola DIST Petroleos",
+    "issuedDate": "2021-10-17T00:00:00.000Z",
+    "paymentDate": "2021-10-17T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 24.81,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 5.21,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 2.61,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 30.02,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "A107121A20006358",
+    "file": "invoices/gasolina_2021_10_22.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-10-22T00:00:00.000Z",
+    "paymentDate": "2021-10-22T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
+    "subtotal": {
+      "amount": 49.59,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 10.41,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.21,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 60,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "I6-5388",
+    "file": "invoices/gasolina_2021_10_24.pdf",
+    "issuer": "Villarce SL",
     "issuedDate": "2021-10-24T00:00:00.000Z",
+    "paymentDate": "2021-10-24T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 41.32,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 8.68,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.34,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 50,
       "currency": "EUR"
     }
   },
   {
-    "number": "JA-723-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pepe.perez@autonomo.com",
-    "issuedDate": "2021-10-24T00:00:00.000Z",
+    "number": "A107121A1008948",
+    "file": "invoices/gasolina_2021_11_05.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-11-05T00:00:00.000Z",
+    "paymentDate": "2021-11-05T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 49.59,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 10.41,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.21,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 60,
       "currency": "EUR"
     }
   },
   {
-    "number": "JA-724-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pabloiveron@gmail.com",
-    "issuedDate": "2021-11-24T00:00:00.000Z",
+    "number": "000650021/00005772",
+    "file": "invoices/gasolina_2021_11_13.pdf",
+    "issuer": "CIA Espanola DIST Petroleos",
+    "issuedDate": "2021-11-13T00:00:00.000Z",
+    "paymentDate": "2021-11-13T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 59.92,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 12.58,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 6.29,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 72.5,
       "currency": "EUR"
     }
   },
   {
-    "number": "JA-725-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pepe.perez@autonomo.com",
-    "issuedDate": "2021-11-24T00:00:00.000Z",
+    "number": "033386/G/21/003630",
+    "file": "invoices/gasolina_2021_11_15.pdf",
+    "issuer": "ES Celtima SL",
+    "issuedDate": "2021-11-15T00:00:00.000Z",
+    "paymentDate": "2021-11-15T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 38.07,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 7.99,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 4.0,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 46.06,
       "currency": "EUR"
     }
   },
   {
-    "number": "JA-726-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pabloiveron@gmail.com",
-    "issuedDate": "2021-12-24T00:00:00.000Z",
+    "number": "A107121A2006750",
+    "file": "invoices/gasolina_2021_12_14.pdf",
+    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuedDate": "2021-12-14T00:00:00.000Z",
+    "paymentDate": "2021-12-14T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 49.59,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 10.41,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 5.21,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 60,
       "currency": "EUR"
     }
   },
   {
-    "number": "JA-727-2021",
-    "issuer": "Garcia Accountants",
-    "client": "pepe.perez@autonomo.com",
-    "issuedDate": "2021-12-24T00:00:00.000Z",
+    "number": "034391/A/21/000548",
+    "file": "invoices/gasolina_2021_12_23.pdf",
+    "issuer": "Campsa",
+    "issuedDate": "2021-12-23T00:00:00.000Z",
+    "paymentDate": "2021-12-23T00:00:00.000Z",
+    "categories": ["Automovil"],
+    "isDeductible": false,
     "subtotal": {
-      "amount": 50,
+      "amount": 60.27,
       "currency": "EUR"
     },
     "taxPct": 21,
     "tax": {
-      "amount": 10.5,
+      "amount": 12.66,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 6.33,
       "currency": "EUR"
     },
     "total": {
-      "amount": 60.5,
+      "amount": 72.93,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "AD81946463",
+    "file": "invoices/apple_2021_11_03_1.pdf",
+    "issuer": "Apple",
+    "issuedDate": "2021-11-03T00:00:00.000Z",
+    "paymentDate": "2021-11-03T00:00:00.000Z",
+    "categories": ["Equipamiento"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 2729.45,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 573.18,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 3302.63,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "AD81946468",
+    "file": "invoices/apple_2021_11_03_2.pdf",
+    "issuer": "Apple",
+    "issuedDate": "2021-11-03T00:00:00.000Z",
+    "paymentDate": "2021-11-03T00:00:00.000Z",
+    "categories": ["Equipamiento"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 269,
+      "currency": "EUR"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 269,
+      "currency": "EUR"
+    }
+  },
+  {
+    "number": "DS-ASE-INV-ES-2021-39938416",
+    "file": "invoices/factura_cargador_portatil_amazon.pdf",
+    "issuer": "Amazon",
+    "issuedDate": "2021-11-18T00:00:00.000Z",
+    "paymentDate": "2021-11-18T00:00:00.000Z",
+    "categories": ["Equipamiento"],
+    "isDeductible": true,
+    "subtotal": {
+      "amount": 33.05,
+      "currency": "EUR"
+    },
+    "taxPct": 21,
+    "tax": {
+      "amount": 6.94,
+      "currency": "EUR"
+    },
+    "total": {
+      "amount": 39.99,
       "currency": "EUR"
     }
   }

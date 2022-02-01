@@ -1,106 +1,378 @@
 [
   {
-    "number": "inv-001-2021",
-    "issuer": "pabloiveron@gmail.com",
-    "client": "Bradley's IT",
-    "issuedDate": "2021-09-30T00:00:00.000Z",
-    "subtotal": {
-      "amount": 1000,
-      "currency": "GBP"
-    },
-    "taxPct": 20,
-    "tax": {
-      "amount": 200,
-      "currency": "GBP"
-    },
-    "total": {
-      "amount": 1200,
-      "currency": "GBP"
-    },
-    "totalOthers": [
+    "number": "001-2021",
+    "file": "invoices/factura_001-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-06-28T00:00:00.000Z",
+    "paymentDate": "2021-06-28T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
       {
-        "amount": 1380,
-        "currency": "EUR",
-        "primaryCurrencyRate": 1.15
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£485/day",
+        "quantity": 4,
+        "unitPrice": {
+          "amount": 485,
+          "currency": "GBP"
+        }
       }
-    ]
-  },
-  {
-    "number": "inv-002-2021",
-    "issuer": "pabloiveron@gmail.com",
-    "client": "Bradley's IT",
-    "issuedDate": "2021-10-31T00:00:00.000Z",
+    ],
     "subtotal": {
-      "amount": 1250,
+      "amount": 2250.4,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 1940,
       "currency": "GBP"
     },
     "taxPct": 0,
     "tax": {
       "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 1940,
       "currency": "GBP"
     },
     "total": {
-      "amount": 1250,
-      "currency": "GBP"
-    },
-    "totalOthers": [
-      {
-        "amount": 1437.5,
-        "currency": "EUR",
-        "primaryCurrencyRate": 1.15
-      }
-    ]
+      "amount": 2250.4,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
   },
   {
-    "number": "inv-003-2021",
-    "issuer": "pabloiveron@gmail.com",
-    "client": "Bradley's IT",
-    "issuedDate": "2021-11-30T00:00:00.000Z",
-    "subtotal": {
-      "amount": 1000,
-      "currency": "GBP"
-    },
-    "taxPct": 20,
-    "tax": {
-      "amount": 200,
-      "currency": "GBP"
-    },
-    "total": {
-      "amount": 1200,
-      "currency": "GBP"
-    },
-    "totalOthers": [
+    "number": "002-2021",
+    "file": "invoices/factura_002-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-07-21T00:00:00.000Z",
+    "paymentDate": "2021-07-28T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
       {
-        "amount": 1380,
-        "currency": "EUR",
-        "primaryCurrencyRate": 1.15
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£485/day",
+        "quantity": 22,
+        "unitPrice": {
+          "amount": 485,
+          "currency": "GBP"
+        }
       }
-    ]
-  },
-  {
-    "number": "inv-004-2021",
-    "issuer": "pabloiveron@gmail.com",
-    "client": "Bradley's IT",
-    "issuedDate": "2021-12-31T00:00:00.000Z",
+    ],
     "subtotal": {
-      "amount": 1000,
+      "amount": 12270.5,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 10670,
       "currency": "GBP"
     },
     "taxPct": 0,
     "tax": {
       "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 10670,
       "currency": "GBP"
     },
     "total": {
-      "amount": 1000,
+      "amount": 12270.5,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
+  },
+  {
+    "number": "003-2021",
+    "file": "invoices/factura_003-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-08-30T00:00:00.000Z",
+    "paymentDate": "2021-06-31T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
+      {
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£485/day",
+        "quantity": 15,
+        "unitPrice": {
+          "amount": 485,
+          "currency": "GBP"
+        }
+      }
+    ],
+    "subtotal": {
+      "amount": 8366.25,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 7275,
       "currency": "GBP"
     },
-    "totalOthers": [
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 7275,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 8366.25,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
+  },
+  {
+    "number": "004-2021",
+    "file": "invoices/factura_004-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-09-27T00:00:00.000Z",
+    "paymentDate": "2021-09-28T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
       {
-        "amount": 1150,
-        "currency": "EUR",
-        "primaryCurrencyRate": 1.15
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£485/day",
+        "quantity": 17,
+        "unitPrice": {
+          "amount": 485,
+          "currency": "GBP"
+        }
       }
-    ]
+    ],
+    "subtotal": {
+      "amount": 9481.75,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 8245,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 8245,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 9481.75,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
+  },
+  {
+    "number": "005-2021",
+    "file": "invoices/factura_005-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-10-26T00:00:00.000Z",
+    "paymentDate": "2021-10-28T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
+      {
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£485/day",
+        "quantity": 22,
+        "unitPrice": {
+          "amount": 485,
+          "currency": "GBP"
+        }
+      }
+    ],
+    "subtotal": {
+      "amount": 12270.5,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 10670,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 10670,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 12270.5,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
+  },
+  {
+    "number": "006-2021",
+    "file": "invoices/factura_006-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-11-26T00:00:00.000Z",
+    "paymentDate": "2021-11-26T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
+      {
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£485/day",
+        "quantity": 21,
+        "unitPrice": {
+          "amount": 485,
+          "currency": "GBP"
+        }
+      }
+    ],
+    "subtotal": {
+      "amount": 11712.75,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 10185,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 10185,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 11712.75,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
+  },
+  {
+    "number": "007-2021",
+    "file": "invoices/factura_007-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-12-23T00:00:00.000Z",
+    "paymentDate": "2021-12-23T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
+      {
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£582/day",
+        "quantity": 6,
+        "unitPrice": {
+          "amount": 582,
+          "currency": "GBP"
+        }
+      }
+    ],
+    "subtotal": {
+      "amount": 4015.08,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 3492,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 3492,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 4015.08,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
+  },
+  {
+    "number": "008-2021",
+    "file": "invoices/factura_008-2021.pdf",
+    "client": "Byte Revolution LTD",
+    "issuedDate": "2021-12-27T00:00:00.000Z",
+    "paymentDate": "2021-12-27T00:00:00.000Z",
+    "categories": ["Facturacion"],
+    "description": [
+      {
+        "descriptionLine1": "Web consultancy services / Servicios consultoria web",
+        "descriptionLine2": "£485/day",
+        "quantity": 15,
+        "unitPrice": {
+          "amount": 485,
+          "currency": "GBP"
+        }
+      }
+    ],
+    "subtotal": {
+      "amount": 8366.25,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "subtotalBaseCurrency": {
+      "amount": 7275,
+      "currency": "GBP"
+    },
+    "taxPct": 0,
+    "tax": {
+      "amount": 0,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    },
+    "taxBaseCurrency": {
+      "amount": 0,
+      "currency": "GBP"
+    },
+    "totalBaseCurrency": {
+      "amount": 7275,
+      "currency": "GBP"
+    },
+    "total": {
+      "amount": 8366.25,
+      "currency": "EUR",
+      "primaryCurrencyRate": 1.15
+    }
   }
 ]
