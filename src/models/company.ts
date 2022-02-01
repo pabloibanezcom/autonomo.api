@@ -1,10 +1,11 @@
 import { Company } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
+import Address from './address';
 
 export const CompanySchema: Schema = new Schema({
   name: { type: String, required: true },
   cifVat: { type: String },
-  address: { type: Object },
+  address: { type: Address },
   director: { type: Schema.Types.ObjectId, ref: 'Person' },
   shareholdings: [{ type: Schema.Types.ObjectId, ref: 'Shareholding' }]
 });

@@ -4,10 +4,10 @@ import AmountCurrency from './amountCurrency';
 import File from './file';
 
 const DescriptionElement = {
-  descriptionLine1: { type: String },
+  descriptionLine1: { type: String, required: true },
   descriptionLine2: { type: String },
-  quantity: { type: String },
-  unitPrice: AmountCurrency
+  quantity: { type: Number, required: true },
+  unitPrice: { type: AmountCurrency, required: true }
 };
 
 export const InvoiceSchema: Schema = new Schema({
@@ -21,12 +21,15 @@ export const InvoiceSchema: Schema = new Schema({
   description: [DescriptionElement],
   categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   subtotal: { type: AmountCurrency, required: true },
+  subtotalBaseCurrency: { type: AmountCurrency },
   taxPct: { type: Number, required: true },
   tax: { type: AmountCurrency, required: true },
+  taxBaseCurrency: { type: AmountCurrency },
   deductibleTaxPct: { type: Number },
   deductibleTax: { type: AmountCurrency },
+  isDeductible: { type: Boolean },
   total: { type: AmountCurrency, required: true },
-  totalOthers: [AmountCurrency],
+  totalBaseCurrency: { type: AmountCurrency },
   file: { type: File }
 });
 
