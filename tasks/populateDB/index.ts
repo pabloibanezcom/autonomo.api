@@ -4,12 +4,14 @@ import categories from '../../mockData/categories.json';
 import companies from '../../mockData/companies.json';
 import invoicesExpenses from '../../mockData/invoices_expenses.json';
 import invoicesIncomes from '../../mockData/invoices_incomes.json';
+import nationalInsurancePayments from '../../mockData/national_insurance_payments.json';
 import people from '../../mockData/people.json';
 import taxYears from '../../mockData/tax_years.json';
 import connect from '../../src/connect';
 import CategoryDB from '../../src/models/category';
 import CompanyDB from '../../src/models/company';
 import InvoiceDB from '../../src/models/invoice';
+import NationalInsurancePaymentDB from '../../src/models/nationalInsurancePayment';
 import PersonDB from '../../src/models/person';
 import TaxYearDB from '../../src/models/taxYear';
 import { generateRandomColor } from '../../src/util/color';
@@ -20,6 +22,7 @@ const generateDB = async (): Promise<boolean> => {
   let user: Person;
 
   const clearExistingData = async (): Promise<void> => {
+    await NationalInsurancePaymentDB.deleteMany({});
     await InvoiceDB.deleteMany({});
     await CategoryDB.deleteMany({});
     await PersonDB.deleteMany({ auth0UserId: null });
@@ -33,7 +36,6 @@ const generateDB = async (): Promise<boolean> => {
 
   const getCompanyOrCreate = async (companyName: string): Promise<Company> => {
     const company = await CompanyDB.findOne({ name: companyName });
-    console.log(company);
     if (company) {
       return company;
     }
@@ -117,6 +119,14 @@ const generateDB = async (): Promise<boolean> => {
     await generateInvoicesByType(false);
   };
 
+  const generateNationalInsurancePayments = async (): Promise<void> => {
+    await Promise.all(
+      nationalInsurancePayments.map(async (niPayment): Promise<void> => {
+        await NationalInsurancePaymentDB.create({ ...niPayment, person: user._id });
+      })
+    );
+  };
+
   await connect({ db: process.env.MONGODB_URI || '' });
   await clearExistingData();
   await getUser();
@@ -125,6 +135,7 @@ const generateDB = async (): Promise<boolean> => {
   await generateCompanies();
   await generateCategories();
   await generateInvoices();
+  await generateNationalInsurancePayments();
   console.log('DB Populate job completed');
   return true;
 };
