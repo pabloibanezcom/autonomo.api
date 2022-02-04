@@ -1,4 +1,4 @@
-import { Category, Company, Person, TaxYear } from '@autonomo/common';
+import { Category, Company, generateRandomColor, Person, TaxYear } from '@autonomo/common';
 import dotenv from 'dotenv';
 import categories from '../../mockData/categories.json';
 import companies from '../../mockData/companies.json';
@@ -6,6 +6,7 @@ import invoicesExpenses from '../../mockData/invoices_expenses.json';
 import invoicesIncomes from '../../mockData/invoices_incomes.json';
 import nationalInsurancePayments from '../../mockData/national_insurance_payments.json';
 import people from '../../mockData/people.json';
+import taxPayments from '../../mockData/tax_payments.json';
 import taxYears from '../../mockData/tax_years.json';
 import connect from '../../src/connect';
 import CategoryDB from '../../src/models/category';
@@ -13,15 +14,17 @@ import CompanyDB from '../../src/models/company';
 import InvoiceDB from '../../src/models/invoice';
 import NationalInsurancePaymentDB from '../../src/models/nationalInsurancePayment';
 import PersonDB from '../../src/models/person';
+import TaxPaymentDB from '../../src/models/taxPayment';
 import TaxYearDB from '../../src/models/taxYear';
-import { generateRandomColor } from '../../src/util/color';
 
 const generateDB = async (): Promise<boolean> => {
   const awsS3BucketLocation = process.env.AWS_S3_BUCKET_LOCATION;
-  console.log(awsS3BucketLocation);
   let user: Person;
 
+  let generatedTaxYears: TaxYear[];
+
   const clearExistingData = async (): Promise<void> => {
+    await TaxPaymentDB.deleteMany({});
     await NationalInsurancePaymentDB.deleteMany({});
     await InvoiceDB.deleteMany({});
     await CategoryDB.deleteMany({});
@@ -47,7 +50,7 @@ const generateDB = async (): Promise<boolean> => {
   };
 
   const generateTaxYears = async (): Promise<void> => {
-    await Promise.all(
+    generatedTaxYears = await Promise.all(
       taxYears.map(async (taxYear): Promise<TaxYear> => {
         return await TaxYearDB.create(taxYear);
       })
@@ -127,6 +130,19 @@ const generateDB = async (): Promise<boolean> => {
     );
   };
 
+  const generateTaxPayments = async (): Promise<void> => {
+    await Promise.all(
+      taxPayments.map(async (taxPayment): Promise<void> => {
+        await TaxPaymentDB.create({
+          ...taxPayment,
+          payer: user._id,
+          payerType: 'Person',
+          taxYear: generatedTaxYears.find(year => year.name === taxPayment.taxYearName)._id
+        });
+      })
+    );
+  };
+
   await connect({ db: process.env.MONGODB_URI || '' });
   await clearExistingData();
   await getUser();
@@ -136,6 +152,7 @@ const generateDB = async (): Promise<boolean> => {
   await generateCategories();
   await generateInvoices();
   await generateNationalInsurancePayments();
+  await generateTaxPayments();
   console.log('DB Populate job completed');
   return true;
 };

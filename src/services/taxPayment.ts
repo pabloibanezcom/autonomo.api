@@ -1,14 +1,19 @@
-import { TaxPayment } from '@autonomo/common';
+import { Person, TaxPayment, TaxPaymentFilter, transformSearchFilterToTaxPaymentQuery } from '@autonomo/common';
 import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
 import TaxPaymentDB from '../models/taxPayment';
-import { getUserFromAuthorizationHeader } from '../util/user';
+import { getUserFromAuthorizationHeader, getValidatedUser } from '../util/user';
 
-export const getTaxPayments = async (authorizationHeader: string, userId: string): Promise<TaxPayment[]> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  if (!user._id.equals(userId)) {
-    throw new UnauthorizedError();
-  }
-  return await TaxPaymentDB.find({ payer: userId });
+export const getTaxPayments = async (
+  authorizationHeader: string,
+  userId: string,
+  searchFilter: TaxPaymentFilter,
+  user: Person = null
+): Promise<TaxPayment[]> => {
+  const requestUser = user || (await getValidatedUser(authorizationHeader, [userId]));
+  return await TaxPaymentDB.find({
+    ...transformSearchFilterToTaxPaymentQuery(searchFilter),
+    payer: requestUser._id
+  });
 };
 
 export const getTaxPayment = async (authorizationHeader: string, taxPaymentId: string): Promise<TaxPayment> => {

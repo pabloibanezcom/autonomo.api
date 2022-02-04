@@ -1,17 +1,24 @@
-import { NationalInsurancePayment } from '@autonomo/common';
+import {
+  NationalInsurancePayment,
+  NationalInsurancePaymentFilter,
+  Person,
+  transformSearchFilterToNationalInsuranceQuery
+} from '@autonomo/common';
 import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
 import NationalInsurancePaymentDB from '../models/nationalInsurancePayment';
-import { getUserFromAuthorizationHeader } from '../util/user';
+import { getUserFromAuthorizationHeader, getValidatedUser } from '../util/user';
 
 export const getNationalInsurancePayments = async (
   authorizationHeader: string,
-  userId: string
+  userId: string,
+  searchFilter: NationalInsurancePaymentFilter,
+  user: Person = null
 ): Promise<NationalInsurancePayment[]> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  if (!user._id.equals(userId)) {
-    throw new UnauthorizedError();
-  }
-  return await NationalInsurancePaymentDB.find({ person: userId });
+  const requestUser = user || (await getValidatedUser(authorizationHeader, [userId]));
+  return await NationalInsurancePaymentDB.find({
+    ...transformSearchFilterToNationalInsuranceQuery(searchFilter),
+    person: requestUser._id
+  });
 };
 
 export const getNationalInsurancePayment = async (

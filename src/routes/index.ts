@@ -8,6 +8,7 @@ import registerShareholdingRoutes from './shareholding';
 import registerTaxPaymentRoutes from './taxPayment';
 import registerTaxYearRoutes from './taxYear';
 import registerUserRoutes from './user';
+import registerYearReportRoutes from './yearReport';
 
 const registerRoutes = (router: express.Router): void => {
   registerCategoryRoutes(router);
@@ -19,6 +20,7 @@ const registerRoutes = (router: express.Router): void => {
   registerTaxPaymentRoutes(router);
   registerTaxYearRoutes(router);
   registerUserRoutes(router);
+  registerYearReportRoutes(router);
 };
 
 export default registerRoutes;

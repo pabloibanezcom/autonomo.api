@@ -14,8 +14,8 @@ import {
 import httpCode from './httpCode';
 
 const registerNationalInsurancePaymentRoutes = (router: express.Router): void => {
-  router.get(`/:userId${routePaths.NATIONAL_INSURANCE_PAYMENT}`, (req: Request, res: Response) => {
-    getNationalInsurancePayments(req.headers.authorization, req.params.userId)
+  router.post(`/:userId${routePaths.NATIONAL_INSURANCE_PAYMENT}`, (req: Request, res: Response) => {
+    getNationalInsurancePayments(req.headers.authorization, req.params.userId, req.body)
       .then((result: NationalInsurancePayment[]) => res.status(httpCode.GET).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });

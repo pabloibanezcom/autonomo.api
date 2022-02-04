@@ -84,8 +84,8 @@
     "number": "438/21",
     "file": "invoices/AE_Navarro_438_21.pdf",
     "issuer": "Mediser Consultores SLU",
-    "issuedDate": "2021-06-24T00:00:00.000Z",
-    "paymentDate": "2021-06-24T00:00:00.000Z",
+    "issuedDate": "2021-06-21T00:00:00.000Z",
+    "paymentDate": "2021-06-21T00:00:00.000Z",
     "categories": ["Consultoria"],
     "isDeductible": true,
     "subtotal": {
@@ -622,9 +622,14 @@
       "amount": 554.23,
       "currency": "EUR"
     },
-    "taxPct": 21,
+    "taxPct": 10,
     "tax": {
       "amount": 47.05,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 23.53,
       "currency": "EUR"
     },
     "total": {
@@ -636,8 +641,8 @@
     "number": "T2121509",
     "file": "invoices/safauto_08_05.pdf",
     "issuer": "Safautomoviles SA",
-    "issuedDate": "2021-08-05T00:00:00.000Z",
-    "paymentDate": "2021-08-05T00:00:00.000Z",
+    "issuedDate": "2021-07-17T00:00:00.000Z",
+    "paymentDate": "2021-07-17T00:00:00.000Z",
     "categories": ["Automovil"],
     "isDeductible": false,
     "subtotal": {
@@ -647,6 +652,11 @@
     "taxPct": 21,
     "tax": {
       "amount": 59.83,
+      "currency": "EUR"
+    },
+    "deductibleTaxPct": 50,
+    "deductibleTax": {
+      "amount": 29.91,
       "currency": "EUR"
     },
     "total": {

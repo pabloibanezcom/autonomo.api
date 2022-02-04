@@ -14,8 +14,8 @@ import {
 import httpCode from './httpCode';
 
 const registerTaxPaymentRoutes = (router: express.Router): void => {
-  router.get(`/:userId${routePaths.TAX_PAYMENT}`, (req: Request, res: Response) => {
-    getTaxPayments(req.headers.authorization, req.params.userId)
+  router.post(`/:userId${routePaths.TAX_PAYMENT}`, (req: Request, res: Response) => {
+    getTaxPayments(req.headers.authorization, req.params.userId, req.body)
       .then((result: TaxPayment[]) => res.status(httpCode.GET).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });

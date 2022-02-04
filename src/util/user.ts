@@ -1,5 +1,6 @@
 import { Person } from '@autonomo/common';
 import { auth0Client } from '../httpClient';
+import { UnauthorizedError } from '../httpError/httpErrors';
 import PersonDB from '../models/person';
 
 interface Auth0UserData {
@@ -36,4 +37,16 @@ export const getUserFromAuthorizationHeader = async (
     }
   }
   return null;
+};
+
+export const getValidatedUser = async (
+  authorizationHeader: string,
+  idsToValidate: string[] = null,
+  createIfNoExist = false
+): Promise<Person> => {
+  const user = await getUserFromAuthorizationHeader(authorizationHeader, createIfNoExist);
+  if (idsToValidate && !idsToValidate.includes(user._id.toString())) {
+    throw new UnauthorizedError();
+  }
+  return user;
 };
