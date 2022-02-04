@@ -17,14 +17,8 @@ import {
 import httpCode from './httpCode';
 
 const registerInvoiceRoutes = (router: express.Router): void => {
-  router.get(`/:userId${routePaths.INCOMES}`, (req: Request, res: Response) => {
-    getInvoices(req.headers.authorization, req.params.userId, 'incomes')
-      .then((result: Invoice[]) => res.status(httpCode.GET).send(result))
-      .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
-  });
-
-  router.get(`/:userId${routePaths.EXPENSES}`, (req: Request, res: Response) => {
-    getInvoices(req.headers.authorization, req.params.userId, 'expenses')
+  router.post(`/:userId${routePaths.INVOICE}`, (req: Request, res: Response) => {
+    getInvoices(req.headers.authorization, req.params.userId, req.body)
       .then((result: Invoice[]) => res.status(httpCode.GET).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
