@@ -17,44 +17,47 @@ import {
 import httpCode from './httpCode';
 
 const registerInvoiceRoutes = (router: express.Router): void => {
-  router.post(`/:userId${routePaths.INVOICE}`, (req: Request, res: Response) => {
-    getInvoices(req.headers.authorization, req.params.userId, req.body)
-      .then((result: Invoice[]) => res.status(httpCode.GET).send(result))
-      .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
-  });
+  router.post(
+    `/${routePaths.BUSINESS_ID}/${routePaths.INVOICE}/${routePaths.SEARCH}`,
+    (req: Request, res: Response) => {
+      getInvoices(req.headers.authorization, req.params.businessId, req.body)
+        .then((result: Invoice[]) => res.status(httpCode.GET).send(result))
+        .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
+    }
+  );
 
-  router.get(`${routePaths.INVOICE}/:id`, (req: Request, res: Response) => {
-    getInvoice(req.headers.authorization, req.params.id)
+  router.get(`/${routePaths.BUSINESS_ID}/${routePaths.INVOICE}/:id`, (req: Request, res: Response) => {
+    getInvoice(req.headers.authorization, req.params.businessId, req.params.id)
       .then((result: Invoice) => res.status(httpCode.GET).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.post(routePaths.INVOICE, (req: Request, res: Response) => {
-    addInvoice(req.headers.authorization, req.body)
+  router.post(`/${routePaths.BUSINESS_ID}/${routePaths.INVOICE}`, (req: Request, res: Response) => {
+    addInvoice(req.headers.authorization, req.params.businessId, req.body)
       .then((result: Invoice) => res.status(httpCode.POST).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.put(`${routePaths.INVOICE}/:id`, (req: Request, res: Response) => {
-    updateInvoice(req.headers.authorization, req.params.id, req.body)
+  router.put(`/${routePaths.BUSINESS_ID}/${routePaths.INVOICE}/:id`, (req: Request, res: Response) => {
+    updateInvoice(req.headers.authorization, req.params.businessId, req.params.id, req.body)
       .then((result: Invoice) => res.status(httpCode.PUT).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.delete(`${routePaths.INVOICE}/:id`, (req: Request, res: Response) => {
-    deleteInvoice(req.headers.authorization, req.params.id)
+  router.delete(`/${routePaths.BUSINESS_ID}/${routePaths.INVOICE}/:id`, (req: Request, res: Response) => {
+    deleteInvoice(req.headers.authorization, req.params.businessId, req.params.id)
       .then((result: Invoice) => res.status(httpCode.DELETE).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.post(`${routePaths.INVOICE}/:id/file`, (req: RequestWithFiles, res: Response) => {
-    addInvoiceFile(req.headers.authorization, req.params.id, req.files?.invoice)
+  router.post(`/${routePaths.BUSINESS_ID}/${routePaths.INVOICE}/:id/file`, (req: RequestWithFiles, res: Response) => {
+    addInvoiceFile(req.headers.authorization, req.params.businessId, req.params.id, req.files?.invoice)
       .then((result: File) => res.status(httpCode.POST).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.delete(`${routePaths.INVOICE}/:id/file`, (req: RequestWithFiles, res: Response) => {
-    deleteInvoiceFile(req.headers.authorization, req.params.id)
+  router.delete(`/${routePaths.BUSINESS_ID}/${routePaths.INVOICE}/:id/file`, (req: RequestWithFiles, res: Response) => {
+    deleteInvoiceFile(req.headers.authorization, req.params.businessId, req.params.id)
       .then((result: Invoice) => res.status(httpCode.DELETE).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });

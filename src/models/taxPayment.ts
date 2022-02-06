@@ -3,10 +3,9 @@ import mongoose, { Schema } from 'mongoose';
 import AmountCurrency from './amountCurrency';
 
 export const TaxPaymentSchema: Schema = new Schema({
-  payer: { type: Schema.Types.ObjectId, refPath: 'payerType', required: true },
-  payerType: { type: String, required: true, enum: ['Company', 'Person'] },
+  business: { type: Schema.Types.ObjectId, ref: 'Business', required: true },
   taxYear: { type: Schema.Types.ObjectId, ref: 'TaxYear', required: true },
-  type: { type: String, required: true },
+  type: { type: String, required: true, enum: ['incomeTax', 'dividendsTax', 'VAT'] },
   date: { type: Date, required: true },
   amount: { type: AmountCurrency, required: true },
   description: { type: String }

@@ -8,32 +8,32 @@ import { addPerson, deletePerson, getPeople, getPerson, updatePerson } from '../
 import httpCode from './httpCode';
 
 const registerPersonRoutes = (router: express.Router): void => {
-  router.get(routePaths.PERSON, (req: Request, res: Response) => {
-    getPeople()
+  router.post(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/${routePaths.SEARCH}`, (req: Request, res: Response) => {
+    getPeople(req.headers.authorization, req.params.businessId)
       .then((result: Person[]) => res.status(httpCode.GET).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.get(`${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
-    getPerson(req.params.id)
+  router.get(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
+    getPerson(req.headers.authorization, req.params.businessId, req.params.id)
       .then((result: Person) => res.status(httpCode.GET).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.post(routePaths.PERSON, (req: Request, res: Response) => {
-    addPerson(req.body)
+  router.post(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}`, (req: Request, res: Response) => {
+    addPerson(req.headers.authorization, req.params.businessId, req.body)
       .then((result: Person) => res.status(httpCode.POST).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.put(`${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
-    updatePerson(req.params.id, req.body)
+  router.put(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
+    updatePerson(req.headers.authorization, req.params.businessId, req.params.id, req.body)
       .then((result: Person) => res.status(httpCode.PUT).send(result))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });
 
-  router.delete(`${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
-    deletePerson(req.params.id)
+  router.delete(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
+    deletePerson(req.headers.authorization, req.params.businessId, req.params.id)
       .then(() => res.status(httpCode.DELETE).send({}))
       .catch((err: HttpError) => res.status(err.code || transformGenericError(err).code).send(err.message));
   });

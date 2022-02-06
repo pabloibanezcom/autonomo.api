@@ -12,10 +12,9 @@ const DescriptionElement = {
 
 export const InvoiceSchema: Schema = new Schema({
   number: { type: String, required: true },
-  issuer: { type: Schema.Types.ObjectId, refPath: 'issuerType', required: true },
-  issuerType: { type: String, required: true, enum: ['Company', 'Person'] },
-  client: { type: Schema.Types.ObjectId, refPath: 'clientType', required: true },
-  clientType: { type: String, required: true, enum: ['Company', 'Person'] },
+  business: { type: Schema.Types.ObjectId, ref: 'Business' },
+  type: { type: String, required: true, enum: ['income', 'expense'] },
+  issuerOrClient: { type: Schema.Types.ObjectId, ref: 'Company' },
   issuedDate: { type: Date, required: true },
   paymentDate: { type: Date },
   description: [DescriptionElement],

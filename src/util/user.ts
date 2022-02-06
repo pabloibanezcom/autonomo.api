@@ -1,52 +1,63 @@
-import { Person } from '@autonomo/common';
+import { Business, GrantTypes, User } from '@autonomo/common';
+import { Bool } from 'aws-sdk/clients/clouddirectory';
 import { auth0Client } from '../httpClient';
-import { UnauthorizedError } from '../httpError/httpErrors';
-import PersonDB from '../models/person';
+import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
+import { BusinessAndUser } from '../interfaces/BusinessAndUser';
+import BusinessDB from '../models/business';
+import UserDB from '../models/user';
 
-interface Auth0UserData {
-  sub: string;
-  given_name: string;
-  family_name: string;
-  email: string;
-  picture: string;
-}
-
-const createUser = async (personData: Auth0UserData): Promise<Person> => {
-  const newPerson = new PersonDB({
-    auth0UserId: personData.sub,
-    firstName: personData.given_name,
-    lastName: personData.family_name,
-    email: personData.email,
-    picture: personData.picture
-  });
-  await newPerson.save();
-  return newPerson;
+const validateGrantType = (required: GrantTypes, current: GrantTypes): Bool => {
+  if (required > current) {
+    throw new UnauthorizedError();
+  }
+  return true;
 };
 
-export const getUserFromAuthorizationHeader = async (
+export const validateUser = async (
   authorizationHeader: string,
-  createIfNoExist = false
-): Promise<Person> => {
-  const response = await auth0Client(authorizationHeader).get('/userinfo');
-  if (response.data) {
-    const person = await PersonDB.findOne({ auth0UserId: response.data.sub });
-    if (person) {
-      return person;
-    } else {
-      return createIfNoExist ? await createUser(response.data) : null;
+  businessId?: string,
+  granType?: GrantTypes
+): Promise<BusinessAndUser> => {
+  let business: Business;
+  if (businessId) {
+    business = await BusinessDB.findById(businessId);
+    if (!business) {
+      throw new NotFoundError();
     }
   }
-  return null;
+  const response = await auth0Client(authorizationHeader).get('/userinfo');
+  const user = await UserDB.findOne({ auth0UserId: response?.data?.sub });
+  if (!user) {
+    throw new UnauthorizedError();
+  }
+  if (granType) {
+    validateGrantType(
+      granType,
+      user.isAdmin
+        ? GrantTypes.Admin
+        : business?.authorisedPeople.find(authPeople => authPeople.user.equals(user.id)).grantType
+    );
+  }
+  return {
+    business,
+    user
+  };
 };
 
-export const getValidatedUser = async (
-  authorizationHeader: string,
-  idsToValidate: string[] = null,
-  createIfNoExist = false
-): Promise<Person> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader, createIfNoExist);
-  if (idsToValidate && !idsToValidate.includes(user._id.toString())) {
+export const getUserOrCreateIt = async (authorizationHeader: string): Promise<User> => {
+  const response = await auth0Client(authorizationHeader).get('/userinfo');
+  if (!response?.data) {
     throw new UnauthorizedError();
+  }
+  let user = await UserDB.findOne({ auth0UserId: response.data.sub });
+  if (!user) {
+    user = await UserDB.create({
+      auth0UserId: response.data.sub,
+      firstName: response.data.given_name,
+      lastName: response.data.family_name,
+      email: response.data.email,
+      picture: response.data.picture
+    });
   }
   return user;
 };

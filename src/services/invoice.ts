@@ -1,94 +1,97 @@
-import { File, Invoice, InvoiceFilter, Person, transformSearchFilterToInvoiceQuery } from '@autonomo/common';
+import { File, GrantTypes, Invoice, InvoiceFilter, transformSearchFilterToInvoiceQuery } from '@autonomo/common';
 import { UploadedFile } from 'express-fileupload';
-import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
+import { NotFoundError } from '../httpError/httpErrors';
 import InvoiceDB from '../models/invoice';
 import { deleteFile, getFileNameFromKey, uploadFile } from '../util/file';
-import { getUserFromAuthorizationHeader, getValidatedUser } from '../util/user';
+import { validateUser } from '../util/user';
 
-export const getInvoices = async (
-  authorizationHeader: string,
-  userId: string,
+export const searchInvoices = async (
+  businessId: string,
   searchFilter: InvoiceFilter,
-  populate = 'issuer client categories',
-  user: Person = null
+  populate = ''
 ): Promise<Invoice[]> => {
-  const requestUser = user || (await getValidatedUser(authorizationHeader, [userId]));
   return await InvoiceDB.find({
-    ...transformSearchFilterToInvoiceQuery(searchFilter, requestUser._id)
+    ...transformSearchFilterToInvoiceQuery(searchFilter),
+    business: businessId
   }).populate(populate);
 };
 
-export const getInvoice = async (authorizationHeader: string, invoiceId: string): Promise<Invoice> => {
-  const user = await getValidatedUser(authorizationHeader);
-  const existingInvoice = await InvoiceDB.findById(invoiceId).populate('issuer client categories');
+export const getInvoices = async (
+  authorizationHeader: string,
+  businessId: string,
+  searchFilter: InvoiceFilter,
+  populate = 'issuerOrClient categories'
+): Promise<Invoice[]> => {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  return await searchInvoices(businessAndUser.business._id.toString(), searchFilter, populate);
+};
+
+export const getInvoice = async (
+  authorizationHeader: string,
+  businessId: string,
+  invoiceId: string,
+  populate = 'issuerOrClient categories'
+): Promise<Invoice> => {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  const existingInvoice = await InvoiceDB.findOne({ business: businessAndUser.business._id, _id: invoiceId }).populate(
+    populate
+  );
   if (!existingInvoice) {
     throw new NotFoundError();
   }
-  if (!user._id.equals(existingInvoice.issuer._id) && !user._id.equals(existingInvoice.client._id)) {
-    throw new UnauthorizedError();
-  }
-
   return existingInvoice;
 };
 
-export const addInvoice = async (authorizationHeader: string, invoice: Invoice): Promise<Invoice> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  if (!user._id.equals(invoice.issuer) && !user._id.equals(invoice.client)) {
-    throw new UnauthorizedError();
-  }
-  return await InvoiceDB.create(invoice);
+export const addInvoice = async (
+  authorizationHeader: string,
+  businessId: string,
+  invoice: Invoice
+): Promise<Invoice> => {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  return await InvoiceDB.create({ ...invoice, business: businessAndUser.business._id });
 };
 
 export const updateInvoice = async (
   authorizationHeader: string,
+  businessId: string,
   invoiceId: string,
   invoice: Invoice
 ): Promise<Invoice> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  if (!user._id.equals(invoice.issuer) && !user._id.equals(invoice.client)) {
-    throw new UnauthorizedError();
-  }
-
-  const existingInvoice = await InvoiceDB.findById(invoiceId);
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingInvoice = await InvoiceDB.findOneAndUpdate(
+    { business: businessAndUser.business._id, _id: invoiceId },
+    invoice,
+    { new: true, runValidators: true }
+  );
   if (!existingInvoice) {
     throw new NotFoundError();
   }
-  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
-    throw new UnauthorizedError();
-  }
-
-  return await InvoiceDB.findByIdAndUpdate(invoiceId, invoice, { new: true, runValidators: true });
+  return existingInvoice;
 };
 
-export const deleteInvoice = async (authorizationHeader: string, invoiceId: string): Promise<Invoice> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  const existingInvoice = await InvoiceDB.findById(invoiceId);
+export const deleteInvoice = async (
+  authorizationHeader: string,
+  businessId: string,
+  invoiceId: string
+): Promise<Invoice> => {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingInvoice = await InvoiceDB.findOneAndDelete({ business: businessAndUser.business._id, _id: invoiceId });
   if (!existingInvoice) {
     throw new NotFoundError();
   }
-  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
-    throw new UnauthorizedError();
-  }
-
-  return await InvoiceDB.findByIdAndDelete(invoiceId);
+  return existingInvoice;
 };
 
 export const addInvoiceFile = async (
   authorizationHeader: string,
+  businessId: string,
   invoiceId: string,
   file: UploadedFile
 ): Promise<File> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-
-  const existingInvoice = await InvoiceDB.findById(invoiceId);
-  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
-    throw new UnauthorizedError();
-  }
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingInvoice = await InvoiceDB.findOne({ business: businessAndUser.business._id, _id: invoiceId });
   if (!existingInvoice) {
     throw new NotFoundError();
-  }
-  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
-    throw new UnauthorizedError();
   }
 
   const existingFileKey = existingInvoice.file?.key;
@@ -109,22 +112,15 @@ export const addInvoiceFile = async (
   return existingInvoice.file;
 };
 
-export const deleteInvoiceFile = async (authorizationHeader: string, invoiceId: string): Promise<Invoice> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-
-  const existingInvoice = await InvoiceDB.findById(invoiceId);
-  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
-    throw new UnauthorizedError();
-  }
+export const deleteInvoiceFile = async (
+  authorizationHeader: string,
+  businessId: string,
+  invoiceId: string
+): Promise<Invoice> => {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingInvoice = await InvoiceDB.findOne({ business: businessAndUser.business._id, _id: invoiceId });
   if (!existingInvoice) {
     throw new NotFoundError();
-  }
-  if (!user._id.equals(existingInvoice.issuer) && !user._id.equals(existingInvoice.client)) {
-    throw new UnauthorizedError();
-  }
-
-  if (!existingInvoice.file) {
-    return existingInvoice;
   }
 
   await deleteFile(existingInvoice.file.key);

@@ -3,11 +3,11 @@ import mongoose, { Schema } from 'mongoose';
 import Address from './address';
 
 export const CompanySchema: Schema = new Schema({
+  business: { type: Schema.Types.ObjectId, ref: 'Business', required: true },
   name: { type: String, required: true },
   cifVat: { type: String },
   address: { type: Address },
-  director: { type: Schema.Types.ObjectId, ref: 'Person' },
-  shareholdings: [{ type: Schema.Types.ObjectId, ref: 'Shareholding' }]
+  director: { type: Schema.Types.ObjectId, ref: 'Person' }
 });
 
 export default mongoose.model<Company>('Company', CompanySchema);
