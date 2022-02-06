@@ -1,8 +1,10 @@
-import { Person } from '@autonomo/common';
+import { User } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
 import Address from './address';
 
-export const PersonSchema: Schema = new Schema({
+export const UserSchema: Schema = new Schema({
+  auth0UserId: { type: String },
+  isAdmin: { type: Boolean },
   firstName: { type: String },
   lastName: { type: String },
   email: { type: String, required: true },
@@ -12,4 +14,4 @@ export const PersonSchema: Schema = new Schema({
   address: { type: Address }
 });
 
-export default mongoose.model<Person>('Person', PersonSchema);
+export default mongoose.model<User>('User', UserSchema);

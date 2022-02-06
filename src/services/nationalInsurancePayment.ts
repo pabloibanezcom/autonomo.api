@@ -1,89 +1,87 @@
 import {
+  GrantTypes,
   NationalInsurancePayment,
   NationalInsurancePaymentFilter,
-  Person,
   transformSearchFilterToNationalInsuranceQuery
 } from '@autonomo/common';
-import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
+import { NotFoundError } from '../httpError/httpErrors';
 import NationalInsurancePaymentDB from '../models/nationalInsurancePayment';
-import { getUserFromAuthorizationHeader, getValidatedUser } from '../util/user';
+import { validateUser } from '../util/user';
+
+export const searchNationalInsurancePayments = async (
+  businessId: string,
+  searchFilter: NationalInsurancePaymentFilter
+): Promise<NationalInsurancePayment[]> => {
+  return await NationalInsurancePaymentDB.find({
+    ...transformSearchFilterToNationalInsuranceQuery(searchFilter),
+    business: businessId
+  });
+};
 
 export const getNationalInsurancePayments = async (
   authorizationHeader: string,
-  userId: string,
-  searchFilter: NationalInsurancePaymentFilter,
-  user: Person = null
+  businessId: string,
+  searchFilter: NationalInsurancePaymentFilter
 ): Promise<NationalInsurancePayment[]> => {
-  const requestUser = user || (await getValidatedUser(authorizationHeader, [userId]));
-  return await NationalInsurancePaymentDB.find({
-    ...transformSearchFilterToNationalInsuranceQuery(searchFilter),
-    person: requestUser._id
-  });
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  return await searchNationalInsurancePayments(businessAndUser.business._id.toString(), searchFilter);
 };
 
 export const getNationalInsurancePayment = async (
   authorizationHeader: string,
-  taxPaymentId: string
+  businessId: string,
+  paymentId: string
 ): Promise<NationalInsurancePayment> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  const existingNationalInsurancePayment = await NationalInsurancePaymentDB.findById(taxPaymentId);
-  if (!existingNationalInsurancePayment) {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  const existingPayment = await NationalInsurancePaymentDB.findOne({
+    business: businessAndUser.business._id,
+    _id: paymentId
+  });
+  if (!existingPayment) {
     throw new NotFoundError();
   }
-  if (!user._id.equals(existingNationalInsurancePayment.person)) {
-    throw new UnauthorizedError();
-  }
-
-  return existingNationalInsurancePayment;
+  return existingPayment;
 };
 
 export const addNationalInsurancePayment = async (
   authorizationHeader: string,
-  taxPayment: NationalInsurancePayment
+  businessId: string,
+  payment: NationalInsurancePayment
 ): Promise<NationalInsurancePayment> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  if (!user._id.equals(taxPayment.person)) {
-    throw new UnauthorizedError();
-  }
-  return await NationalInsurancePaymentDB.create(taxPayment);
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  return await NationalInsurancePaymentDB.create({ ...payment, business: businessAndUser.business._id });
 };
 
 export const updateNationalInsurancePayment = async (
   authorizationHeader: string,
-  taxPaymentId: string,
-  taxPayment: NationalInsurancePayment
+  businessId: string,
+  paymentId: string,
+  payment: NationalInsurancePayment
 ): Promise<NationalInsurancePayment> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  if (!user._id.equals(taxPayment.person)) {
-    throw new UnauthorizedError();
-  }
-
-  const existingNationalInsurancePayment = await NationalInsurancePaymentDB.findById(taxPaymentId);
-  if (!existingNationalInsurancePayment) {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingPayment = await NationalInsurancePaymentDB.findOneAndUpdate(
+    { business: businessAndUser.business._id, _id: paymentId },
+    payment,
+    { new: true, runValidators: true }
+  );
+  if (!existingPayment) {
     throw new NotFoundError();
   }
-  if (!user._id.equals(existingNationalInsurancePayment.person)) {
-    throw new UnauthorizedError();
-  }
-
-  return await NationalInsurancePaymentDB.findByIdAndUpdate(taxPaymentId, taxPayment, {
-    new: true,
-    runValidators: true
-  });
+  return existingPayment;
 };
 
 export const deleteNationalInsurancePayment = async (
   authorizationHeader: string,
-  taxPaymentId: string
+  businessId: string,
+  paymentId: string
 ): Promise<NationalInsurancePayment> => {
-  const user = await getUserFromAuthorizationHeader(authorizationHeader);
-  const existingNationalInsurancePayment = await NationalInsurancePaymentDB.findById(taxPaymentId);
-  if (!existingNationalInsurancePayment) {
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingPayment = await NationalInsurancePaymentDB.findOneAndDelete({
+    business: businessAndUser.business._id,
+    _id: paymentId
+  });
+  if (!existingPayment) {
     throw new NotFoundError();
   }
-  if (!user._id.equals(existingNationalInsurancePayment.person)) {
-    throw new UnauthorizedError();
-  }
-
-  return await NationalInsurancePaymentDB.findByIdAndDelete(taxPaymentId);
+  return existingPayment;
 };

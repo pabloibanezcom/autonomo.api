@@ -2,7 +2,7 @@
   {
     "number": "I107121AA015998",
     "file": "invoices/gasolina_01_06_2021.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-06-01T00:00:00.000Z",
     "paymentDate": "2021-06-01T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -29,7 +29,7 @@
   {
     "number": "I107121AB014998",
     "file": "invoices/gasolina_11_06_2021.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-06-11T00:00:00.000Z",
     "paymentDate": "2021-06-11T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -56,7 +56,7 @@
   {
     "number": "I107121AB015286",
     "file": "invoices/gasolina_24_06_2021.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-06-24T00:00:00.000Z",
     "paymentDate": "2021-06-24T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -83,7 +83,7 @@
   {
     "number": "438/21",
     "file": "invoices/AE_Navarro_438_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-06-21T00:00:00.000Z",
     "paymentDate": "2021-06-21T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -105,7 +105,7 @@
   {
     "number": "033848/D/21/001194",
     "file": "invoices/gasolina_2021_07_01.pdf",
-    "issuer": "Energia Santa Ana SL",
+    "issuerOrClient": "Energia Santa Ana SL",
     "issuedDate": "2021-07-01T00:00:00.000Z",
     "paymentDate": "2021-07-01T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -132,7 +132,7 @@
   {
     "number": "A106121A1011385",
     "file": "invoices/gasolina_2021_07_14.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-07-14T00:00:00.000Z",
     "paymentDate": "2021-07-14T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -159,7 +159,7 @@
   {
     "number": "A107121A1006850",
     "file": "invoices/gasolina_2021_07_23.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-07-23T00:00:00.000Z",
     "paymentDate": "2021-07-23T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -186,7 +186,7 @@
   {
     "number": "I095-3161",
     "file": "invoices/gasolina_2021_07_25.pdf",
-    "issuer": "Inurritza SL",
+    "issuerOrClient": "Inurritza SL",
     "issuedDate": "2021-07-25T00:00:00.000Z",
     "paymentDate": "2021-07-25T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -213,7 +213,7 @@
   {
     "number": "0000019008",
     "file": "invoices/gasolina_2021_07_26.pdf",
-    "issuer": "EESSA-ES La Serna",
+    "issuerOrClient": "EESSA-ES La Serna",
     "issuedDate": "2021-07-26T00:00:00.000Z",
     "paymentDate": "2021-07-26T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -240,7 +240,7 @@
   {
     "number": "I-5113",
     "file": "invoices/gasolina_2021_08_06.pdf",
-    "issuer": "Maypa SL",
+    "issuerOrClient": "Maypa SL",
     "issuedDate": "2021-08-06T00:00:00.000Z",
     "paymentDate": "2021-08-06T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -267,7 +267,7 @@
   {
     "number": "CC-12549",
     "file": "invoices/gasolina_2021_08_10.pdf",
-    "issuer": "Laboil SL",
+    "issuerOrClient": "Laboil SL",
     "issuedDate": "2021-08-10T00:00:00.000Z",
     "paymentDate": "2021-08-10T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -294,7 +294,7 @@
   {
     "number": "A107121A1007319",
     "file": "invoices/gasolina_2021_08_17.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-08-17T00:00:00.000Z",
     "paymentDate": "2021-08-17T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -321,7 +321,7 @@
   {
     "number": "033056/D/21/001266",
     "file": "invoices/gasolina_2021_08_22.pdf",
-    "issuer": "Villa Huerta SL",
+    "issuerOrClient": "Villa Huerta SL",
     "issuedDate": "2021-08-22T00:00:00.000Z",
     "paymentDate": "2021-08-22T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -348,7 +348,7 @@
   {
     "number": "I2-349",
     "file": "invoices/gasolina_2021_08_29.pdf",
-    "issuer": "ES Cresmar SL",
+    "issuerOrClient": "ES Cresmar SL",
     "issuedDate": "2021-08-29T00:00:00.000Z",
     "paymentDate": "2021-08-29T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -375,7 +375,7 @@
   {
     "number": "096320/D/21/001349",
     "file": "invoices/gasolina_2021_09_12.pdf",
-    "issuer": "Martinez Sepulveda Nerea",
+    "issuerOrClient": "Martinez Sepulveda Nerea",
     "issuedDate": "2021-09-12T00:00:00.000Z",
     "paymentDate": "2021-09-12T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -402,7 +402,7 @@
   {
     "number": "A107121A1008205",
     "file": "invoices/gasolina_2021_09_30.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-09-30T00:00:00.000Z",
     "paymentDate": "2021-09-30T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -429,7 +429,7 @@
   {
     "number": "524/21",
     "file": "invoices/AE_Navarro_524_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-07-16T00:00:00.000Z",
     "paymentDate": "2021-07-16T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -451,7 +451,7 @@
   {
     "number": "592/21",
     "file": "invoices/AE_Navarro_592_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-08-13T00:00:00.000Z",
     "paymentDate": "2021-08-13T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -473,7 +473,7 @@
   {
     "number": "662/21",
     "file": "invoices/AE_Navarro_662_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-09-16T00:00:00.000Z",
     "paymentDate": "2021-09-16T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -495,7 +495,7 @@
   {
     "number": "#442995",
     "file": "invoices/Dante Labs _ Orders _ _442995 _ Shopify Plus.pdf",
-    "issuer": "Dante Labs",
+    "issuerOrClient": "Dante Labs",
     "issuedDate": "2021-08-30T00:00:00.000Z",
     "paymentDate": "2021-08-30T00:00:00.000Z",
     "categories": ["Viajes"],
@@ -532,7 +532,7 @@
   {
     "number": "DD/2021/FS/234481",
     "file": "invoices/democratest_2021_08_30.pdf",
-    "issuer": "Dante Labs",
+    "issuerOrClient": "Dante Labs",
     "issuedDate": "2021-08-30T00:00:00.000Z",
     "paymentDate": "2021-08-30T00:00:00.000Z",
     "categories": ["Viajes"],
@@ -554,7 +554,7 @@
   {
     "number": "KQDLCJVB",
     "file": "invoices/Ibis_Canning_Town_06_09_2021.pdf",
-    "issuer": "Ibis London Canning Town",
+    "issuerOrClient": "Ibis London Canning Town",
     "issuedDate": "2021-09-02T00:00:00.000Z",
     "paymentDate": "2021-09-02T00:00:00.000Z",
     "categories": ["Viajes"],
@@ -591,7 +591,7 @@
   {
     "number": "KQDLCJVB",
     "file": "invoices/ryanair_08_30.pdf",
-    "issuer": "Ryanair",
+    "issuerOrClient": "Ryanair",
     "issuedDate": "2021-08-30T00:00:00.000Z",
     "paymentDate": "2021-08-30T00:00:00.000Z",
     "categories": ["Viajes"],
@@ -613,7 +613,7 @@
   {
     "number": "65700383",
     "file": "invoices/direct_seguros_2021_07_21.pdf",
-    "issuer": "Direct Seguros",
+    "issuerOrClient": "Direct Seguros",
     "issuedDate": "2021-07-21T00:00:00.000Z",
     "paymentDate": "2021-07-21T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -640,7 +640,7 @@
   {
     "number": "T2121509",
     "file": "invoices/safauto_08_05.pdf",
-    "issuer": "Safautomoviles SA",
+    "issuerOrClient": "Safautomoviles SA",
     "issuedDate": "2021-07-17T00:00:00.000Z",
     "paymentDate": "2021-07-17T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -667,7 +667,7 @@
   {
     "number": "738/21",
     "file": "invoices/AE_Navarro_738_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-10-21T00:00:00.000Z",
     "paymentDate": "2021-10-21T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -689,7 +689,7 @@
   {
     "number": "810/21",
     "file": "invoices/AE_Navarro_810_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-11-17T00:00:00.000Z",
     "paymentDate": "2021-11-17T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -711,7 +711,7 @@
   {
     "number": "890/21",
     "file": "invoices/AE_Navarro_890_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-12-20T00:00:00.000Z",
     "paymentDate": "2021-12-20T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -733,7 +733,7 @@
   {
     "number": "890/21-2",
     "file": "invoices/AE_Navarro_890_21.pdf",
-    "issuer": "Mediser Consultores SLU",
+    "issuerOrClient": "Mediser Consultores SLU",
     "issuedDate": "2021-12-20T00:00:00.000Z",
     "paymentDate": "2021-12-20T00:00:00.000Z",
     "categories": ["Consultoria"],
@@ -755,7 +755,7 @@
   {
     "number": "033531/D/21/003854",
     "file": "invoices/gasolina_2021_10_11.pdf",
-    "issuer": "ES Servimosa",
+    "issuerOrClient": "ES Servimosa",
     "issuedDate": "2021-10-11T00:00:00.000Z",
     "paymentDate": "2021-10-11T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -782,7 +782,7 @@
   {
     "number": "033049/D/21/001328",
     "file": "invoices/gasolina_2021_10_15.pdf",
-    "issuer": "ES Salas Gestion de carbura",
+    "issuerOrClient": "ES Salas Gestion de carbura",
     "issuedDate": "2021-10-15T00:00:00.000Z",
     "paymentDate": "2021-10-15T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -809,7 +809,7 @@
   {
     "number": "015950021/00003709",
     "file": "invoices/gasolina_2021_10_17.pdf",
-    "issuer": "CIA Espanola DIST Petroleos",
+    "issuerOrClient": "CIA Espanola DIST Petroleos",
     "issuedDate": "2021-10-17T00:00:00.000Z",
     "paymentDate": "2021-10-17T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -836,7 +836,7 @@
   {
     "number": "A107121A20006358",
     "file": "invoices/gasolina_2021_10_22.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-10-22T00:00:00.000Z",
     "paymentDate": "2021-10-22T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -863,7 +863,7 @@
   {
     "number": "I6-5388",
     "file": "invoices/gasolina_2021_10_24.pdf",
-    "issuer": "Villarce SL",
+    "issuerOrClient": "Villarce SL",
     "issuedDate": "2021-10-24T00:00:00.000Z",
     "paymentDate": "2021-10-24T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -890,7 +890,7 @@
   {
     "number": "A107121A1008948",
     "file": "invoices/gasolina_2021_11_05.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-11-05T00:00:00.000Z",
     "paymentDate": "2021-11-05T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -917,7 +917,7 @@
   {
     "number": "000650021/00005772",
     "file": "invoices/gasolina_2021_11_13.pdf",
-    "issuer": "CIA Espanola DIST Petroleos",
+    "issuerOrClient": "CIA Espanola DIST Petroleos",
     "issuedDate": "2021-11-13T00:00:00.000Z",
     "paymentDate": "2021-11-13T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -944,7 +944,7 @@
   {
     "number": "033386/G/21/003630",
     "file": "invoices/gasolina_2021_11_15.pdf",
-    "issuer": "ES Celtima SL",
+    "issuerOrClient": "ES Celtima SL",
     "issuedDate": "2021-11-15T00:00:00.000Z",
     "paymentDate": "2021-11-15T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -971,7 +971,7 @@
   {
     "number": "A107121A2006750",
     "file": "invoices/gasolina_2021_12_14.pdf",
-    "issuer": "Aten Oil Setor Operaciones SL",
+    "issuerOrClient": "Aten Oil Setor Operaciones SL",
     "issuedDate": "2021-12-14T00:00:00.000Z",
     "paymentDate": "2021-12-14T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -998,7 +998,7 @@
   {
     "number": "034391/A/21/000548",
     "file": "invoices/gasolina_2021_12_23.pdf",
-    "issuer": "Campsa",
+    "issuerOrClient": "Campsa",
     "issuedDate": "2021-12-23T00:00:00.000Z",
     "paymentDate": "2021-12-23T00:00:00.000Z",
     "categories": ["Automovil"],
@@ -1025,7 +1025,7 @@
   {
     "number": "AD81946463",
     "file": "invoices/apple_2021_11_03_1.pdf",
-    "issuer": "Apple",
+    "issuerOrClient": "Apple",
     "issuedDate": "2021-11-03T00:00:00.000Z",
     "paymentDate": "2021-11-03T00:00:00.000Z",
     "categories": ["Equipamiento"],
@@ -1047,7 +1047,7 @@
   {
     "number": "AD81946468",
     "file": "invoices/apple_2021_11_03_2.pdf",
-    "issuer": "Apple",
+    "issuerOrClient": "Apple",
     "issuedDate": "2021-11-03T00:00:00.000Z",
     "paymentDate": "2021-11-03T00:00:00.000Z",
     "categories": ["Equipamiento"],
@@ -1069,7 +1069,7 @@
   {
     "number": "DS-ASE-INV-ES-2021-39938416",
     "file": "invoices/factura_cargador_portatil_amazon.pdf",
-    "issuer": "Amazon",
+    "issuerOrClient": "Amazon",
     "issuedDate": "2021-11-18T00:00:00.000Z",
     "paymentDate": "2021-11-18T00:00:00.000Z",
     "categories": ["Equipamiento"],

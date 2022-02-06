@@ -1,59 +1,41 @@
-import { roundTwoDigits, YearReport } from '@autonomo/common';
+import { GrantTypes, roundTwoDigits, YearReport } from '@autonomo/common';
 import { calculateProgressiveTax, calculateVATBalance } from '../util/tax';
-import { getInvoices } from './invoice';
-import { getNationalInsurancePayments } from './nationalInsurancePayment';
-import { getTaxPayments } from './taxPayment';
+import { validateUser } from '../util/user';
+import { searchInvoices } from './invoice';
+import { searchNationalInsurancePayments } from './nationalInsurancePayment';
+import { searchTaxPayments } from './taxPayment';
 import { getTaxYear } from './taxYear';
-import { getUserById } from './user';
 
 export const getYearReport = async (
   authorizationHeader: string,
-  userId: string,
+  businessId: string,
   taxYearId: string
 ): Promise<YearReport> => {
-  const user = await getUserById(userId);
-  const taxYear = await getTaxYear(taxYearId);
-  const incomes = await getInvoices(
-    authorizationHeader,
-    userId,
-    {
-      type: 'income',
-      startIssuedDate: taxYear.startDate,
-      endIssuedDate: taxYear.endDate
-    },
-    '',
-    user
-  );
-  const expenses = await getInvoices(
-    authorizationHeader,
-    userId,
-    {
-      type: 'expense',
-      startIssuedDate: taxYear.startDate,
-      endIssuedDate: taxYear.endDate
-    },
-    '',
-    user
-  );
-  const nationalInsurancePayments = await getNationalInsurancePayments(
-    authorizationHeader,
-    userId,
-    {
-      startDate: taxYear.startDate,
-      endDate: taxYear.endDate
-    },
-    user
-  );
+  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
 
-  const taxPayments = await getTaxPayments(
-    authorizationHeader,
-    userId,
-    {
-      startDate: taxYear.startDate,
-      endDate: taxYear.endDate
-    },
-    user
-  );
+  const taxYear = await getTaxYear(taxYearId);
+
+  const incomes = await searchInvoices(businessAndUser.business._id.toString(), {
+    type: 'income',
+    startIssuedDate: taxYear.startDate,
+    endIssuedDate: taxYear.endDate
+  });
+
+  const expenses = await searchInvoices(businessAndUser.business._id.toString(), {
+    type: 'expense',
+    startIssuedDate: taxYear.startDate,
+    endIssuedDate: taxYear.endDate
+  });
+
+  const nationalInsurancePayments = await searchNationalInsurancePayments(businessAndUser.business._id.toString(), {
+    startDate: taxYear.startDate,
+    endDate: taxYear.endDate
+  });
+
+  const taxPayments = await searchTaxPayments(businessAndUser.business._id.toString(), {
+    startDate: taxYear.startDate,
+    endDate: taxYear.endDate
+  });
 
   const incomesSum = roundTwoDigits(
     incomes.map(invoice => invoice.subtotal.amount).reduce((prev, next) => prev + next)
@@ -74,6 +56,7 @@ export const getYearReport = async (
   const incomeTax = roundTwoDigits(calculateProgressiveTax(taxYear.incomeTax, grossProfit));
 
   return {
+    business: businessAndUser.business._id,
     creationDate: new Date(),
     taxYear: taxYear._id,
     incomes: incomesSum,
