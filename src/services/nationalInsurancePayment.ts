@@ -1,14 +1,16 @@
 import {
+  buildPagination,
   GrantTypes,
   NationalInsurancePayment,
   NationalInsurancePaymentFilter,
+  NationalInsurancePaymentSearchResult,
   transformSearchFilterToNationalInsuranceQuery
 } from '@autonomo/common';
 import { NotFoundError } from '../httpError/httpErrors';
 import NationalInsurancePaymentDB from '../models/nationalInsurancePayment';
 import { validateUser } from '../util/user';
 
-export const searchNationalInsurancePayments = async (
+export const getNationalInsurancePayments = async (
   businessId: string,
   searchFilter: NationalInsurancePaymentFilter
 ): Promise<NationalInsurancePayment[]> => {
@@ -18,13 +20,20 @@ export const searchNationalInsurancePayments = async (
   });
 };
 
-export const getNationalInsurancePayments = async (
+export const searchNationalInsurancePayments = async (
   authorizationHeader: string,
   businessId: string,
   searchFilter: NationalInsurancePaymentFilter
-): Promise<NationalInsurancePayment[]> => {
+): Promise<NationalInsurancePaymentSearchResult> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
-  return await searchNationalInsurancePayments(businessAndUser.business._id.toString(), searchFilter);
+  const totalItems = await NationalInsurancePaymentDB.count({
+    ...transformSearchFilterToNationalInsuranceQuery(searchFilter),
+    business: businessId
+  });
+  return {
+    pagination: buildPagination(searchFilter.pagination, totalItems),
+    items: await getNationalInsurancePayments(businessAndUser.business._id.toString(), searchFilter)
+  };
 };
 
 export const getNationalInsurancePayment = async (
