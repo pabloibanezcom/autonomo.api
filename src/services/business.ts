@@ -20,7 +20,7 @@ export const getBusinesses = async (
       authorisedPeople: { $elemMatch: { user: userId } }
     },
     null,
-    transformPaginationToQueryOptions(searchFilter.pagination)
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
   ).populate(populate);
 };
 
@@ -35,6 +35,7 @@ export const searchBusinesses = async (
   });
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
+    sorting: searchFilter.sorting,
     items: await getBusinesses(businessAndUser.user._id.toString(), searchFilter)
   };
 };

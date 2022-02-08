@@ -25,7 +25,7 @@ export const getInvoices = async (
       business: businessId
     },
     null,
-    transformPaginationToQueryOptions(searchFilter.pagination)
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
   ).populate(populate);
 };
 
@@ -42,6 +42,7 @@ export const searchInvoices = async (
   });
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
+    sorting: searchFilter.sorting,
     items: await getInvoices(businessAndUser.business._id.toString(), searchFilter, populate)
   };
 };

@@ -17,7 +17,7 @@ export const getTaxYears = async (searchFilter: TaxYearFilter, populate = ''): P
       ...transformSearchFilterToTaxYearQuery(searchFilter)
     },
     null,
-    transformPaginationToQueryOptions(searchFilter.pagination)
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
   ).populate(populate);
 };
 
@@ -27,6 +27,7 @@ export const searchTaxYears = async (searchFilter: TaxYearFilter): Promise<TaxYe
   });
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
+    sorting: searchFilter.sorting,
     items: await getTaxYears(searchFilter)
   };
 };
