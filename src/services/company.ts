@@ -21,7 +21,7 @@ export const getCompanies = async (
       business: businessId
     },
     null,
-    transformPaginationToQueryOptions(searchFilter.pagination)
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
   ).populate(populate);
 };
 
@@ -37,6 +37,7 @@ export const searchCompanies = async (
   });
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
+    sorting: searchFilter.sorting,
     items: await getCompanies(businessAndUser.business._id.toString(), searchFilter)
   };
 };

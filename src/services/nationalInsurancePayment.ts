@@ -4,6 +4,7 @@ import {
   NationalInsurancePayment,
   NationalInsurancePaymentFilter,
   NationalInsurancePaymentSearchResult,
+  transformPaginationToQueryOptions,
   transformSearchFilterToNationalInsuranceQuery
 } from '@autonomo/common';
 import { NotFoundError } from '../httpError/httpErrors';
@@ -14,10 +15,14 @@ export const getNationalInsurancePayments = async (
   businessId: string,
   searchFilter: NationalInsurancePaymentFilter
 ): Promise<NationalInsurancePayment[]> => {
-  return await NationalInsurancePaymentDB.find({
-    ...transformSearchFilterToNationalInsuranceQuery(searchFilter),
-    business: businessId
-  });
+  return await NationalInsurancePaymentDB.find(
+    {
+      ...transformSearchFilterToNationalInsuranceQuery(searchFilter),
+      business: businessId
+    },
+    null,
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
+  );
 };
 
 export const searchNationalInsurancePayments = async (
@@ -32,6 +37,7 @@ export const searchNationalInsurancePayments = async (
   });
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
+    sorting: searchFilter.sorting,
     items: await getNationalInsurancePayments(businessAndUser.business._id.toString(), searchFilter)
   };
 };

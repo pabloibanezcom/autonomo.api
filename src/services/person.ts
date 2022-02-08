@@ -18,7 +18,7 @@ export const getPeople = async (businessId: string, searchFilter: PersonFilter, 
       business: businessId
     },
     null,
-    transformPaginationToQueryOptions(searchFilter.pagination)
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
   ).populate(populate);
 };
 
@@ -34,6 +34,7 @@ export const searchPeople = async (
   });
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
+    sorting: searchFilter.sorting,
     items: await getPeople(businessAndUser.business._id.toString(), searchFilter)
   };
 };

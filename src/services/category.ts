@@ -22,7 +22,7 @@ export const getCategories = async (
       business: businessId
     },
     null,
-    transformPaginationToQueryOptions(searchFilter.pagination)
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
   ).populate(populate);
 };
 
@@ -38,6 +38,7 @@ export const searchCategories = async (
   });
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
+    sorting: searchFilter.sorting,
     items: await getCategories(businessAndUser.business._id.toString(), searchFilter)
   };
 };
