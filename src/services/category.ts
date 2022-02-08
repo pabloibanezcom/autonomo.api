@@ -1,11 +1,45 @@
-import { Category, GrantTypes } from '@autonomo/common';
+import {
+  buildPagination,
+  Category,
+  CategoryFilter,
+  CategorySearchResult,
+  GrantTypes,
+  transformPaginationToQueryOptions,
+  transformSearchFilterToCategoryQuery
+} from '@autonomo/common';
 import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
 import CategoryDB from '../models/category';
 import { validateUser } from '../util/user';
 
-export const getCategories = async (authorizationHeader: string, businessId: string): Promise<Category[]> => {
+export const getCategories = async (
+  businessId: string,
+  searchFilter: CategoryFilter,
+  populate = ''
+): Promise<Category[]> => {
+  return await CategoryDB.find(
+    {
+      ...transformSearchFilterToCategoryQuery(searchFilter),
+      business: businessId
+    },
+    null,
+    transformPaginationToQueryOptions(searchFilter.pagination)
+  ).populate(populate);
+};
+
+export const searchCategories = async (
+  authorizationHeader: string,
+  businessId: string,
+  searchFilter: CategoryFilter
+): Promise<CategorySearchResult> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
-  return await CategoryDB.find({ business: businessAndUser.business._id });
+  const totalItems = await CategoryDB.count({
+    ...transformSearchFilterToCategoryQuery(searchFilter),
+    business: businessId
+  });
+  return {
+    pagination: buildPagination(searchFilter.pagination, totalItems),
+    items: await getCategories(businessAndUser.business._id.toString(), searchFilter)
+  };
 };
 
 export const addCategory = async (

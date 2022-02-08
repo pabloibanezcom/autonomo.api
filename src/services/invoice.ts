@@ -1,29 +1,49 @@
-import { File, GrantTypes, Invoice, InvoiceFilter, transformSearchFilterToInvoiceQuery } from '@autonomo/common';
+import {
+  buildPagination,
+  File,
+  GrantTypes,
+  Invoice,
+  InvoiceFilter,
+  InvoiceSearchResult,
+  transformPaginationToQueryOptions,
+  transformSearchFilterToInvoiceQuery
+} from '@autonomo/common';
 import { UploadedFile } from 'express-fileupload';
 import { NotFoundError } from '../httpError/httpErrors';
 import InvoiceDB from '../models/invoice';
 import { deleteFile, getFileNameFromKey, uploadFile } from '../util/file';
 import { validateUser } from '../util/user';
 
-export const searchInvoices = async (
+export const getInvoices = async (
   businessId: string,
   searchFilter: InvoiceFilter,
   populate = ''
 ): Promise<Invoice[]> => {
-  return await InvoiceDB.find({
-    ...transformSearchFilterToInvoiceQuery(searchFilter),
-    business: businessId
-  }).populate(populate);
+  return await InvoiceDB.find(
+    {
+      ...transformSearchFilterToInvoiceQuery(searchFilter),
+      business: businessId
+    },
+    null,
+    transformPaginationToQueryOptions(searchFilter.pagination)
+  ).populate(populate);
 };
 
-export const getInvoices = async (
+export const searchInvoices = async (
   authorizationHeader: string,
   businessId: string,
   searchFilter: InvoiceFilter,
   populate = 'issuerOrClient categories'
-): Promise<Invoice[]> => {
+): Promise<InvoiceSearchResult> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
-  return await searchInvoices(businessAndUser.business._id.toString(), searchFilter, populate);
+  const totalItems = await InvoiceDB.count({
+    ...transformSearchFilterToInvoiceQuery(searchFilter),
+    business: businessId
+  });
+  return {
+    pagination: buildPagination(searchFilter.pagination, totalItems),
+    items: await getInvoices(businessAndUser.business._id.toString(), searchFilter, populate)
+  };
 };
 
 export const getInvoice = async (

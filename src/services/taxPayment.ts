@@ -1,22 +1,36 @@
-import { GrantTypes, TaxPayment, TaxPaymentFilter, transformSearchFilterToTaxPaymentQuery } from '@autonomo/common';
+import {
+  buildPagination,
+  GrantTypes,
+  TaxPayment,
+  TaxPaymentFilter,
+  TaxPaymentSearchResult,
+  transformSearchFilterToTaxPaymentQuery
+} from '@autonomo/common';
 import { NotFoundError } from '../httpError/httpErrors';
 import TaxPaymentDB from '../models/taxPayment';
 import { validateUser } from '../util/user';
 
-export const searchTaxPayments = async (businessId: string, searchFilter: TaxPaymentFilter): Promise<TaxPayment[]> => {
+export const getTaxPayments = async (businessId: string, searchFilter: TaxPaymentFilter): Promise<TaxPayment[]> => {
   return await TaxPaymentDB.find({
     ...transformSearchFilterToTaxPaymentQuery(searchFilter),
     business: businessId
   });
 };
 
-export const getTaxPayments = async (
+export const searchTaxPayments = async (
   authorizationHeader: string,
   businessId: string,
   searchFilter: TaxPaymentFilter
-): Promise<TaxPayment[]> => {
+): Promise<TaxPaymentSearchResult> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
-  return await searchTaxPayments(businessAndUser.business._id.toString(), searchFilter);
+  const totalItems = await TaxPaymentDB.count({
+    ...transformSearchFilterToTaxPaymentQuery(searchFilter),
+    business: businessId
+  });
+  return {
+    pagination: buildPagination(searchFilter.pagination, totalItems),
+    items: await getTaxPayments(businessAndUser.business._id.toString(), searchFilter)
+  };
 };
 
 export const getTaxPayment = async (

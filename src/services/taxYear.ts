@@ -1,10 +1,34 @@
-import { GrantTypes, TaxYear } from '@autonomo/common';
+import {
+  buildPagination,
+  GrantTypes,
+  TaxYear,
+  TaxYearFilter,
+  TaxYearSearchResult,
+  transformPaginationToQueryOptions,
+  transformSearchFilterToTaxYearQuery
+} from '@autonomo/common';
 import { NotFoundError } from '../httpError/httpErrors';
 import TaxYearDB from '../models/taxYear';
 import { validateUser } from '../util/user';
 
-export const getTaxYears = async (): Promise<TaxYear[]> => {
-  return await TaxYearDB.find({});
+export const getTaxYears = async (searchFilter: TaxYearFilter, populate = ''): Promise<TaxYear[]> => {
+  return await TaxYearDB.find(
+    {
+      ...transformSearchFilterToTaxYearQuery(searchFilter)
+    },
+    null,
+    transformPaginationToQueryOptions(searchFilter.pagination)
+  ).populate(populate);
+};
+
+export const searchTaxYears = async (searchFilter: TaxYearFilter): Promise<TaxYearSearchResult> => {
+  const totalItems = await TaxYearDB.count({
+    ...transformSearchFilterToTaxYearQuery(searchFilter)
+  });
+  return {
+    pagination: buildPagination(searchFilter.pagination, totalItems),
+    items: await getTaxYears(searchFilter)
+  };
 };
 
 export const getTaxYear = async (taxYearId: string): Promise<TaxYear> => {

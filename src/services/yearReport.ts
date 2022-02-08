@@ -1,9 +1,9 @@
 import { GrantTypes, roundTwoDigits, YearReport } from '@autonomo/common';
 import { calculateProgressiveTax, calculateVATBalance } from '../util/tax';
 import { validateUser } from '../util/user';
-import { searchInvoices } from './invoice';
-import { searchNationalInsurancePayments } from './nationalInsurancePayment';
-import { searchTaxPayments } from './taxPayment';
+import { getInvoices } from './invoice';
+import { getNationalInsurancePayments } from './nationalInsurancePayment';
+import { getTaxPayments } from './taxPayment';
 import { getTaxYear } from './taxYear';
 
 export const getYearReport = async (
@@ -15,24 +15,24 @@ export const getYearReport = async (
 
   const taxYear = await getTaxYear(taxYearId);
 
-  const incomes = await searchInvoices(businessAndUser.business._id.toString(), {
+  const incomes = await getInvoices(businessAndUser.business._id.toString(), {
     type: 'income',
     startIssuedDate: taxYear.startDate,
     endIssuedDate: taxYear.endDate
   });
 
-  const expenses = await searchInvoices(businessAndUser.business._id.toString(), {
+  const expenses = await getInvoices(businessAndUser.business._id.toString(), {
     type: 'expense',
     startIssuedDate: taxYear.startDate,
     endIssuedDate: taxYear.endDate
   });
 
-  const nationalInsurancePayments = await searchNationalInsurancePayments(businessAndUser.business._id.toString(), {
+  const nationalInsurancePayments = await getNationalInsurancePayments(businessAndUser.business._id.toString(), {
     startDate: taxYear.startDate,
     endDate: taxYear.endDate
   });
 
-  const taxPayments = await searchTaxPayments(businessAndUser.business._id.toString(), {
+  const taxPayments = await getTaxPayments(businessAndUser.business._id.toString(), {
     startDate: taxYear.startDate,
     endDate: taxYear.endDate
   });

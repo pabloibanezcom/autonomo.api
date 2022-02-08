@@ -1,10 +1,44 @@
-import { Company, GrantTypes } from '@autonomo/common';
+import {
+  buildPagination,
+  Company,
+  CompanyFilter,
+  CompanySearchResult,
+  GrantTypes,
+  transformPaginationToQueryOptions,
+  transformSearchFilterToCompanyQuery
+} from '@autonomo/common';
 import CompanyDB from '../models/company';
 import { validateUser } from '../util/user';
 
-export const getCompanies = async (authorizationHeader: string, businessId: string): Promise<Company[]> => {
+export const getCompanies = async (
+  businessId: string,
+  searchFilter: CompanyFilter,
+  populate = ''
+): Promise<Company[]> => {
+  return await CompanyDB.find(
+    {
+      ...transformSearchFilterToCompanyQuery(searchFilter),
+      business: businessId
+    },
+    null,
+    transformPaginationToQueryOptions(searchFilter.pagination)
+  ).populate(populate);
+};
+
+export const searchCompanies = async (
+  authorizationHeader: string,
+  businessId: string,
+  searchFilter: CompanyFilter
+): Promise<CompanySearchResult> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
-  return await CompanyDB.find({ business: businessAndUser.business._id }).populate('director');
+  const totalItems = await CompanyDB.count({
+    ...transformSearchFilterToCompanyQuery(searchFilter),
+    business: businessId
+  });
+  return {
+    pagination: buildPagination(searchFilter.pagination, totalItems),
+    items: await getCompanies(businessAndUser.business._id.toString(), searchFilter)
+  };
 };
 
 export const getCompany = async (
