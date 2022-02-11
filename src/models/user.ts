@@ -11,7 +11,8 @@ export const UserSchema: Schema = new Schema({
   nif: { type: String },
   gender: { type: String },
   picture: { type: String },
-  address: { type: Address }
+  address: { type: Address },
+  defaultBusiness: { type: Schema.Types.ObjectId, ref: 'Business' }
 });
 
 export default mongoose.model<User>('User', UserSchema);

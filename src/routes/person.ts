@@ -1,40 +1,38 @@
-import { Person, PersonSearchResult } from '@autonomo/common';
+import { HttpCodes, Person, PersonSearchResult, Routes } from '@autonomo/common';
 import * as express from 'express';
 import { Request, Response } from 'express';
-import routePaths from '../constants/routePaths';
 import { HttpError } from '../httpError/httpErrors';
 import transformHttpErrorCode from '../httpError/transformHttpErrorCode';
 import { addPerson, deletePerson, getPerson, searchPeople, updatePerson } from '../services/person';
-import httpCode from './httpCode';
 
 const registerPersonRoutes = (router: express.Router): void => {
-  router.post(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/${routePaths.SEARCH}`, (req: Request, res: Response) => {
+  router.post(Routes.SEARCH_PEOPLE, (req: Request, res: Response) => {
     searchPeople(req.headers.authorization, req.params.businessId, req.body)
-      .then((result: PersonSearchResult) => res.status(httpCode.GET).send(result))
+      .then((result: PersonSearchResult) => res.status(HttpCodes.GET).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
-  router.get(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
+  router.get(Routes.GET_PERSON, (req: Request, res: Response) => {
     getPerson(req.headers.authorization, req.params.businessId, req.params.id)
-      .then((result: Person) => res.status(httpCode.GET).send(result))
+      .then((result: Person) => res.status(HttpCodes.GET).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
-  router.post(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}`, (req: Request, res: Response) => {
+  router.post(Routes.ADD_PERSON, (req: Request, res: Response) => {
     addPerson(req.headers.authorization, req.params.businessId, req.body)
-      .then((result: Person) => res.status(httpCode.POST).send(result))
+      .then((result: Person) => res.status(HttpCodes.POST).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
-  router.put(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
+  router.put(Routes.UPDATE_PERSON, (req: Request, res: Response) => {
     updatePerson(req.headers.authorization, req.params.businessId, req.params.id, req.body)
-      .then((result: Person) => res.status(httpCode.PUT).send(result))
+      .then((result: Person) => res.status(HttpCodes.PUT).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
-  router.delete(`/${routePaths.BUSINESS_ID}/${routePaths.PERSON}/:id`, (req: Request, res: Response) => {
+  router.delete(Routes.DELETE_PERSON, (req: Request, res: Response) => {
     deletePerson(req.headers.authorization, req.params.businessId, req.params.id)
-      .then(() => res.status(httpCode.DELETE).send({}))
+      .then(() => res.status(HttpCodes.DELETE).send({}))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 };
