@@ -1,4 +1,4 @@
-import { BAD_REQUEST, NOT_FOUND, UNAUTHORIZED } from './errorMessages';
+import { BAD_REQUEST, NOT_FOUND, UNAUTHORIZED, USER_ALREADY_EXISTS } from './errorMessages';
 
 export class HttpError extends Error {
   code?: number;
@@ -25,5 +25,11 @@ export class UnauthorizedError extends HttpError {
 export class NotFoundError extends HttpError {
   constructor(message: string = NOT_FOUND) {
     super(404, 'Not found error', message);
+  }
+}
+
+export class UserAlreadyExistsError extends HttpError {
+  constructor(message: string = USER_ALREADY_EXISTS) {
+    super(409, 'User already exists error', message);
   }
 }
