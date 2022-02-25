@@ -1,5 +1,5 @@
 import {
-  buildPagination,
+  buildSearchFilter,
   File,
   GrantTypes,
   Invoice,
@@ -40,10 +40,10 @@ export const searchInvoices = async (
     ...transformSearchFilterToInvoiceQuery(searchFilter),
     business: businessId
   });
+  const verifiedSearchFilter = buildSearchFilter(searchFilter, totalItems, 'issuedDate');
   return {
-    pagination: buildPagination(searchFilter.pagination, totalItems),
-    sorting: searchFilter.sorting,
-    items: await getInvoices(businessAndUser.business._id.toString(), searchFilter, populate)
+    ...verifiedSearchFilter,
+    items: await getInvoices(businessAndUser.business._id.toString(), verifiedSearchFilter, populate)
   };
 };
 

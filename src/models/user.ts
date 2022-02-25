@@ -3,11 +3,11 @@ import mongoose, { Schema } from 'mongoose';
 import Address from './address';
 
 export const UserSchema: Schema = new Schema({
-  auth0UserId: { type: String },
   isAdmin: { type: Boolean },
   firstName: { type: String },
   lastName: { type: String },
   email: { type: String, required: true },
+  password: { type: String },
   nif: { type: String },
   gender: { type: String },
   picture: { type: String },
