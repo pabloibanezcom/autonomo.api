@@ -7,7 +7,8 @@ export const CompanySchema: Schema = new Schema({
   name: { type: String, required: true },
   cifVat: { type: String },
   address: { type: Address },
-  director: { type: Schema.Types.ObjectId, ref: 'Person' }
+  director: { type: Schema.Types.ObjectId, ref: 'Person' },
+  defaultCurrency: { type: String }
 });
 
 export default mongoose.model<Company>('Company', CompanySchema);

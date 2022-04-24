@@ -21,7 +21,7 @@ export const getCompanies = async (
       business: businessId
     },
     null,
-    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting)
+    transformPaginationToQueryOptions(searchFilter.pagination, searchFilter.sorting || { sortBy: 'name' })
   ).populate(populate);
 };
 

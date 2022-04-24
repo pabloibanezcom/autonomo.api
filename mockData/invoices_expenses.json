@@ -503,7 +503,7 @@
     "subtotal": {
       "amount": 55.2,
       "currency": "EUR",
-      "primaryCurrencyRate": 1.15
+      "baseCurrencyRate": 1.15
     },
     "subtotalBaseCurrency": {
       "amount": 48,
@@ -513,7 +513,7 @@
     "tax": {
       "amount": 0,
       "currency": "EUR",
-      "primaryCurrencyRate": 1.15
+      "baseCurrencyRate": 1.15
     },
     "taxBaseCurrency": {
       "amount": 0,
@@ -522,7 +522,7 @@
     "total": {
       "amount": 55.2,
       "currency": "EUR",
-      "primaryCurrencyRate": 1.15
+      "baseCurrencyRate": 1.15
     },
     "totalBaseCurrency": {
       "amount": 48,
@@ -562,7 +562,7 @@
     "subtotal": {
       "amount": 353.34,
       "currency": "EUR",
-      "primaryCurrencyRate": 1.17
+      "baseCurrencyRate": 1.17
     },
     "subtotalBaseCurrency": {
       "amount": 302.7,
@@ -572,7 +572,7 @@
     "tax": {
       "amount": 0,
       "currency": "EUR",
-      "primaryCurrencyRate": 1.17
+      "baseCurrencyRate": 1.17
     },
     "taxBaseCurrency": {
       "amount": 0,
@@ -581,7 +581,7 @@
     "total": {
       "amount": 353.34,
       "currency": "EUR",
-      "primaryCurrencyRate": 1.17
+      "baseCurrencyRate": 1.17
     },
     "totalBaseCurrency": {
       "amount": 302.7,
