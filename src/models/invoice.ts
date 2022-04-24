@@ -1,13 +1,17 @@
 import { Invoice } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
-import AmountCurrency from './amountCurrency';
+import CurrencyAmount from './CurrencyAmount';
 import File from './file';
 
-const DescriptionElement = {
+const ProductOrService = {
   descriptionLine1: { type: String, required: true },
   descriptionLine2: { type: String },
   quantity: { type: Number, required: true },
-  unitPrice: { type: AmountCurrency, required: true }
+  unitPrice: { type: CurrencyAmount, required: true },
+  subtotal: { type: CurrencyAmount, required: true },
+  taxPct: { type: Number, required: true },
+  tax: { type: CurrencyAmount, required: true },
+  total: { type: CurrencyAmount, required: true }
 };
 
 export const InvoiceSchema: Schema = new Schema({
@@ -17,18 +21,19 @@ export const InvoiceSchema: Schema = new Schema({
   issuerOrClient: { type: Schema.Types.ObjectId, ref: 'Company' },
   issuedDate: { type: Date, required: true },
   paymentDate: { type: Date },
-  description: [DescriptionElement],
+  productsOrServices: [ProductOrService],
   categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
-  subtotal: { type: AmountCurrency, required: true },
-  subtotalBaseCurrency: { type: AmountCurrency },
+  baseCurrency: { type: String, required: true },
+  subtotal: { type: CurrencyAmount, required: true },
+  subtotalBaseCurrency: { type: CurrencyAmount },
   taxPct: { type: Number, required: true },
-  tax: { type: AmountCurrency, required: true },
-  taxBaseCurrency: { type: AmountCurrency },
+  tax: { type: CurrencyAmount, required: true },
+  taxBaseCurrency: { type: CurrencyAmount },
   deductibleTaxPct: { type: Number },
-  deductibleTax: { type: AmountCurrency },
+  deductibleTax: { type: CurrencyAmount },
   isDeductible: { type: Boolean },
-  total: { type: AmountCurrency, required: true },
-  totalBaseCurrency: { type: AmountCurrency },
+  total: { type: CurrencyAmount, required: true },
+  totalBaseCurrency: { type: CurrencyAmount },
   file: { type: File }
 });
 

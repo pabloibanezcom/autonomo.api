@@ -9,7 +9,8 @@
       "postalCode": "NW4 4DU",
       "town": "Hendon",
       "country": "UK"
-    }
+    },
+    "defaultCurrency": "GBP"
   },
   {
     "name": "Mediser Consultores SLU",
@@ -21,6 +22,7 @@
       "postalCode": "12004",
       "town": "Castellón",
       "country": "España"
-    }
+    },
+    "defaultCurrency": "EUR"
   }
 ]

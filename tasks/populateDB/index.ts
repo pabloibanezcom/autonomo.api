@@ -45,6 +45,11 @@ const generateDB = async (): Promise<boolean> => {
     accountant = await UserDB.findOne({ email: 'accountant@gmail.com' });
   };
 
+  const setUserMainBusiness = async (): Promise<void> => {
+    user.defaultBusiness = business._id;
+    await UserDB.findByIdAndUpdate(user._id, { ...user, defaultBusiness: business._id });
+  };
+
   const getMainPerson = async (): Promise<void> => {
     mainPerson = await PersonDB.findOne({ email: 'pabloiveron@gmail.com' });
   };
@@ -138,6 +143,7 @@ const generateDB = async (): Promise<boolean> => {
           ...invoice,
           business: business._id,
           type: type,
+          baseCurrency: invoice.totalBaseCurrency?.currency || invoice.total.currency,
           issuerOrClient: await getCompanyOrCreate(invoice.issuerOrClient),
           categories: invoice.categories.map(catName => categories.find(cat => cat.name === catName)._id),
           file: {
@@ -178,6 +184,7 @@ const generateDB = async (): Promise<boolean> => {
   await generatePeople();
   await getMainPerson();
   await generateBusiness();
+  await setUserMainBusiness();
   await generateTaxYears();
   await generateCompanies();
   await generateCategories();
