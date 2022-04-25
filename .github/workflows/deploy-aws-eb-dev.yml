@@ -36,6 +36,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: autonomo.api
           environment_name: autonomo
-          version_label: autonomo-api-dev-${{ github.sha }}-$((1 + RANDOM % 10))
-          region: eu-west-1
+          version_label: autonomo-api-dev-${{ github.sha }}
+          region: eu-west-2
           deployment_package: deploy.zip
