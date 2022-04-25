@@ -37,5 +37,5 @@ jobs:
           application_name: autonomo.api
           environment_name: autonomo
           version_label: autonomo-api-dev-${{ github.sha }}-$((1 + RANDOM % 10))
-          region: eu-west-1
+          region: eu-west-2
           deployment_package: deploy.zip
