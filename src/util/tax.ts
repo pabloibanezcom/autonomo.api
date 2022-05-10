@@ -1,4 +1,4 @@
-import { Invoice, roundTwoDigits, TaxDefinition } from '@autonomo/common';
+import { Expense, Income, roundTwoDigits, TaxDefinition } from '@autonomo/common';
 
 export const calculateProgressiveTax = (taxDefinition: TaxDefinition, grossProfit: number): number => {
   let result = 0;
@@ -11,11 +11,15 @@ export const calculateProgressiveTax = (taxDefinition: TaxDefinition, grossProfi
   return result;
 };
 
-export const calculateVATBalance = (incomes: Invoice[], expenses: Invoice[]): number => {
-  const calculateVATSum = (invoices: Invoice[]): number => {
-    return invoices
-      .map(invoice => invoice.deductibleTax?.amount || invoice.tax.amount)
+export const calculateVATBalance = (incomes: Income[], expenses: Expense[]): number => {
+  const calculateIncomeVATSum = (): number => {
+    return incomes.map(income => income.tax.amount).reduce((prev, next) => prev + next);
+  };
+
+  const calculateExpenseVATSum = (): number => {
+    return expenses
+      .map(expense => expense.deductibleTax?.amount || expense.tax.amount)
       .reduce((prev, next) => prev + next);
   };
-  return roundTwoDigits(calculateVATSum(incomes) - calculateVATSum(expenses));
+  return roundTwoDigits(calculateIncomeVATSum() - calculateExpenseVATSum());
 };

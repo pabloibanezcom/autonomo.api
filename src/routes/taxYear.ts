@@ -3,7 +3,14 @@ import * as express from 'express';
 import { Request, Response } from 'express';
 import { HttpError } from '../httpError/httpErrors';
 import transformHttpErrorCode from '../httpError/transformHttpErrorCode';
-import { addTaxYear, deleteTaxYear, getTaxYear, searchTaxYears, updateTaxYear } from '../services/taxYear';
+import {
+  addTaxYear,
+  deleteTaxYear,
+  getBusinessTaxYear,
+  getTaxYear,
+  searchTaxYears,
+  updateTaxYear
+} from '../services/taxYear';
 
 const registerTaxYearRoutes = (router: express.Router): void => {
   router.post(Routes.SEARCH_TAX_YEARS, (req: Request, res: Response) => {
@@ -14,6 +21,12 @@ const registerTaxYearRoutes = (router: express.Router): void => {
 
   router.get(Routes.GET_TAX_YEAR, (req: Request, res: Response) => {
     getTaxYear(req.params.id)
+      .then((result: TaxYear) => res.status(HttpCodes.GET).send(result))
+      .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
+  });
+
+  router.get(Routes.GET_BUSINESS_TAX_YEAR, (req: Request, res: Response) => {
+    getBusinessTaxYear(req.params.businessId)
       .then((result: TaxYear) => res.status(HttpCodes.GET).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });

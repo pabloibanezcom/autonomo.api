@@ -2,6 +2,7 @@
   {
     "name": "Pablo Ibanez (Autonomo)",
     "type": "sole-trader",
+    "country": "ES",
     "defaultCurrency": "EUR",
     "exchangeRates": [
       {
@@ -19,6 +20,7 @@
   {
     "name": "Another business",
     "type": "sole-trader",
+    "country": "GB",
     "defaultCurrency": "GBP"
   }
 ]

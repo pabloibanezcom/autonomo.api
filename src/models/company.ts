@@ -5,6 +5,7 @@ import Address from './address';
 export const CompanySchema: Schema = new Schema({
   business: { type: Schema.Types.ObjectId, ref: 'Business', required: true },
   name: { type: String, required: true },
+  country: { type: String },
   cifVat: { type: String },
   address: { type: Address },
   director: { type: Schema.Types.ObjectId, ref: 'Person' },

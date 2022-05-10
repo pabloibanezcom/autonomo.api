@@ -1,6 +1,6 @@
 import { NationalInsurancePayment } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
-import CurrencyAmount from './CurrencyAmount';
+import CurrencyAmount from './currencyAmount';
 
 export const NationalInsurancePaymentSchema: Schema = new Schema({
   business: { type: Schema.Types.ObjectId, ref: 'Business', required: true },

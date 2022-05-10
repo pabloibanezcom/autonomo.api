@@ -1,7 +1,8 @@
 import { GrantTypes, roundTwoDigits, YearReport } from '@autonomo/common';
 import { calculateProgressiveTax, calculateVATBalance } from '../util/tax';
 import { validateUser } from '../util/user';
-import { getInvoices } from './invoice';
+import { getExpenses } from './expense';
+import { getIncomes } from './income';
 import { getNationalInsurancePayments } from './nationalInsurancePayment';
 import { getTaxPayments } from './taxPayment';
 import { getTaxYear } from './taxYear';
@@ -15,14 +16,12 @@ export const getYearReport = async (
 
   const taxYear = await getTaxYear(taxYearId);
 
-  const incomes = await getInvoices(businessAndUser.business._id.toString(), {
-    type: 'income',
+  const incomes = await getIncomes(businessAndUser.business._id.toString(), {
     startIssuedDate: taxYear.startDate,
     endIssuedDate: taxYear.endDate
   });
 
-  const expenses = await getInvoices(businessAndUser.business._id.toString(), {
-    type: 'expense',
+  const expenses = await getExpenses(businessAndUser.business._id.toString(), {
     startIssuedDate: taxYear.startDate,
     endIssuedDate: taxYear.endDate
   });

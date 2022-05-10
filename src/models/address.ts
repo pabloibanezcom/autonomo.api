@@ -1,3 +1,5 @@
+import { Schema } from 'mongoose';
+
 const Address = {
   line1: { type: String, required: true },
   line2: { type: String },
@@ -7,4 +9,4 @@ const Address = {
   country: { type: String, required: true }
 };
 
-export default Address;
+export default new Schema(Address, { _id: false });

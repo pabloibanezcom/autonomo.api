@@ -1,9 +1,9 @@
 [
   {
     "name": "España 2021",
-    "country": "es",
+    "country": "ES",
     "startDate": "2021-01-01T00:00:00.000+00:00",
-    "endDate": "2021-12-31T00:00:00.000+00:00",
+    "endDate": "2021-12-31T23:59:59.000+00:00",
     "incomeTax": {
       "name": "IRPF C.Madrid 2021",
       "taxBands": [
@@ -71,13 +71,14 @@
           "rate": 26
         }
       ]
-    }
+    },
+    "vatBands": [0, 4, 10, 21]
   },
   {
     "name": "España 2022",
-    "country": "es",
+    "country": "ES",
     "startDate": "2022-01-01T00:00:00.000+00:00",
-    "endDate": "2022-12-31T00:00:00.000+00:00",
+    "endDate": "2022-12-31T23:59:59.000+00:00",
     "incomeTax": {
       "name": "IRPF C.Madrid 2022",
       "taxBands": [
@@ -145,6 +146,7 @@
           "rate": 26
         }
       ]
-    }
+    },
+    "vatBands": [0, 4, 10, 21]
   }
 ]

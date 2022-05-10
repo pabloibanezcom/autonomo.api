@@ -1,6 +1,7 @@
 [
   {
     "name": "Byte Revolution LTD",
+    "country": "GB",
     "cifVat": "GB219432514",
     "director": "info@byterevolution.com",
     "address": {
@@ -14,6 +15,7 @@
   },
   {
     "name": "Mediser Consultores SLU",
+    "country": "ES",
     "cifVat": "B12821732",
     "director": "aenavarro@aenavarro.es",
     "address": {

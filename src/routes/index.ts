@@ -2,7 +2,7 @@ import * as express from 'express';
 import registerBusinessRoutes from './business';
 import registerCategoryRoutes from './category';
 import registerCompanyRoutes from './company';
-import registerInvoiceRoutes from './invoice';
+import registerInvoiceRoutes from './income';
 import registerNationalInsurancePaymentRoutes from './nationalInsurancePayment';
 import registerPersonRoutes from './person';
 import registerTaxPaymentRoutes from './taxPayment';
