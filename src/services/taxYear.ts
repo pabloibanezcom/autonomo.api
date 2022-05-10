@@ -8,6 +8,7 @@ import {
   transformSearchFilterToTaxYearQuery
 } from '@autonomo/common';
 import { NotFoundError } from '../httpError/httpErrors';
+import BusinessDB from '../models/business';
 import TaxYearDB from '../models/taxYear';
 import { validateUser } from '../util/user';
 
@@ -34,6 +35,20 @@ export const searchTaxYears = async (searchFilter: TaxYearFilter): Promise<TaxYe
 
 export const getTaxYear = async (taxYearId: string): Promise<TaxYear> => {
   const taxYear = await TaxYearDB.findById(taxYearId);
+  if (!taxYear) {
+    throw new NotFoundError();
+  }
+  return taxYear;
+};
+
+export const getBusinessTaxYear = async (businessId: string): Promise<TaxYear> => {
+  const today = new Date().toISOString().split('T')[0];
+  const business = await BusinessDB.findById(businessId);
+  const taxYear = await TaxYearDB.findOne({
+    country: business.country,
+    startDate: { $lte: today },
+    endDate: { $gte: today }
+  });
   if (!taxYear) {
     throw new NotFoundError();
   }

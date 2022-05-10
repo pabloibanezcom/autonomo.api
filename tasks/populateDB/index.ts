@@ -1,10 +1,10 @@
-import { Business, Category, Company, generateRandomColor, InvoiceType, Person, TaxYear, User } from '@autonomo/common';
+import { Business, Category, Company, generateRandomColor, Person, TaxYear, User } from '@autonomo/common';
 import dotenv from 'dotenv';
 import businesses from '../../mockData/businesses.json';
 import categories from '../../mockData/categories.json';
 import companies from '../../mockData/companies.json';
-import invoicesExpenses from '../../mockData/invoices_expenses.json';
-import invoicesIncomes from '../../mockData/invoices_incomes.json';
+import expenses from '../../mockData/expenses.json';
+import incomes from '../../mockData/incomes.json';
 import nationalInsurancePayments from '../../mockData/national_insurance_payments.json';
 import people from '../../mockData/people.json';
 import taxPayments from '../../mockData/tax_payments.json';
@@ -13,7 +13,8 @@ import connect from '../../src/connect';
 import BusinessDB from '../../src/models/business';
 import CategoryDB from '../../src/models/category';
 import CompanyDB from '../../src/models/company';
-import InvoiceDB from '../../src/models/invoice';
+import ExpenseDB from '../../src/models/expense';
+import IncomeDB from '../../src/models/income';
 import NationalInsurancePaymentDB from '../../src/models/nationalInsurancePayment';
 import PersonDB from '../../src/models/person';
 import TaxPaymentDB from '../../src/models/taxPayment';
@@ -32,7 +33,8 @@ const generateDB = async (): Promise<boolean> => {
   const clearExistingData = async (): Promise<void> => {
     await TaxPaymentDB.deleteMany({});
     await NationalInsurancePaymentDB.deleteMany({});
-    await InvoiceDB.deleteMany({});
+    await ExpenseDB.deleteMany({});
+    await IncomeDB.deleteMany({});
     await CategoryDB.deleteMany({});
     await PersonDB.deleteMany({});
     await CompanyDB.deleteMany({});
@@ -133,29 +135,38 @@ const generateDB = async (): Promise<boolean> => {
     await generateInvoiceCategories();
   };
 
-  const generateInvoices = async (): Promise<void> => {
+  const generateIncomes = async (): Promise<void> => {
     const categories = await CategoryDB.find({ business: business._id, type: 'invoice' });
+    for (const income of incomes) {
+      await IncomeDB.create({
+        ...income,
+        business: business._id,
+        baseCurrency: income.totalBaseCurrency?.currency || income.total.currency,
+        client: await getCompanyOrCreate(income.client),
+        categories: income.categories.map(catName => categories.find(cat => cat.name === catName)._id),
+        file: {
+          key: income.file,
+          location: `${awsS3BucketLocation}${income.file}`
+        }
+      });
+    }
+  };
 
-    const generateInvoicesByType = async (type: InvoiceType): Promise<void> => {
-      const invoices = type === 'income' ? invoicesIncomes : invoicesExpenses;
-      for (const invoice of invoices) {
-        await InvoiceDB.create({
-          ...invoice,
-          business: business._id,
-          type: type,
-          baseCurrency: invoice.totalBaseCurrency?.currency || invoice.total.currency,
-          issuerOrClient: await getCompanyOrCreate(invoice.issuerOrClient),
-          categories: invoice.categories.map(catName => categories.find(cat => cat.name === catName)._id),
-          file: {
-            key: invoice.file,
-            location: `${awsS3BucketLocation}${invoice.file}`
-          }
-        });
-      }
-    };
-
-    await generateInvoicesByType('income');
-    await generateInvoicesByType('expense');
+  const generateExpenses = async (): Promise<void> => {
+    const categories = await CategoryDB.find({ business: business._id, type: 'invoice' });
+    for (const expense of expenses) {
+      await ExpenseDB.create({
+        ...expense,
+        business: business._id,
+        baseCurrency: expense.totalBaseCurrency?.currency || expense.total.currency,
+        issuer: await getCompanyOrCreate(expense.issuer),
+        categories: expense.categories.map(catName => categories.find(cat => cat.name === catName)._id),
+        file: {
+          key: expense.file,
+          location: `${awsS3BucketLocation}${expense.file}`
+        }
+      });
+    }
   };
 
   const generateNationalInsurancePayments = async (): Promise<void> => {
@@ -188,7 +199,9 @@ const generateDB = async (): Promise<boolean> => {
   await generateTaxYears();
   await generateCompanies();
   await generateCategories();
-  await generateInvoices();
+  // await generateIncomes();
+  console.log(!!generateIncomes);
+  await generateExpenses();
   await generateNationalInsurancePayments();
   await generateTaxPayments();
   console.log('DB Populate job completed');
