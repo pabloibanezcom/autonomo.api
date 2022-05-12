@@ -1,4 +1,11 @@
-import { ChangePasswordData, LoginData, LoginResponse, RegisterData, User } from '@autonomo/common';
+import {
+  ChangePasswordData,
+  generateRandomColor,
+  LoginData,
+  LoginResponse,
+  RegisterData,
+  User
+} from '@autonomo/common';
 import { BadRequestError, UnauthorizedError, UserAlreadyExistsError } from '../httpError/httpErrors';
 import UserDB from '../models/user';
 import {
@@ -31,7 +38,11 @@ export const registerUser = async (registerData: RegisterData): Promise<boolean>
   if (Array.isArray(passwordValidation) && passwordValidation.length) {
     throw new BadRequestError(passwordValidation.map(e => e.message).join(' | '));
   }
-  await UserDB.create({ ...registerData, password: await hashPassword(registerData.password) });
+  await UserDB.create({
+    ...registerData,
+    password: await hashPassword(registerData.password),
+    color: generateRandomColor()
+  });
   return true;
 };
 

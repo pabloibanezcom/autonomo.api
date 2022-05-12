@@ -1,5 +1,6 @@
 import {
   buildPagination,
+  generateRandomColor,
   GrantTypes,
   Person,
   PersonFilter,
@@ -53,7 +54,11 @@ export const getPerson = async (authorizationHeader: string, businessId: string,
 
 export const addPerson = async (authorizationHeader: string, businessId: string, person: Person): Promise<Person> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await PersonDB.create({ ...person, business: businessAndUser.business._id });
+  return await PersonDB.create({
+    ...person,
+    business: businessAndUser.business._id,
+    color: person.color || generateRandomColor()
+  });
 };
 
 export const updatePerson = async (

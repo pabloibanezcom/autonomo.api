@@ -9,6 +9,7 @@ export const PersonSchema: Schema = new Schema({
   nif: { type: String },
   gender: { type: String },
   picture: { type: String },
+  color: { type: String },
   address: { type: Address }
 });
 

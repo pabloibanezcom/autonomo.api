@@ -11,6 +11,7 @@ export const UserSchema: Schema = new Schema({
   nif: { type: String },
   gender: { type: String },
   picture: { type: String },
+  color: { type: String },
   address: { type: Address },
   defaultBusiness: { type: Schema.Types.ObjectId, ref: 'Business' }
 });

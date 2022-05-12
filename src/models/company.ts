@@ -9,7 +9,8 @@ export const CompanySchema: Schema = new Schema({
   cifVat: { type: String },
   address: { type: Address },
   director: { type: Schema.Types.ObjectId, ref: 'Person' },
-  defaultCurrency: { type: String }
+  defaultCurrency: { type: String },
+  color: { type: String }
 });
 
 export default mongoose.model<Company>('Company', CompanySchema);
