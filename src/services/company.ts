@@ -3,6 +3,7 @@ import {
   Company,
   CompanyFilter,
   CompanySearchResult,
+  generateRandomColor,
   GrantTypes,
   transformPaginationToQueryOptions,
   transformSearchFilterToCompanyQuery
@@ -57,7 +58,11 @@ export const addCompany = async (
   company: Company
 ): Promise<Company> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await CompanyDB.create({ ...company, business: businessAndUser.business._id });
+  return await CompanyDB.create({
+    ...company,
+    business: businessAndUser.business._id,
+    color: company.color || generateRandomColor()
+  });
 };
 
 export const updateCompany = async (

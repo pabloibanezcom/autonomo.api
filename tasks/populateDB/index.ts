@@ -61,7 +61,7 @@ const generateDB = async (): Promise<boolean> => {
     if (company) {
       return company;
     }
-    return await CompanyDB.create({ business: business._id, name: companyName });
+    return await CompanyDB.create({ business: business._id, name: companyName, color: generateRandomColor() });
   };
 
   const getPersonByEmail = async (personEmail: string): Promise<Person> => {
@@ -101,7 +101,7 @@ const generateDB = async (): Promise<boolean> => {
   const generatePeople = async (): Promise<void> => {
     await Promise.all(
       people.map(async (person): Promise<Person> => {
-        return await PersonDB.create(person);
+        return await PersonDB.create({ ...person, color: generateRandomColor() });
       })
     );
   };
@@ -112,7 +112,8 @@ const generateDB = async (): Promise<boolean> => {
         return await CompanyDB.create({
           ...company,
           business: business._id,
-          director: await getPersonByEmail(company.director)
+          director: await getPersonByEmail(company.director),
+          color: generateRandomColor()
         });
       })
     );
