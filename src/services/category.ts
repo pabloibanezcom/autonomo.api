@@ -3,6 +3,7 @@ import {
   Category,
   CategoryFilter,
   CategorySearchResult,
+  generateAltColor,
   GrantTypes,
   transformPaginationToQueryOptions,
   transformSearchFilterToCategoryQuery
@@ -49,7 +50,11 @@ export const addCategory = async (
   category: Category
 ): Promise<Category> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await CategoryDB.create({ ...category, business: businessAndUser.business._id });
+  return await CategoryDB.create({
+    ...category,
+    business: businessAndUser.business._id,
+    altColor: generateAltColor(category.color)
+  });
 };
 
 export const updateCategory = async (
@@ -67,7 +72,11 @@ export const updateCategory = async (
     throw new UnauthorizedError();
   }
 
-  return await CategoryDB.findByIdAndUpdate(categoryId, category, { new: true, runValidators: true });
+  return await CategoryDB.findByIdAndUpdate(
+    categoryId,
+    { ...category, altColor: generateAltColor(category.color) },
+    { new: true, runValidators: true }
+  );
 };
 
 export const deleteCategory = async (

@@ -1,4 +1,13 @@
-import { Business, Category, Company, generateRandomColor, Person, TaxYear, User } from '@autonomo/common';
+import {
+  Business,
+  Category,
+  Company,
+  generateAltColor,
+  generateRandomColor,
+  Person,
+  TaxYear,
+  User
+} from '@autonomo/common';
 import dotenv from 'dotenv';
 import businesses from '../../mockData/businesses.json';
 import categories from '../../mockData/categories.json';
@@ -123,10 +132,12 @@ const generateDB = async (): Promise<boolean> => {
     const generateInvoiceCategories = async (): Promise<void> => {
       await Promise.all(
         categories.invoice.map(async (category): Promise<Category> => {
+          const color = generateRandomColor();
           return await CategoryDB.create({
             business: business._id,
             name: category,
-            color: generateRandomColor(),
+            color,
+            altColor: generateAltColor(color),
             type: 'invoice'
           });
         })
