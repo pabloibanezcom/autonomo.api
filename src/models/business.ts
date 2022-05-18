@@ -11,7 +11,8 @@ export const BusinessSchema: Schema = new Schema({
   exchangeRates: { type: [ExchangeRate] },
   company: { type: Schema.Types.ObjectId, ref: 'Company' },
   soleTrader: { type: Schema.Types.ObjectId, ref: 'Person' },
-  authorisedPeople: { type: [AuthorisedPerson], required: true }
+  authorisedPeople: { type: [AuthorisedPerson], required: true },
+  nextInvoiceNumber: { type: String, required: true }
 });
 
 export default mongoose.model<Business>('Business', BusinessSchema);

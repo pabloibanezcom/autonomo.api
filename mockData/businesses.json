@@ -15,12 +15,14 @@
         "currencyTo": "EUR",
         "rate": 0.93
       }
-    ]
+    ],
+    "nextInvoiceNumber": "INV-001"
   },
   {
     "name": "Another business",
     "type": "sole-trader",
     "country": "GB",
-    "defaultCurrency": "GBP"
+    "defaultCurrency": "GBP",
+    "nextInvoiceNumber": "INV-001"
   }
 ]
