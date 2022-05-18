@@ -47,7 +47,7 @@ export const getIncome = async (
   authorizationHeader: string,
   businessId: string,
   incomeId: string,
-  populate = 'issuerOrClient categories'
+  populate = 'client categories'
 ): Promise<Income> => {
   const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const existingIncome = await IncomeDB.findOne({ business: businessAndUser.business._id, _id: incomeId }).populate(
