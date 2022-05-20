@@ -9,6 +9,13 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
+          envkey_MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          envkey_WELCOME_MESSAGE: ${{ secrets.WELCOME_MESSAGE }}
+
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
 
@@ -18,7 +25,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'autonomo-api-prod'
           heroku_email: 'me@pabloibanez.com'
-        env:
-          HD_JWT_TOKEN_SECRET: ${{ secrets.JWT_TOKEN_SECRET }}
-          HD_MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          HD_WELCOME_MESSAGE: ${{ secrets.WELCOME_MESSAGE }}
+          usedocker: true
