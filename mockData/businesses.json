@@ -1,6 +1,6 @@
 [
   {
-    "name": "Pablo Ibanez (Autonomo)",
+    "name": "Pablo Ibanez",
     "type": "sole-trader",
     "country": "ES",
     "defaultCurrency": "EUR",
@@ -20,7 +20,7 @@
   },
   {
     "name": "Another business",
-    "type": "sole-trader",
+    "type": "company",
     "country": "GB",
     "defaultCurrency": "GBP",
     "nextInvoiceNumber": "INV-001"

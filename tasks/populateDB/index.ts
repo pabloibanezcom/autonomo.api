@@ -83,15 +83,12 @@ const generateDB = async (): Promise<boolean> => {
         const newBusiness = await BusinessDB.create({
           ...b,
           soleTrader: mainPerson._id,
-          authorisedPeople:
-            b.name === 'Pablo Ibanez (Autonomo)'
-              ? [
-                  { user: user._id, grantType: 'Write' },
-                  { user: accountant._id, grantType: 'View' }
-                ]
-              : []
+          authorisedPeople: [
+            { user: user._id, grantType: 'Write' },
+            { user: accountant._id, grantType: 'View' }
+          ]
         });
-        if (newBusiness.name === 'Pablo Ibanez (Autonomo)') {
+        if (newBusiness.name === 'Pablo Ibanez') {
           business = newBusiness;
         }
         return newBusiness;

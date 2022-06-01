@@ -7,7 +7,9 @@ jobs:
     environment: production
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3s
+        with:
+          fetch-depth: 0
 
       - name: Create env file
         uses: SpicyPizza/create-envfile@v1
@@ -25,4 +27,3 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'autonomo-api-prod'
           heroku_email: 'me@pabloibanez.com'
-          usedocker: true
