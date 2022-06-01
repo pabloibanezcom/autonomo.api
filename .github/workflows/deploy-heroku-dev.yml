@@ -31,3 +31,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: 'autonomo-api-dev'
           heroku_email: 'me@pabloibanez.com'
+          usedocker: true
