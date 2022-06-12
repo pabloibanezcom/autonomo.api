@@ -19,9 +19,9 @@ export const TaxYearSchema: Schema = new Schema({
   country: { type: String, required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
-  incomeTax: { type: TaxDefinition, required: true, _id: false },
-  dividendsTax: { type: TaxDefinition, required: true, _id: false },
-  vatBands: { type: [Number], required: true }
+  incomeTax: { type: TaxDefinition, _id: false },
+  dividendsTax: { type: TaxDefinition, _id: false },
+  vatBands: { type: [Number] }
 });
 
 export default mongoose.model<TaxYear>(ModelName.TaxYear, TaxYearSchema);

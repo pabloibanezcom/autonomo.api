@@ -10,6 +10,7 @@ import {
 import { NotFoundError } from '../httpError/httpErrors';
 import BusinessDB from '../models/business';
 import TaxYearDB from '../models/taxYear';
+import { fullTaxYear } from '../mongoose/populate';
 import { validateUser } from '../util/user';
 
 export const getTaxYears = async (searchFilter: TaxYearFilter, populate = ''): Promise<TaxYear[]> => {
@@ -41,14 +42,14 @@ export const getTaxYear = async (taxYearId: string): Promise<TaxYear> => {
   return taxYear;
 };
 
-export const getBusinessTaxYear = async (businessId: string): Promise<TaxYear> => {
+export const getBusinessTaxYear = async (businessId: string, select: string = fullTaxYear): Promise<TaxYear> => {
   const today = new Date().toISOString().split('T')[0];
   const business = await BusinessDB.findById(businessId);
   const taxYear = await TaxYearDB.findOne({
     country: business.country,
     startDate: { $lte: today },
     endDate: { $gte: today }
-  });
+  }).select(select);
   if (!taxYear) {
     throw new NotFoundError();
   }

@@ -12,7 +12,9 @@ export const BusinessSchema: Schema = new Schema({
   exchangeRates: { type: [ExchangeRate] },
   company: { type: Schema.Types.ObjectId, ref: ModelName.Company },
   soleTrader: { type: Schema.Types.ObjectId, ref: ModelName.Person },
+  tradingStartDate: { type: Date },
   people: { type: [BusinessPerson], required: true },
+  currentTaxYear: { type: Schema.Types.ObjectId, ref: ModelName.TaxYear },
   nextInvoiceNumber: { type: String, required: true },
   natureOfBusiness: { type: String }
 });

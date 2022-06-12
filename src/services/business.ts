@@ -7,6 +7,7 @@ import {
   transformSearchFilterToBusinessQuery
 } from '@autonomo/common';
 import BusinessDB from '../models/business';
+
 import { basicCompany, basicPerson } from '../mongoose/populate';
 import { validateUser } from '../util/user';
 
