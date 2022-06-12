@@ -1,11 +1,12 @@
 import {
   Business,
   BusinessPerson,
+  BusinessRole,
   Category,
   Company,
   generateAltColor,
   generateRandomColor,
-  GrantTypes,
+  GrantType,
   Person,
   TaxYear,
   User
@@ -120,7 +121,7 @@ const generateDB = async (): Promise<boolean> => {
         const businessPeople = await transformBusinessPerson(b.people);
         const aux = {
           ...b,
-          soleTrader: b.type === 'sole-trader' ? mainPerson._id : undefined,
+          soleTrader: b.type === BusinessRole.SoleTrader ? mainPerson._id : undefined,
           people: businessPeople
         };
         const newBusiness = await BusinessDB.create(aux);
@@ -131,7 +132,7 @@ const generateDB = async (): Promise<boolean> => {
           if (mainPerson._id.toString().includes(bP.person.toString())) {
             mainUser.businesses.push({
               business: newBusiness.id,
-              grantType: GrantTypes.Write,
+              grantType: GrantType.Write,
               role: bP.role
             });
           }

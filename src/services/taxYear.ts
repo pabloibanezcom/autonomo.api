@@ -1,6 +1,6 @@
 import {
   buildPagination,
-  GrantTypes,
+  GrantType,
   TaxYear,
   TaxYearFilter,
   TaxYearSearchResult,
@@ -56,7 +56,7 @@ export const getBusinessTaxYear = async (businessId: string): Promise<TaxYear> =
 };
 
 export const addTaxYear = async (authorizationHeader: string, taxYear: TaxYear): Promise<TaxYear> => {
-  await validateUser(authorizationHeader, null, GrantTypes.Admin);
+  await validateUser(authorizationHeader, null, GrantType.Admin);
   return await TaxYearDB.create(taxYear);
 };
 
@@ -65,7 +65,7 @@ export const updateTaxYear = async (
   taxYearId: string,
   taxYear: TaxYear
 ): Promise<TaxYear> => {
-  await validateUser(authorizationHeader, null, GrantTypes.Admin);
+  await validateUser(authorizationHeader, null, GrantType.Admin);
   const currentTaxYear = await TaxYearDB.findByIdAndUpdate(taxYearId, taxYear, { new: true, runValidators: true });
   if (!currentTaxYear) {
     throw new NotFoundError();
@@ -74,7 +74,7 @@ export const updateTaxYear = async (
 };
 
 export const deleteTaxYear = async (authorizationHeader: string, taxYearId: string): Promise<TaxYear> => {
-  await validateUser(authorizationHeader, null, GrantTypes.Admin);
+  await validateUser(authorizationHeader, null, GrantType.Admin);
   const currentTaxYear = await TaxYearDB.findByIdAndDelete(taxYearId);
   if (!currentTaxYear) {
     throw new NotFoundError();

@@ -1,7 +1,7 @@
 import {
   buildPagination,
   generateRandomColor,
-  GrantTypes,
+  GrantType,
   Person,
   PersonFilter,
   PersonSearchResult,
@@ -28,7 +28,7 @@ export const searchPeople = async (
   businessId: string,
   searchFilter: PersonFilter
 ): Promise<PersonSearchResult> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await PersonDB.count({
     ...transformSearchFilterToPersonQuery(searchFilter),
     business: businessId
@@ -41,7 +41,7 @@ export const searchPeople = async (
 };
 
 export const getPerson = async (authorizationHeader: string, businessId: string, personId: string): Promise<Person> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const existingPerson = await PersonDB.findOne({
     business: businessId,
     _id: personId
@@ -53,7 +53,7 @@ export const getPerson = async (authorizationHeader: string, businessId: string,
 };
 
 export const addPerson = async (authorizationHeader: string, businessId: string, person: Person): Promise<Person> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await PersonDB.create({
     ...person,
     business: businessId,
@@ -67,7 +67,7 @@ export const updatePerson = async (
   personId: string,
   person: Person
 ): Promise<Person> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingPerson = await PersonDB.findOneAndUpdate({ business: businessId, _id: personId }, person, {
     new: true,
     runValidators: true
@@ -83,7 +83,7 @@ export const deletePerson = async (
   businessId: string,
   personId: string
 ): Promise<Person> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingPerson = await PersonDB.findOneAndDelete({
     business: businessId,
     _id: personId

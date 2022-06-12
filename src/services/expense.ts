@@ -4,7 +4,7 @@ import {
   ExpenseFilter,
   ExpenseSearchResult,
   File,
-  GrantTypes,
+  GrantType,
   transformPaginationToQueryOptions,
   transformSearchFilterToExpenseQuery
 } from '@autonomo/common';
@@ -35,7 +35,7 @@ export const searchExpenses = async (
   searchFilter: ExpenseFilter,
   populate = 'issuer categories'
 ): Promise<ExpenseSearchResult> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await ExpenseDB.count({
     ...transformSearchFilterToExpenseQuery(searchFilter),
     business: businessId
@@ -53,7 +53,7 @@ export const getExpense = async (
   expenseId: string,
   populate = 'issuer categories'
 ): Promise<Expense> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const existingExpense = await ExpenseDB.findOne({ business: businessId, _id: expenseId }).populate(populate);
   if (!existingExpense) {
     throw new NotFoundError();
@@ -66,7 +66,7 @@ export const addExpense = async (
   businessId: string,
   expense: Expense
 ): Promise<Expense> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await ExpenseDB.create({ ...expense, business: businessId });
 };
 
@@ -76,7 +76,7 @@ export const updateExpense = async (
   expenseId: string,
   expense: Expense
 ): Promise<Expense> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingExpense = await ExpenseDB.findOneAndUpdate({ business: businessId, _id: expenseId }, expense, {
     new: true,
     runValidators: true
@@ -92,7 +92,7 @@ export const deleteExpense = async (
   businessId: string,
   expenseId: string
 ): Promise<Expense> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingExpense = await ExpenseDB.findOneAndDelete({ business: businessId, _id: expenseId });
   if (!existingExpense) {
     throw new NotFoundError();
@@ -106,7 +106,7 @@ export const addExpenseFile = async (
   expenseId: string,
   file: UploadedFile
 ): Promise<File> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingExpense = await ExpenseDB.findOne({ business: businessId, _id: expenseId });
   if (!existingExpense) {
     throw new NotFoundError();
@@ -135,7 +135,7 @@ export const deleteExpenseFile = async (
   businessId: string,
   expenseId: string
 ): Promise<Expense> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingExpense = await ExpenseDB.findOne({ business: businessId, _id: expenseId });
   if (!existingExpense) {
     throw new NotFoundError();

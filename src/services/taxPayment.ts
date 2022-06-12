@@ -1,6 +1,6 @@
 import {
   buildPagination,
-  GrantTypes,
+  GrantType,
   TaxPayment,
   TaxPaymentFilter,
   TaxPaymentSearchResult,
@@ -27,7 +27,7 @@ export const searchTaxPayments = async (
   businessId: string,
   searchFilter: TaxPaymentFilter
 ): Promise<TaxPaymentSearchResult> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await TaxPaymentDB.count({
     ...transformSearchFilterToTaxPaymentQuery(searchFilter),
     business: businessId
@@ -44,7 +44,7 @@ export const getTaxPayment = async (
   businessId: string,
   paymentId: string
 ): Promise<TaxPayment> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const existingPayment = await TaxPaymentDB.findOne({
     business: businessId,
     _id: paymentId
@@ -60,7 +60,7 @@ export const addTaxPayment = async (
   businessId: string,
   payment: TaxPayment
 ): Promise<TaxPayment> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await TaxPaymentDB.create({ ...payment, business: businessId });
 };
 
@@ -70,7 +70,7 @@ export const updateTaxPayment = async (
   paymentId: string,
   payment: TaxPayment
 ): Promise<TaxPayment> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingPayment = await TaxPaymentDB.findOneAndUpdate({ business: businessId, _id: paymentId }, payment, {
     new: true,
     runValidators: true
@@ -86,7 +86,7 @@ export const deleteTaxPayment = async (
   businessId: string,
   paymentId: string
 ): Promise<TaxPayment> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingPayment = await TaxPaymentDB.findOneAndDelete({
     business: businessId,
     _id: paymentId

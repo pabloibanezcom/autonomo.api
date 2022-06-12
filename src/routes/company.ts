@@ -1,4 +1,4 @@
-import { Company, CompanySearchResult, HttpCodes, Routes } from '@autonomo/common';
+import { Company, CompanySearchResult, HttpCode, Routes } from '@autonomo/common';
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { HttpError } from '../httpError/httpErrors';
@@ -8,31 +8,31 @@ import { addCompany, deleteCompany, getCompany, searchCompanies, updateCompany }
 const registerCompanyRoutes = (router: express.Router): void => {
   router.post(Routes.SEARCH_COMPANIES, (req: Request, res: Response) => {
     searchCompanies(req.headers.authorization, req.params.businessId, req.body)
-      .then((result: CompanySearchResult) => res.status(HttpCodes.GET).send(result))
+      .then((result: CompanySearchResult) => res.status(HttpCode.GET).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
   router.get(Routes.GET_COMPANY, (req: Request, res: Response) => {
     getCompany(req.headers.authorization, req.params.businessId, req.params.id)
-      .then((result: Company) => res.status(HttpCodes.GET).send(result))
+      .then((result: Company) => res.status(HttpCode.GET).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
   router.post(Routes.ADD_COMPANY, (req: Request, res: Response) => {
     addCompany(req.headers.authorization, req.params.businessId, req.body)
-      .then((result: Company) => res.status(HttpCodes.POST).send(result))
+      .then((result: Company) => res.status(HttpCode.POST).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
   router.put(Routes.UPDATE_COMPANY, (req: Request, res: Response) => {
     updateCompany(req.headers.authorization, req.params.businessId, req.params.id, req.body)
-      .then((result: Company) => res.status(HttpCodes.PUT).send(result))
+      .then((result: Company) => res.status(HttpCode.PUT).send(result))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 
   router.delete(Routes.DELETE_COMPANY, (req: Request, res: Response) => {
     deleteCompany(req.headers.authorization, req.params.businessId, req.params.id)
-      .then(() => res.status(HttpCodes.DELETE).send({}))
+      .then(() => res.status(HttpCode.DELETE).send({}))
       .catch((err: HttpError) => res.status(transformHttpErrorCode(err.code)).send(err.message));
   });
 };
