@@ -1,5 +1,6 @@
 import { TaxYear } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
+import { ModelName } from './modelName';
 
 const TaxBand = {
   start: { type: Number, required: true },
@@ -23,4 +24,4 @@ export const TaxYearSchema: Schema = new Schema({
   vatBands: { type: [Number], required: true }
 });
 
-export default mongoose.model<TaxYear>('TaxYear', TaxYearSchema);
+export default mongoose.model<TaxYear>(ModelName.TaxYear, TaxYearSchema);

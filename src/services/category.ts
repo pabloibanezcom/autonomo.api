@@ -4,7 +4,7 @@ import {
   CategoryFilter,
   CategorySearchResult,
   generateAltColor,
-  GrantTypes,
+  GrantType,
   transformPaginationToQueryOptions,
   transformSearchFilterToCategoryQuery
 } from '@autonomo/common';
@@ -32,7 +32,7 @@ export const searchCategories = async (
   businessId: string,
   searchFilter: CategoryFilter
 ): Promise<CategorySearchResult> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await CategoryDB.count({
     ...transformSearchFilterToCategoryQuery(searchFilter),
     business: businessId
@@ -49,7 +49,7 @@ export const addCategory = async (
   businessId: string,
   category: Category
 ): Promise<Category> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await CategoryDB.create({
     ...category,
     business: businessId,
@@ -63,7 +63,7 @@ export const updateCategory = async (
   categoryId: string,
   category: Category
 ): Promise<Category> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingCategory = await CategoryDB.findById(categoryId);
   if (!existingCategory) {
     throw new NotFoundError();
@@ -84,7 +84,7 @@ export const deleteCategory = async (
   businessId: string,
   categoryId: string
 ): Promise<Category> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingCategory = await CategoryDB.findById(categoryId);
   if (!existingCategory) {
     throw new NotFoundError();

@@ -1,7 +1,7 @@
 [
   {
     "name": "Pablo Ibanez",
-    "type": "sole-trader",
+    "type": "soleTrader",
     "soleTrader": "pabloiveron@gmail.com",
     "country": "ES",
     "defaultCurrency": "EUR",
@@ -21,12 +21,12 @@
     "people": [
       {
         "email": "pabloiveron@gmail.com",
-        "role": "SoleTrader",
+        "role": "soleTrader",
         "since": "2021-06-01T00:00:00.000Z"
       },
       {
         "email": "aenavarro@aenavarro.es",
-        "role": "Accountant",
+        "role": "accountant",
         "since": "2021-06-01T00:00:00.000Z"
       }
     ]
@@ -40,12 +40,12 @@
     "people": [
       {
         "email": "pabloiveron@gmail.com",
-        "role": "Director",
+        "role": "director",
         "since": "2021-04-28T00:00:00.000Z"
       },
       {
         "email": "aqua.rahman@hudsonconway.com",
-        "role": "Accountant",
+        "role": "accountant",
         "since": "2021-04-28T00:00:00.000Z"
       }
     ]

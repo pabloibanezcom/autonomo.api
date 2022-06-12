@@ -4,7 +4,7 @@ import {
   CompanyFilter,
   CompanySearchResult,
   generateRandomColor,
-  GrantTypes,
+  GrantType,
   transformPaginationToQueryOptions,
   transformSearchFilterToCompanyQuery
 } from '@autonomo/common';
@@ -31,7 +31,7 @@ export const searchCompanies = async (
   businessId: string,
   searchFilter: CompanyFilter
 ): Promise<CompanySearchResult> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await CompanyDB.count({
     ...transformSearchFilterToCompanyQuery(searchFilter),
     business: businessId
@@ -48,7 +48,7 @@ export const getCompany = async (
   businessId: string,
   companyId: string
 ): Promise<Company> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   return await CompanyDB.findOne({ business: businessId, _id: companyId }).populate('director');
 };
 
@@ -57,7 +57,7 @@ export const addCompany = async (
   businessId: string,
   company: Company
 ): Promise<Company> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await CompanyDB.create({
     ...company,
     business: businessId,
@@ -71,7 +71,7 @@ export const updateCompany = async (
   companyId: string,
   company: Company
 ): Promise<Company> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await CompanyDB.findOneAndUpdate({ business: businessId, _id: companyId }, company, {
     new: true,
     runValidators: true
@@ -83,6 +83,6 @@ export const deleteCompany = async (
   businessId: string,
   companyId: string
 ): Promise<Company> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await CompanyDB.findOneAndDelete({ business: businessId, _id: companyId });
 };

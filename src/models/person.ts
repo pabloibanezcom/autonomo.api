@@ -1,6 +1,7 @@
 import { Person } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
 import Address from './address';
+import { ModelName } from './modelName';
 
 export const PersonSchema: Schema = new Schema({
   firstName: { type: String },
@@ -13,4 +14,4 @@ export const PersonSchema: Schema = new Schema({
   address: { type: Address }
 });
 
-export default mongoose.model<Person>('Person', PersonSchema);
+export default mongoose.model<Person>(ModelName.Person, PersonSchema);

@@ -1,4 +1,4 @@
-import { GrantTypes, roundTwoDigits, YearReport } from '@autonomo/common';
+import { GrantType, roundTwoDigits, YearReport } from '@autonomo/common';
 import mongoose from 'mongoose';
 import { calculateProgressiveTax, calculateVATBalance } from '../util/tax';
 import { validateUser } from '../util/user';
@@ -13,7 +13,7 @@ export const getYearReport = async (
   businessId: string,
   taxYearId: string
 ): Promise<YearReport> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
 
   const taxYear = await getTaxYear(taxYearId);
 

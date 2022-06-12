@@ -1,4 +1,4 @@
-import { GrantTypes, LoginResponse, User } from '@autonomo/common';
+import { GrantType, LoginResponse, User } from '@autonomo/common';
 import { Bool } from 'aws-sdk/clients/clouddirectory';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -8,7 +8,7 @@ import JWTUser from '../interfaces/JWTUser';
 import UserDB from '../models/user';
 import { basicPerson } from '../mongoose/populate';
 
-const validateGrantType = (required: GrantTypes, current: GrantTypes): Bool => {
+const validateGrantType = (required: GrantType, current: GrantType): Bool => {
   if (required > current) {
     throw new UnauthorizedError();
   }
@@ -42,7 +42,7 @@ export const generateLoginResponse = (user: User): LoginResponse => {
 export const validateUser = async (
   authorizationHeader: string,
   businessId?: string,
-  granType?: GrantTypes,
+  granType?: GrantType,
   populatePerson?: boolean
 ): Promise<User> => {
   if (!authorizationHeader) {
@@ -58,7 +58,7 @@ export const validateUser = async (
   if (granType) {
     validateGrantType(
       granType,
-      user.isAdmin ? GrantTypes.Admin : user.businesses.find(b => b.business.toString() === businessId).grantType
+      user.isAdmin ? GrantType.Admin : user.businesses.find(b => b.business.toString() === businessId).grantType
     );
   }
   return user;

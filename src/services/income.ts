@@ -1,7 +1,7 @@
 import {
   buildSearchFilter,
   File,
-  GrantTypes,
+  GrantType,
   Income,
   IncomeFilter,
   IncomeSearchResult,
@@ -31,7 +31,7 @@ export const searchIncomes = async (
   searchFilter: IncomeFilter,
   populate = 'client categories'
 ): Promise<IncomeSearchResult> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await IncomeDB.count({
     ...transformSearchFilterToIncomeQuery(searchFilter),
     business: businessId
@@ -49,7 +49,7 @@ export const getIncome = async (
   incomeId: string,
   populate = 'client categories'
 ): Promise<Income> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantType.View);
   const existingIncome = await IncomeDB.findOne({ business: businessId, _id: incomeId }).populate(populate);
   if (!existingIncome) {
     throw new NotFoundError();
@@ -58,7 +58,7 @@ export const getIncome = async (
 };
 
 export const addIncome = async (authorizationHeader: string, businessId: string, income: Income): Promise<Income> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await IncomeDB.create({ ...income, business: businessId });
 };
 
@@ -68,7 +68,7 @@ export const updateIncome = async (
   incomeId: string,
   income: Income
 ): Promise<Income> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingIncome = await IncomeDB.findOneAndUpdate({ business: businessId, _id: incomeId }, income, {
     new: true,
     runValidators: true
@@ -84,7 +84,7 @@ export const deleteIncome = async (
   businessId: string,
   incomeId: string
 ): Promise<Income> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingIncome = await IncomeDB.findOneAndDelete({ business: businessId, _id: incomeId });
   if (!existingIncome) {
     throw new NotFoundError();
@@ -98,7 +98,7 @@ export const addIncomeFile = async (
   incomeId: string,
   file: UploadedFile
 ): Promise<File> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingIncome = await IncomeDB.findOne({ business: businessId, _id: incomeId });
   if (!existingIncome) {
     throw new NotFoundError();
@@ -127,7 +127,7 @@ export const deleteIncomeFile = async (
   businessId: string,
   incomeId: string
 ): Promise<Income> => {
-  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
   const existingIncome = await IncomeDB.findOne({ business: businessId, _id: incomeId });
   if (!existingIncome) {
     throw new NotFoundError();
