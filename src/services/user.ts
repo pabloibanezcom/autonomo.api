@@ -65,5 +65,5 @@ export const changePassword = async (changePasswordData: ChangePasswordData): Pr
 };
 
 export const getUser = async (authorizationHeader: string): Promise<User> => {
-  return await validateUser(authorizationHeader);
+  return await validateUser(authorizationHeader, null, null, true);
 };

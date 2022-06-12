@@ -6,6 +6,7 @@ import passwordValidator from 'password-validator';
 import { UnauthorizedError } from '../httpError/httpErrors';
 import JWTUser from '../interfaces/JWTUser';
 import UserDB from '../models/user';
+import { basicPerson } from '../mongoose/populate';
 
 const validateGrantType = (required: GrantTypes, current: GrantTypes): Bool => {
   if (required > current) {
@@ -41,13 +42,16 @@ export const generateLoginResponse = (user: User): LoginResponse => {
 export const validateUser = async (
   authorizationHeader: string,
   businessId?: string,
-  granType?: GrantTypes
+  granType?: GrantTypes,
+  populatePerson?: boolean
 ): Promise<User> => {
   if (!authorizationHeader) {
     throw new UnauthorizedError();
   }
   const jwtUser = jwt.verify(authorizationHeader.replace('Bearer ', ''), process.env.JWT_TOKEN_SECRET) as JWTUser;
-  const user = await UserDB.findById(jwtUser.id).select('-password -businesses');
+  const user = await (
+    await UserDB.findById(jwtUser.id).select('-password -businesses')
+  ).populate(populatePerson ? { path: 'person', select: basicPerson } : 'email');
   if (!user) {
     throw new UnauthorizedError();
   }
