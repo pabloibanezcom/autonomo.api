@@ -9,9 +9,13 @@ import UserDB from '../models/user';
 import { basicPerson } from '../mongoose/populate';
 
 const validateGrantType = (required: GrantType, current: GrantType): Bool => {
-  if (required > current) {
+  if (
+    (required === GrantType.Admin && current !== GrantType.Admin) ||
+    (required === GrantType.Write && current === GrantType.View)
+  ) {
     throw new UnauthorizedError();
   }
+
   return true;
 };
 
