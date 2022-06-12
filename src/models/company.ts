@@ -8,6 +8,7 @@ export const CompanySchema: Schema = new Schema({
   country: { type: String },
   cifVat: { type: String },
   address: { type: Address },
+  creationDate: { type: Date },
   director: { type: Schema.Types.ObjectId, ref: 'Person' },
   defaultCurrency: { type: String },
   color: { type: String }

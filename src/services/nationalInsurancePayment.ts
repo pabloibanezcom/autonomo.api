@@ -30,7 +30,7 @@ export const searchNationalInsurancePayments = async (
   businessId: string,
   searchFilter: NationalInsurancePaymentFilter
 ): Promise<NationalInsurancePaymentSearchResult> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const totalItems = await NationalInsurancePaymentDB.count({
     ...transformSearchFilterToNationalInsuranceQuery(searchFilter),
     business: businessId
@@ -38,7 +38,7 @@ export const searchNationalInsurancePayments = async (
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
     sorting: searchFilter.sorting,
-    items: await getNationalInsurancePayments(businessAndUser.business._id.toString(), searchFilter)
+    items: await getNationalInsurancePayments(businessId, searchFilter)
   };
 };
 
@@ -47,9 +47,9 @@ export const getNationalInsurancePayment = async (
   businessId: string,
   paymentId: string
 ): Promise<NationalInsurancePayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const existingPayment = await NationalInsurancePaymentDB.findOne({
-    business: businessAndUser.business._id,
+    business: businessId,
     _id: paymentId
   });
   if (!existingPayment) {
@@ -63,8 +63,8 @@ export const addNationalInsurancePayment = async (
   businessId: string,
   payment: NationalInsurancePayment
 ): Promise<NationalInsurancePayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await NationalInsurancePaymentDB.create({ ...payment, business: businessAndUser.business._id });
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  return await NationalInsurancePaymentDB.create({ ...payment, business: businessId });
 };
 
 export const updateNationalInsurancePayment = async (
@@ -73,9 +73,9 @@ export const updateNationalInsurancePayment = async (
   paymentId: string,
   payment: NationalInsurancePayment
 ): Promise<NationalInsurancePayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   const existingPayment = await NationalInsurancePaymentDB.findOneAndUpdate(
-    { business: businessAndUser.business._id, _id: paymentId },
+    { business: businessId, _id: paymentId },
     payment,
     { new: true, runValidators: true }
   );
@@ -90,9 +90,9 @@ export const deleteNationalInsurancePayment = async (
   businessId: string,
   paymentId: string
 ): Promise<NationalInsurancePayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   const existingPayment = await NationalInsurancePaymentDB.findOneAndDelete({
-    business: businessAndUser.business._id,
+    business: businessId,
     _id: paymentId
   });
   if (!existingPayment) {

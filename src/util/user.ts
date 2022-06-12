@@ -1,12 +1,10 @@
-import { Business, GrantTypes, LoginResponse, User } from '@autonomo/common';
+import { GrantTypes, LoginResponse, User } from '@autonomo/common';
 import { Bool } from 'aws-sdk/clients/clouddirectory';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import passwordValidator from 'password-validator';
-import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
-import { BusinessAndUser } from '../interfaces/BusinessAndUser';
+import { UnauthorizedError } from '../httpError/httpErrors';
 import JWTUser from '../interfaces/JWTUser';
-import BusinessDB from '../models/business';
 import UserDB from '../models/user';
 
 const validateGrantType = (required: GrantTypes, current: GrantTypes): Bool => {
@@ -44,32 +42,20 @@ export const validateUser = async (
   authorizationHeader: string,
   businessId?: string,
   granType?: GrantTypes
-): Promise<BusinessAndUser> => {
-  let business: Business;
-  if (businessId) {
-    business = await BusinessDB.findById(businessId);
-    if (!business) {
-      throw new NotFoundError();
-    }
-  }
+): Promise<User> => {
   if (!authorizationHeader) {
     throw new UnauthorizedError();
   }
   const jwtUser = jwt.verify(authorizationHeader.replace('Bearer ', ''), process.env.JWT_TOKEN_SECRET) as JWTUser;
-  const user = await UserDB.findById(jwtUser.id).select('-password');
+  const user = await UserDB.findById(jwtUser.id).select('-password -businesses');
   if (!user) {
     throw new UnauthorizedError();
   }
   if (granType) {
     validateGrantType(
       granType,
-      user.isAdmin
-        ? GrantTypes.Admin
-        : business?.authorisedPeople.find(authPeople => authPeople.user.equals(user.id)).grantType
+      user.isAdmin ? GrantTypes.Admin : user.businesses.find(b => b.business.toString() === businessId).grantType
     );
   }
-  return {
-    business,
-    user
-  };
+  return user;
 };

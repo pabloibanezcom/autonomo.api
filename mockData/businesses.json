@@ -2,6 +2,7 @@
   {
     "name": "Pablo Ibanez",
     "type": "sole-trader",
+    "soleTrader": "pabloiveron@gmail.com",
     "country": "ES",
     "defaultCurrency": "EUR",
     "exchangeRates": [
@@ -16,13 +17,37 @@
         "rate": 0.93
       }
     ],
-    "nextInvoiceNumber": "INV-001"
+    "nextInvoiceNumber": "INV-001",
+    "people": [
+      {
+        "email": "pabloiveron@gmail.com",
+        "role": "SoleTrader",
+        "since": "2021-06-01T00:00:00.000Z"
+      },
+      {
+        "email": "aenavarro@aenavarro.es",
+        "role": "Accountant",
+        "since": "2021-06-01T00:00:00.000Z"
+      }
+    ]
   },
   {
-    "name": "Another business",
+    "name": "ALP Coding Ltd",
     "type": "company",
     "country": "GB",
     "defaultCurrency": "GBP",
-    "nextInvoiceNumber": "INV-001"
+    "nextInvoiceNumber": "INV-001",
+    "people": [
+      {
+        "email": "pabloiveron@gmail.com",
+        "role": "Director",
+        "since": "2021-04-28T00:00:00.000Z"
+      },
+      {
+        "email": "aqua.rahman@hudsonconway.com",
+        "role": "Accountant",
+        "since": "2021-04-28T00:00:00.000Z"
+      }
+    ]
   }
 ]

@@ -31,7 +31,7 @@ export const searchCompanies = async (
   businessId: string,
   searchFilter: CompanyFilter
 ): Promise<CompanySearchResult> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const totalItems = await CompanyDB.count({
     ...transformSearchFilterToCompanyQuery(searchFilter),
     business: businessId
@@ -39,7 +39,7 @@ export const searchCompanies = async (
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
     sorting: searchFilter.sorting,
-    items: await getCompanies(businessAndUser.business._id.toString(), searchFilter)
+    items: await getCompanies(businessId, searchFilter)
   };
 };
 
@@ -48,8 +48,8 @@ export const getCompany = async (
   businessId: string,
   companyId: string
 ): Promise<Company> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
-  return await CompanyDB.findOne({ business: businessAndUser.business._id, _id: companyId }).populate('director');
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  return await CompanyDB.findOne({ business: businessId, _id: companyId }).populate('director');
 };
 
 export const addCompany = async (
@@ -57,10 +57,10 @@ export const addCompany = async (
   businessId: string,
   company: Company
 ): Promise<Company> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   return await CompanyDB.create({
     ...company,
-    business: businessAndUser.business._id,
+    business: businessId,
     color: company.color || generateRandomColor()
   });
 };
@@ -71,8 +71,8 @@ export const updateCompany = async (
   companyId: string,
   company: Company
 ): Promise<Company> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await CompanyDB.findOneAndUpdate({ business: businessAndUser.business._id, _id: companyId }, company, {
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  return await CompanyDB.findOneAndUpdate({ business: businessId, _id: companyId }, company, {
     new: true,
     runValidators: true
   });
@@ -83,6 +83,6 @@ export const deleteCompany = async (
   businessId: string,
   companyId: string
 ): Promise<Company> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await CompanyDB.findOneAndDelete({ business: businessAndUser.business._id, _id: companyId });
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  return await CompanyDB.findOneAndDelete({ business: businessId, _id: companyId });
 };

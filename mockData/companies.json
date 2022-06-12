@@ -1,5 +1,18 @@
 [
   {
+    "name": "ALP Coding Ltd",
+    "country": "GB",
+    "director": "pabloiveron@gmail.com",
+    "address": {
+      "line1": "Churchill House 137-139",
+      "line2": "Brent Street",
+      "postalCode": "NW4 4DU",
+      "town": "Hendon",
+      "country": "UK"
+    },
+    "defaultCurrency": "GBP"
+  },
+  {
     "name": "Byte Revolution LTD",
     "country": "GB",
     "cifVat": "GB219432514",
