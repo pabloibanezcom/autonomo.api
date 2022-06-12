@@ -35,7 +35,7 @@ export const searchExpenses = async (
   searchFilter: ExpenseFilter,
   populate = 'issuer categories'
 ): Promise<ExpenseSearchResult> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const totalItems = await ExpenseDB.count({
     ...transformSearchFilterToExpenseQuery(searchFilter),
     business: businessId
@@ -43,7 +43,7 @@ export const searchExpenses = async (
   const verifiedSearchFilter = buildSearchFilter(searchFilter, totalItems, 'issuedDate');
   return {
     ...verifiedSearchFilter,
-    items: await getExpenses(businessAndUser.business._id.toString(), verifiedSearchFilter, populate)
+    items: await getExpenses(businessId, verifiedSearchFilter, populate)
   };
 };
 
@@ -53,10 +53,8 @@ export const getExpense = async (
   expenseId: string,
   populate = 'issuer categories'
 ): Promise<Expense> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
-  const existingExpense = await ExpenseDB.findOne({ business: businessAndUser.business._id, _id: expenseId }).populate(
-    populate
-  );
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  const existingExpense = await ExpenseDB.findOne({ business: businessId, _id: expenseId }).populate(populate);
   if (!existingExpense) {
     throw new NotFoundError();
   }
@@ -68,8 +66,8 @@ export const addExpense = async (
   businessId: string,
   expense: Expense
 ): Promise<Expense> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await ExpenseDB.create({ ...expense, business: businessAndUser.business._id });
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  return await ExpenseDB.create({ ...expense, business: businessId });
 };
 
 export const updateExpense = async (
@@ -78,12 +76,11 @@ export const updateExpense = async (
   expenseId: string,
   expense: Expense
 ): Promise<Expense> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  const existingExpense = await ExpenseDB.findOneAndUpdate(
-    { business: businessAndUser.business._id, _id: expenseId },
-    expense,
-    { new: true, runValidators: true }
-  );
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingExpense = await ExpenseDB.findOneAndUpdate({ business: businessId, _id: expenseId }, expense, {
+    new: true,
+    runValidators: true
+  });
   if (!existingExpense) {
     throw new NotFoundError();
   }
@@ -95,8 +92,8 @@ export const deleteExpense = async (
   businessId: string,
   expenseId: string
 ): Promise<Expense> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  const existingExpense = await ExpenseDB.findOneAndDelete({ business: businessAndUser.business._id, _id: expenseId });
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingExpense = await ExpenseDB.findOneAndDelete({ business: businessId, _id: expenseId });
   if (!existingExpense) {
     throw new NotFoundError();
   }
@@ -109,8 +106,8 @@ export const addExpenseFile = async (
   expenseId: string,
   file: UploadedFile
 ): Promise<File> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  const existingExpense = await ExpenseDB.findOne({ business: businessAndUser.business._id, _id: expenseId });
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingExpense = await ExpenseDB.findOne({ business: businessId, _id: expenseId });
   if (!existingExpense) {
     throw new NotFoundError();
   }
@@ -138,8 +135,8 @@ export const deleteExpenseFile = async (
   businessId: string,
   expenseId: string
 ): Promise<Expense> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  const existingExpense = await ExpenseDB.findOne({ business: businessAndUser.business._id, _id: expenseId });
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingExpense = await ExpenseDB.findOne({ business: businessId, _id: expenseId });
   if (!existingExpense) {
     throw new NotFoundError();
   }

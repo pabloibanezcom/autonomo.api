@@ -32,7 +32,7 @@ export const searchCategories = async (
   businessId: string,
   searchFilter: CategoryFilter
 ): Promise<CategorySearchResult> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const totalItems = await CategoryDB.count({
     ...transformSearchFilterToCategoryQuery(searchFilter),
     business: businessId
@@ -40,7 +40,7 @@ export const searchCategories = async (
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
     sorting: searchFilter.sorting,
-    items: await getCategories(businessAndUser.business._id.toString(), searchFilter)
+    items: await getCategories(businessId, searchFilter)
   };
 };
 
@@ -49,10 +49,10 @@ export const addCategory = async (
   businessId: string,
   category: Category
 ): Promise<Category> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   return await CategoryDB.create({
     ...category,
-    business: businessAndUser.business._id,
+    business: businessId,
     altColor: generateAltColor(category.color)
   });
 };
@@ -63,12 +63,12 @@ export const updateCategory = async (
   categoryId: string,
   category: Category
 ): Promise<Category> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   const existingCategory = await CategoryDB.findById(categoryId);
   if (!existingCategory) {
     throw new NotFoundError();
   }
-  if (!businessAndUser.business._id.equals(existingCategory.business._id)) {
+  if (!businessId.includes(existingCategory.business._id.toString())) {
     throw new UnauthorizedError();
   }
 
@@ -84,12 +84,12 @@ export const deleteCategory = async (
   businessId: string,
   categoryId: string
 ): Promise<Category> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   const existingCategory = await CategoryDB.findById(categoryId);
   if (!existingCategory) {
     throw new NotFoundError();
   }
-  if (!businessAndUser.business._id.equals(existingCategory.business._id)) {
+  if (!businessId.includes(existingCategory.business._id.toString())) {
     throw new UnauthorizedError();
   }
 

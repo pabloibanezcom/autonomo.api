@@ -1,4 +1,5 @@
 import { GrantTypes, roundTwoDigits, YearReport } from '@autonomo/common';
+import mongoose from 'mongoose';
 import { calculateProgressiveTax, calculateVATBalance } from '../util/tax';
 import { validateUser } from '../util/user';
 import { getExpenses } from './expense';
@@ -12,26 +13,26 @@ export const getYearReport = async (
   businessId: string,
   taxYearId: string
 ): Promise<YearReport> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
 
   const taxYear = await getTaxYear(taxYearId);
 
-  const incomes = await getIncomes(businessAndUser.business._id.toString(), {
+  const incomes = await getIncomes(businessId, {
     startIssuedDate: taxYear.startDate,
     endIssuedDate: taxYear.endDate
   });
 
-  const expenses = await getExpenses(businessAndUser.business._id.toString(), {
+  const expenses = await getExpenses(businessId, {
     startIssuedDate: taxYear.startDate,
     endIssuedDate: taxYear.endDate
   });
 
-  const nationalInsurancePayments = await getNationalInsurancePayments(businessAndUser.business._id.toString(), {
+  const nationalInsurancePayments = await getNationalInsurancePayments(businessId, {
     startDate: taxYear.startDate,
     endDate: taxYear.endDate
   });
 
-  const taxPayments = await getTaxPayments(businessAndUser.business._id.toString(), {
+  const taxPayments = await getTaxPayments(businessId, {
     startDate: taxYear.startDate,
     endDate: taxYear.endDate
   });
@@ -55,7 +56,7 @@ export const getYearReport = async (
   const incomeTax = roundTwoDigits(calculateProgressiveTax(taxYear.incomeTax, grossProfit));
 
   return {
-    business: businessAndUser.business._id,
+    business: new mongoose.Types.ObjectId(businessId),
     creationDate: new Date(),
     taxYear: taxYear._id,
     incomes: incomesSum,

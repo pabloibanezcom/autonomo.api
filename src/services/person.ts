@@ -28,7 +28,7 @@ export const searchPeople = async (
   businessId: string,
   searchFilter: PersonFilter
 ): Promise<PersonSearchResult> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const totalItems = await PersonDB.count({
     ...transformSearchFilterToPersonQuery(searchFilter),
     business: businessId
@@ -36,14 +36,14 @@ export const searchPeople = async (
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
     sorting: searchFilter.sorting,
-    items: await getPeople(businessAndUser.business._id.toString(), searchFilter)
+    items: await getPeople(businessId, searchFilter)
   };
 };
 
 export const getPerson = async (authorizationHeader: string, businessId: string, personId: string): Promise<Person> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const existingPerson = await PersonDB.findOne({
-    business: businessAndUser.business._id,
+    business: businessId,
     _id: personId
   });
   if (!existingPerson) {
@@ -53,10 +53,10 @@ export const getPerson = async (authorizationHeader: string, businessId: string,
 };
 
 export const addPerson = async (authorizationHeader: string, businessId: string, person: Person): Promise<Person> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   return await PersonDB.create({
     ...person,
-    business: businessAndUser.business._id,
+    business: businessId,
     color: person.color || generateRandomColor()
   });
 };
@@ -67,12 +67,11 @@ export const updatePerson = async (
   personId: string,
   person: Person
 ): Promise<Person> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  const existingPerson = await PersonDB.findOneAndUpdate(
-    { business: businessAndUser.business._id, _id: personId },
-    person,
-    { new: true, runValidators: true }
-  );
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingPerson = await PersonDB.findOneAndUpdate({ business: businessId, _id: personId }, person, {
+    new: true,
+    runValidators: true
+  });
   if (!existingPerson) {
     throw new NotFoundError();
   }
@@ -84,9 +83,9 @@ export const deletePerson = async (
   businessId: string,
   personId: string
 ): Promise<Person> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   const existingPerson = await PersonDB.findOneAndDelete({
-    business: businessAndUser.business._id,
+    business: businessId,
     _id: personId
   });
   if (!existingPerson) {

@@ -27,7 +27,7 @@ export const searchTaxPayments = async (
   businessId: string,
   searchFilter: TaxPaymentFilter
 ): Promise<TaxPaymentSearchResult> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const totalItems = await TaxPaymentDB.count({
     ...transformSearchFilterToTaxPaymentQuery(searchFilter),
     business: businessId
@@ -35,7 +35,7 @@ export const searchTaxPayments = async (
   return {
     pagination: buildPagination(searchFilter.pagination, totalItems),
     sorting: searchFilter.sorting,
-    items: await getTaxPayments(businessAndUser.business._id.toString(), searchFilter)
+    items: await getTaxPayments(businessId, searchFilter)
   };
 };
 
@@ -44,9 +44,9 @@ export const getTaxPayment = async (
   businessId: string,
   paymentId: string
 ): Promise<TaxPayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.View);
+  await validateUser(authorizationHeader, businessId, GrantTypes.View);
   const existingPayment = await TaxPaymentDB.findOne({
-    business: businessAndUser.business._id,
+    business: businessId,
     _id: paymentId
   });
   if (!existingPayment) {
@@ -60,8 +60,8 @@ export const addTaxPayment = async (
   businessId: string,
   payment: TaxPayment
 ): Promise<TaxPayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  return await TaxPaymentDB.create({ ...payment, business: businessAndUser.business._id });
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  return await TaxPaymentDB.create({ ...payment, business: businessId });
 };
 
 export const updateTaxPayment = async (
@@ -70,12 +70,11 @@ export const updateTaxPayment = async (
   paymentId: string,
   payment: TaxPayment
 ): Promise<TaxPayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
-  const existingPayment = await TaxPaymentDB.findOneAndUpdate(
-    { business: businessAndUser.business._id, _id: paymentId },
-    payment,
-    { new: true, runValidators: true }
-  );
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  const existingPayment = await TaxPaymentDB.findOneAndUpdate({ business: businessId, _id: paymentId }, payment, {
+    new: true,
+    runValidators: true
+  });
   if (!existingPayment) {
     throw new NotFoundError();
   }
@@ -87,9 +86,9 @@ export const deleteTaxPayment = async (
   businessId: string,
   paymentId: string
 ): Promise<TaxPayment> => {
-  const businessAndUser = await validateUser(authorizationHeader, businessId, GrantTypes.Write);
+  await validateUser(authorizationHeader, businessId, GrantTypes.Write);
   const existingPayment = await TaxPaymentDB.findOneAndDelete({
-    business: businessAndUser.business._id,
+    business: businessId,
     _id: paymentId
   });
   if (!existingPayment) {
