@@ -62,6 +62,14 @@ const generateDB = async (): Promise<boolean> => {
     await UserDB.findByIdAndUpdate(mainUser._id, { ...mainUser, defaultBusiness: business._id });
   };
 
+  const setUserPerson = async (): Promise<void> => {
+    const person = await getPersonByEmail(mainUser.email);
+    if (person) {
+      mainUser.person = person;
+      await UserDB.findByIdAndUpdate(mainUser._id, { ...mainUser, person: person._id });
+    }
+  };
+
   const getMainPerson = async (): Promise<void> => {
     mainPerson = (await PersonDB.findOne({ email: 'pabloiveron@gmail.com' })) as Person;
   };
@@ -268,6 +276,7 @@ const generateDB = async (): Promise<boolean> => {
   await getMainPerson();
   await generateBusiness();
   await setUserBusinesses();
+  await setUserPerson();
   await generateTaxYears();
   await generateCompanies();
   await setBusinessCompanies();
