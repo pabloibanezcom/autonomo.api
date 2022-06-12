@@ -3,21 +3,26 @@
     "firstName": "Pablo",
     "lastName": "Ibanez",
     "email": "pabloiveron@gmail.com",
-    "nif": "17448005K"
+    "nif": "17448005K",
+    "gender": "male",
+    "picture": "https://s.gravatar.com/avatar/19593fd19182275d84ce2e20c4dc99bc?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fpa.png"
   },
   {
     "firstName": "Alejandro",
     "lastName": "Navarro",
-    "email": "aenavarro@aenavarro.es"
+    "email": "aenavarro@aenavarro.es",
+    "gender": "male"
   },
   {
     "firstName": "Fabio",
     "lastName": "Tisci",
-    "email": "info@byterevolution.com"
+    "email": "info@byterevolution.com",
+    "gender": "male"
   },
   {
     "firstName": "Aqua",
     "lastName": "Rahman",
-    "email": "aqua.rahman@hudsonconway.com"
+    "email": "aqua.rahman@hudsonconway.com",
+    "gender": "male"
   }
 ]
