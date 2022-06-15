@@ -17,7 +17,7 @@ import {
 } from '../util/user';
 
 export const login = async (loginData: LoginData): Promise<LoginResponse> => {
-  const user = await UserDB.findOne({ email: loginData.email });
+  const user = await UserDB.findOne({ email: loginData.email.toLowerCase() });
   if (!user) {
     throw new UnauthorizedError();
   }
@@ -30,7 +30,7 @@ export const login = async (loginData: LoginData): Promise<LoginResponse> => {
 };
 
 export const registerUser = async (registerData: RegisterData): Promise<boolean> => {
-  const existingUser = await UserDB.findOne({ email: registerData.email });
+  const existingUser = await UserDB.findOne({ email: registerData.email.toLowerCase() });
   if (existingUser) {
     throw new UserAlreadyExistsError();
   }
@@ -40,6 +40,7 @@ export const registerUser = async (registerData: RegisterData): Promise<boolean>
   }
   await UserDB.create({
     ...registerData,
+    email: registerData.email.toLowerCase(),
     password: await hashPassword(registerData.password),
     color: generateRandomColor()
   });
@@ -47,7 +48,7 @@ export const registerUser = async (registerData: RegisterData): Promise<boolean>
 };
 
 export const changePassword = async (changePasswordData: ChangePasswordData): Promise<boolean> => {
-  const user = await UserDB.findOne({ email: changePasswordData.email });
+  const user = await UserDB.findOne({ email: changePasswordData.email.toLowerCase() });
   if (!user) {
     throw new UnauthorizedError();
   }
