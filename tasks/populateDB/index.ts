@@ -75,12 +75,22 @@ const generateDB = async (): Promise<boolean> => {
     mainPerson = (await PersonDB.findOne({ email: 'pabloiveron@gmail.com' })) as Person;
   };
 
-  const getCompanyOrCreate = async (companyName: string): Promise<Company> => {
+  const getCompanyOrCreate = async (companyName: string, currency: string): Promise<Company> => {
     const company = await CompanyDB.findOne({ business: business._id, name: companyName });
     if (company) {
       return company;
     }
-    return await CompanyDB.create({ business: business._id, name: companyName, color: generateRandomColor() });
+
+    const getCountryCodeFromCurrency = (): string => {
+      return currency === 'GBP' ? 'GB' : 'ES';
+    };
+
+    return await CompanyDB.create({
+      business: business._id,
+      name: companyName,
+      color: generateRandomColor(),
+      country: getCountryCodeFromCurrency()
+    });
   };
 
   const getPersonByEmail = async (personEmail: string): Promise<Person> => {
@@ -212,7 +222,7 @@ const generateDB = async (): Promise<boolean> => {
         ...income,
         business: business._id,
         baseCurrency: income.totalBaseCurrency?.currency || income.total.currency,
-        client: await getCompanyOrCreate(income.client),
+        client: await getCompanyOrCreate(income.client, income.totalBaseCurrency?.currency || income.total.currency),
         categories: income.categories.map(catName => categories.find(cat => cat.name === catName)._id),
         file: {
           key: income.file,
@@ -232,7 +242,7 @@ const generateDB = async (): Promise<boolean> => {
         ...expense,
         business: business._id,
         baseCurrency: expense.totalBaseCurrency?.currency || expense.total.currency,
-        issuer: await getCompanyOrCreate(expense.issuer),
+        issuer: await getCompanyOrCreate(expense.issuer, expense.totalBaseCurrency?.currency || expense.total.currency),
         categories: expense.categories.map(catName => categories.find(cat => cat.name === catName)._id),
         file: {
           key: expense.file,
