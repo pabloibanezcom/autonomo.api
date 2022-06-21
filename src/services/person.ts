@@ -8,7 +8,7 @@ import {
   transformPaginationToQueryOptions,
   transformSearchFilterToPersonQuery
 } from '@autonomo/common';
-import { NotFoundError } from '../httpError/httpErrors';
+import { BadRequestError, NotFoundError } from '../httpError/httpErrors';
 import PersonDB from '../models/person';
 import { validateUser } from '../util/user';
 
@@ -28,15 +28,17 @@ export const searchPeople = async (
   businessId: string,
   searchFilter: PersonFilter
 ): Promise<PersonSearchResult> => {
+  if (!searchFilter || !Object.keys(searchFilter).length) {
+    throw new BadRequestError('searchFilter can not be empty');
+  }
   await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await PersonDB.count({
     ...transformSearchFilterToPersonQuery(searchFilter),
     business: businessId
   });
   return {
-    pagination: buildPagination(searchFilter.pagination, totalItems),
-    sorting: searchFilter.sorting,
-    items: await getPeople(businessId, searchFilter)
+    ...{ ...searchFilter, pagination: buildPagination(searchFilter.pagination, totalItems) },
+    ...{ items: await getPeople(businessId, searchFilter) }
   };
 };
 
