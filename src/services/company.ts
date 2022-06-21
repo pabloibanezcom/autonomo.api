@@ -8,6 +8,7 @@ import {
   transformPaginationToQueryOptions,
   transformSearchFilterToCompanyQuery
 } from '@autonomo/common';
+import { BadRequestError } from '../httpError/httpErrors';
 import CompanyDB from '../models/company';
 import { validateUser } from '../util/user';
 
@@ -31,15 +32,17 @@ export const searchCompanies = async (
   businessId: string,
   searchFilter: CompanyFilter
 ): Promise<CompanySearchResult> => {
+  if (!searchFilter || !Object.keys(searchFilter).length) {
+    throw new BadRequestError('searchFilter can not be empty');
+  }
   await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await CompanyDB.count({
     ...transformSearchFilterToCompanyQuery(searchFilter),
     business: businessId
   });
   return {
-    pagination: buildPagination(searchFilter.pagination, totalItems),
-    sorting: searchFilter.sorting,
-    items: await getCompanies(businessId, searchFilter)
+    ...{ ...searchFilter, pagination: buildPagination(searchFilter.pagination, totalItems) },
+    ...{ items: await getCompanies(businessId, searchFilter) }
   };
 };
 
