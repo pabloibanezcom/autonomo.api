@@ -31,8 +31,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: autonomo.api
-          environment_name: autonomo
+          application_name: autonomo.api.dev
+          environment_name: autonomo-api-dev
           version_label: autonomo-api-dev-${{ github.sha }}
           region: eu-west-2
           deployment_package: deploy.zip
