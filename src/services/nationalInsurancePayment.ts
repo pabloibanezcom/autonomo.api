@@ -7,6 +7,7 @@ import {
   transformPaginationToQueryOptions,
   transformSearchFilterToNationalInsuranceQuery
 } from '@autonomo/common';
+import mongoose from 'mongoose';
 import { NotFoundError } from '../httpError/httpErrors';
 import NationalInsurancePaymentDB from '../models/nationalInsurancePayment';
 import { validateUser } from '../util/user';
@@ -64,7 +65,7 @@ export const addNationalInsurancePayment = async (
   payment: NationalInsurancePayment
 ): Promise<NationalInsurancePayment> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await NationalInsurancePaymentDB.create({ ...payment, business: businessId });
+  return await NationalInsurancePaymentDB.create({ ...payment, business: new mongoose.Types.ObjectId(businessId) });
 };
 
 export const updateNationalInsurancePayment = async (

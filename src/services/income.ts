@@ -9,6 +9,7 @@ import {
   transformSearchFilterToIncomeQuery
 } from '@autonomo/common';
 import { UploadedFile } from 'express-fileupload';
+import mongoose from 'mongoose';
 import { NotFoundError } from '../httpError/httpErrors';
 import IncomeDB from '../models/income';
 import { deleteFile, getFileNameFromKey, uploadFile } from '../util/file';
@@ -59,7 +60,7 @@ export const getIncome = async (
 
 export const addIncome = async (authorizationHeader: string, businessId: string, income: Income): Promise<Income> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await IncomeDB.create({ ...income, business: businessId });
+  return await IncomeDB.create({ ...income, business: new mongoose.Types.ObjectId(businessId) });
 };
 
 export const updateIncome = async (
