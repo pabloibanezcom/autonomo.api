@@ -8,6 +8,7 @@ import {
   transformPaginationToQueryOptions,
   transformSearchFilterToCategoryQuery
 } from '@autonomo/common';
+import mongoose from 'mongoose';
 import { NotFoundError, UnauthorizedError } from '../httpError/httpErrors';
 import CategoryDB from '../models/category';
 import { validateUser } from '../util/user';
@@ -52,7 +53,7 @@ export const addCategory = async (
   await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await CategoryDB.create({
     ...category,
-    business: businessId,
+    business: new mongoose.Types.ObjectId(businessId),
     altColor: generateAltColor(category.color)
   });
 };

@@ -21,3 +21,6 @@ yarn-error.log*
 
 # env variables
 src/environmentVars.json
+
+# google drive files
+tasks/populateDB/files.json

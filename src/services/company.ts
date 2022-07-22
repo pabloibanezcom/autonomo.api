@@ -8,6 +8,7 @@ import {
   transformPaginationToQueryOptions,
   transformSearchFilterToCompanyQuery
 } from '@autonomo/common';
+import mongoose from 'mongoose';
 import { BadRequestError } from '../httpError/httpErrors';
 import CompanyDB from '../models/company';
 import { validateUser } from '../util/user';
@@ -63,7 +64,7 @@ export const addCompany = async (
   await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await CompanyDB.create({
     ...company,
-    business: businessId,
+    business: new mongoose.Types.ObjectId(businessId),
     color: company.color || generateRandomColor()
   });
 };

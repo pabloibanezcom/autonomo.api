@@ -7,6 +7,7 @@ import {
   transformPaginationToQueryOptions,
   transformSearchFilterToTaxPaymentQuery
 } from '@autonomo/common';
+import mongoose from 'mongoose';
 import { NotFoundError } from '../httpError/httpErrors';
 import TaxPaymentDB from '../models/taxPayment';
 import { validateUser } from '../util/user';
@@ -61,7 +62,7 @@ export const addTaxPayment = async (
   payment: TaxPayment
 ): Promise<TaxPayment> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await TaxPaymentDB.create({ ...payment, business: businessId });
+  return await TaxPaymentDB.create({ ...payment, business: new mongoose.Types.ObjectId(businessId) });
 };
 
 export const updateTaxPayment = async (

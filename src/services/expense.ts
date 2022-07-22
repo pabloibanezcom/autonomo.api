@@ -9,6 +9,7 @@ import {
   transformSearchFilterToExpenseQuery
 } from '@autonomo/common';
 import { UploadedFile } from 'express-fileupload';
+import mongoose from 'mongoose';
 import { NotFoundError } from '../httpError/httpErrors';
 import ExpenseDB from '../models/expense';
 import { deleteFile, getFileNameFromKey, uploadFile } from '../util/file';
@@ -67,7 +68,7 @@ export const addExpense = async (
   expense: Expense
 ): Promise<Expense> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await ExpenseDB.create({ ...expense, business: businessId });
+  return await ExpenseDB.create({ ...expense, business: new mongoose.Types.ObjectId(businessId) });
 };
 
 export const updateExpense = async (
