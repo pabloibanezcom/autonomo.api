@@ -3,15 +3,31 @@ import {
   Company,
   CompanyFilter,
   CompanySearchResult,
+  CurrencyAmount,
+  Expense,
   generateRandomColor,
   GrantType,
+  Income,
+  Invoice,
+  InvoicesStats,
+  roundTwoDigits,
   transformPaginationToQueryOptions,
   transformSearchFilterToCompanyQuery
 } from '@autonomo/common';
 import mongoose from 'mongoose';
 import { BadRequestError } from '../httpError/httpErrors';
-import CompanyDB from '../models/company';
+import { CompanyDB, ExpenseDB, IncomeDB } from '../models';
 import { validateUser } from '../util/user';
+
+const generateInvoicesStats = (invoices: Income[] | Expense[] = []): InvoicesStats => {
+  return {
+    quantity: invoices.length,
+    last: invoices[0]?.issuedDate,
+    total: (invoices as Invoice[]).reduce<CurrencyAmount>((currentValue, inv) => {
+      return { currency: inv.total.currency, amount: roundTwoDigits((currentValue?.amount || 0) + inv.total.amount) };
+    }, undefined)
+  };
+};
 
 export const getCompanies = async (
   businessId: string,
@@ -56,17 +72,23 @@ export const getCompany = async (
   return await CompanyDB.findOne({ business: businessId, _id: companyId }).populate('director');
 };
 
+export const addCompanyWithoutAuth = async (businessId: string, company: Company): Promise<Company> => {
+  return await CompanyDB.create({
+    ...company,
+    business: new mongoose.Types.ObjectId(businessId),
+    color: company.color || generateRandomColor(),
+    invoicesIssuedStats: generateInvoicesStats(),
+    invoicesReceivedStats: generateInvoicesStats()
+  });
+};
+
 export const addCompany = async (
   authorizationHeader: string,
   businessId: string,
   company: Company
 ): Promise<Company> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await CompanyDB.create({
-    ...company,
-    business: new mongoose.Types.ObjectId(businessId),
-    color: company.color || generateRandomColor()
-  });
+  return await addCompanyWithoutAuth(businessId, company);
 };
 
 export const updateCompany = async (
@@ -89,4 +111,18 @@ export const deleteCompany = async (
 ): Promise<Company> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
   return await CompanyDB.findOneAndDelete({ business: businessId, _id: companyId });
+};
+
+export const refreshCompanyStats = async (companyId: string): Promise<Company> => {
+  const companyExpenses = await ExpenseDB.find({ issuer: companyId }).sort({ issuedDate: 'desc' });
+  const companyIncomes = await IncomeDB.find({ client: companyId }).sort({ issuedDate: 'desc' });
+
+  return await CompanyDB.findByIdAndUpdate(
+    companyId,
+    {
+      invoicesIssuedStats: generateInvoicesStats(companyExpenses),
+      invoicesReceivedStats: generateInvoicesStats(companyIncomes)
+    },
+    { new: true }
+  );
 };

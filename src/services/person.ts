@@ -54,13 +54,17 @@ export const getPerson = async (authorizationHeader: string, businessId: string,
   return existingPerson;
 };
 
-export const addPerson = async (authorizationHeader: string, businessId: string, person: Person): Promise<Person> => {
-  await validateUser(authorizationHeader, businessId, GrantType.Write);
+export const addPersonWithoutAuth = async (businessId: string, person: Person): Promise<Person> => {
   return await PersonDB.create({
     ...person,
     business: businessId,
     color: person.color || generateRandomColor()
   });
+};
+
+export const addPerson = async (authorizationHeader: string, businessId: string, person: Person): Promise<Person> => {
+  await validateUser(authorizationHeader, businessId, GrantType.Write);
+  return await addPersonWithoutAuth(businessId, person);
 };
 
 export const updatePerson = async (

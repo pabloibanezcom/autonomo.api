@@ -56,13 +56,17 @@ export const getTaxPayment = async (
   return existingPayment;
 };
 
+export const addTaxPaymentWithoutAuth = async (businessId: string, payment: TaxPayment): Promise<TaxPayment> => {
+  return await TaxPaymentDB.create({ ...payment, business: new mongoose.Types.ObjectId(businessId) });
+};
+
 export const addTaxPayment = async (
   authorizationHeader: string,
   businessId: string,
   payment: TaxPayment
 ): Promise<TaxPayment> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await TaxPaymentDB.create({ ...payment, business: new mongoose.Types.ObjectId(businessId) });
+  return await addTaxPaymentWithoutAuth(businessId, payment);
 };
 
 export const updateTaxPayment = async (

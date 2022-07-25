@@ -14,6 +14,7 @@ import { NotFoundError } from '../httpError/httpErrors';
 import ExpenseDB from '../models/expense';
 import { deleteFile, getFileNameFromKey, uploadFile } from '../util/file';
 import { validateUser } from '../util/user';
+import { refreshCompanyStats } from './company';
 
 export const getExpenses = async (
   businessId: string,
@@ -62,13 +63,19 @@ export const getExpense = async (
   return existingExpense;
 };
 
+export const addExpenseWithoutAuth = async (businessId: string, expense: Expense): Promise<Expense> => {
+  const newExpense = await ExpenseDB.create({ ...expense, business: new mongoose.Types.ObjectId(businessId) });
+  await refreshCompanyStats(newExpense.issuer._id.toString());
+  return newExpense;
+};
+
 export const addExpense = async (
   authorizationHeader: string,
   businessId: string,
   expense: Expense
 ): Promise<Expense> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await ExpenseDB.create({ ...expense, business: new mongoose.Types.ObjectId(businessId) });
+  return await addExpenseWithoutAuth(businessId, expense);
 };
 
 export const updateExpense = async (
