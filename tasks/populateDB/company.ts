@@ -2,6 +2,7 @@
 import { Company, Currency, generateRandomColor } from '@autonomo/common';
 import { Types } from 'mongoose';
 import CompanyDB from '../../src/models/company';
+import { addCompanyWithoutAuth } from '../../src/services/company';
 import { getBusinessByName } from './business';
 import { log } from './log';
 import { getPersonByEmail } from './person';
@@ -36,9 +37,9 @@ const generateCompanies = async (companies: any[]): Promise<void> => {
     const business = await getBusinessByName(businessCompanies.business);
     const newCompanies = await Promise.all(
       businessCompanies.companies.map(async (company): Promise<Company> => {
-        const c = await CompanyDB.create({
+        const c = await addCompanyWithoutAuth(business._id?.toString() as string, {
           ...company,
-          business: business?._id,
+          business: business?._id as Types.ObjectId,
           creationDate: company.creationDate ? new Date(company.creationDate) : undefined,
           defaultCurrency: company.defaultCurrency as Currency,
           director: await getPersonByEmail(company.director),
@@ -61,7 +62,7 @@ const getCompanyOrCreate = async (companyName: string, business: string): Promis
   if (existingCompany) {
     return existingCompany;
   }
-  return await CompanyDB.create({
+  return await addCompanyWithoutAuth(business, {
     business: new Types.ObjectId(business),
     name: companyName,
     color: generateRandomColor()

@@ -45,17 +45,21 @@ export const searchCategories = async (
   };
 };
 
+export const addCategoryWithoutAuth = async (businessId: string, category: Category): Promise<Category> => {
+  return await CategoryDB.create({
+    ...category,
+    business: new mongoose.Types.ObjectId(businessId),
+    altColor: generateAltColor(category.color)
+  });
+};
+
 export const addCategory = async (
   authorizationHeader: string,
   businessId: string,
   category: Category
 ): Promise<Category> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await CategoryDB.create({
-    ...category,
-    business: new mongoose.Types.ObjectId(businessId),
-    altColor: generateAltColor(category.color)
-  });
+  return await addCategoryWithoutAuth(businessId, category);
 };
 
 export const updateCategory = async (

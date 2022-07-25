@@ -14,6 +14,7 @@ import { NotFoundError } from '../httpError/httpErrors';
 import IncomeDB from '../models/income';
 import { deleteFile, getFileNameFromKey, uploadFile } from '../util/file';
 import { validateUser } from '../util/user';
+import { refreshCompanyStats } from './company';
 
 export const getIncomes = async (businessId: string, searchFilter: IncomeFilter, populate = ''): Promise<Income[]> => {
   return await IncomeDB.find(
@@ -58,9 +59,15 @@ export const getIncome = async (
   return existingIncome;
 };
 
+export const addIncomeWithoutAuth = async (businessId: string, income: Income): Promise<Income> => {
+  const newIncome = await IncomeDB.create({ ...income, business: new mongoose.Types.ObjectId(businessId) });
+  await refreshCompanyStats(newIncome.client._id.toString());
+  return newIncome;
+};
+
 export const addIncome = async (authorizationHeader: string, businessId: string, income: Income): Promise<Income> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await IncomeDB.create({ ...income, business: new mongoose.Types.ObjectId(businessId) });
+  return await addIncomeWithoutAuth(businessId, income);
 };
 
 export const updateIncome = async (

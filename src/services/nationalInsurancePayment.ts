@@ -59,13 +59,20 @@ export const getNationalInsurancePayment = async (
   return existingPayment;
 };
 
+export const addNationalInsurancePaymentWithoutAuth = async (
+  businessId: string,
+  payment: NationalInsurancePayment
+): Promise<NationalInsurancePayment> => {
+  return await NationalInsurancePaymentDB.create({ ...payment, business: new mongoose.Types.ObjectId(businessId) });
+};
+
 export const addNationalInsurancePayment = async (
   authorizationHeader: string,
   businessId: string,
   payment: NationalInsurancePayment
 ): Promise<NationalInsurancePayment> => {
   await validateUser(authorizationHeader, businessId, GrantType.Write);
-  return await NationalInsurancePaymentDB.create({ ...payment, business: new mongoose.Types.ObjectId(businessId) });
+  return await addNationalInsurancePaymentWithoutAuth(businessId, payment);
 };
 
 export const updateNationalInsurancePayment = async (

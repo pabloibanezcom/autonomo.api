@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Business, Currency, CurrencyAmount, InvoiceProductOrService } from '@autonomo/common';
-import ExpenseDB from '../../src/models/expense';
+import { Business, Currency, CurrencyAmount, InvoiceProductOrService, roundTwoDigits } from '@autonomo/common';
+import { addExpenseWithoutAuth } from '../../src/services/expense';
 import { getCategoriesByName } from './category';
 import { getCompanyOrCreate } from './company';
 import { log } from './log';
@@ -14,7 +14,7 @@ const generateExpense = async (business: Business, expenseData: any): Promise<vo
     currency: Currency = business.defaultCurrency as Currency
   ): CurrencyAmount => {
     return {
-      amount,
+      amount: roundTwoDigits(amount),
       currency
     };
   };
@@ -22,7 +22,7 @@ const generateExpense = async (business: Business, expenseData: any): Promise<vo
   const baseAmount = (amount: number): CurrencyAmount | undefined => {
     return expenseData.baseCurrency !== business.defaultCurrency
       ? {
-          amount: amount,
+          amount: roundTwoDigits(amount),
           currency: expenseData.baseCurrency
         }
       : undefined;
@@ -34,7 +34,7 @@ const generateExpense = async (business: Business, expenseData: any): Promise<vo
 
   const issuer = await getCompanyOrCreate(expenseData.issuer, business._id.toString());
 
-  await ExpenseDB.create({
+  await addExpenseWithoutAuth(business._id.toString(), {
     business: business._id,
     number: expenseData.number,
     issuer: issuer._id,

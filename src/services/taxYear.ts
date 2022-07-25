@@ -56,9 +56,13 @@ export const getBusinessTaxYear = async (businessId: string, select: string = fu
   return taxYear;
 };
 
+export const addTaxYeaWithoutAuth = async (taxYear: TaxYear): Promise<TaxYear> => {
+  return await TaxYearDB.create(taxYear);
+};
+
 export const addTaxYear = async (authorizationHeader: string, taxYear: TaxYear): Promise<TaxYear> => {
   await validateUser(authorizationHeader, null, GrantType.Admin);
-  return await TaxYearDB.create(taxYear);
+  return await addTaxYeaWithoutAuth(taxYear);
 };
 
 export const updateTaxYear = async (

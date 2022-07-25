@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Business, Currency, CurrencyAmount, InvoiceProductOrService } from '@autonomo/common';
-import IncomeDB from '../../src/models/income';
+import { Business, Currency, CurrencyAmount, InvoiceProductOrService, roundTwoDigits } from '@autonomo/common';
+import { addIncomeWithoutAuth } from '../../src/services/income';
 import { getCategoriesByName } from './category';
 import { getCompanyOrCreate } from './company';
 import { log } from './log';
@@ -14,7 +14,7 @@ const generateIncome = async (business: Business, incomeData: any, incomeService
     currency: Currency = business.defaultCurrency as Currency
   ): CurrencyAmount => {
     return {
-      amount,
+      amount: roundTwoDigits(amount),
       currency
     };
   };
@@ -22,7 +22,7 @@ const generateIncome = async (business: Business, incomeData: any, incomeService
   const baseAmount = (amount: number): CurrencyAmount | undefined => {
     return incomeData.baseCurrency !== business.defaultCurrency
       ? {
-          amount: amount,
+          amount: roundTwoDigits(amount),
           currency: incomeData.baseCurrency
         }
       : undefined;
@@ -55,7 +55,7 @@ const generateIncome = async (business: Business, incomeData: any, incomeService
 
   const client = await getCompanyOrCreate(incomeData.client, business._id.toString());
 
-  await IncomeDB.create({
+  await addIncomeWithoutAuth(business._id.toString(), {
     business: business._id,
     number: incomeData.number,
     client: client._id,
@@ -73,6 +73,7 @@ const generateIncome = async (business: Business, incomeData: any, incomeService
     total: generateCurrencyAmount(incomeData.subtotal + incomeData.subtotal * incomeData.taxPct),
     totalBaseCurrency: baseAmount(incomeData.subtotalBaseCurrency + incomeData.subtotalBaseCurrency * incomeData.taxPct)
   });
+
   return;
 };
 
