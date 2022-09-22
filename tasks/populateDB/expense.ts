@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Business, Currency, CurrencyAmount, InvoiceProductOrService, roundTwoDigits } from '@autonomo/common';
+import { Business, Currency, CurrencyAmount, File, InvoiceProductOrService, roundTwoDigits } from '@autonomo/common';
 import { addExpenseWithoutAuth } from '../../src/services/expense';
 import { getCategoriesByName } from './category';
 import { getCompanyOrCreate } from './company';
 import { log } from './log';
 
-const generateExpense = async (business: Business, expenseData: any): Promise<void> => {
+const generateExpense = async (business: Business, expenseData: any, companyLogoFile?: File): Promise<void> => {
   if (!business._id) {
     return;
   }
@@ -32,7 +32,7 @@ const generateExpense = async (business: Business, expenseData: any): Promise<vo
     return [];
   };
 
-  const issuer = await getCompanyOrCreate(expenseData.issuer, business._id.toString());
+  const issuer = await getCompanyOrCreate(expenseData.issuer, business._id.toString(), companyLogoFile);
 
   await addExpenseWithoutAuth(business._id.toString(), {
     business: business._id,
@@ -61,19 +61,26 @@ const generateExpense = async (business: Business, expenseData: any): Promise<vo
   return;
 };
 
-const generateExpenses = async (xlsxData: any[]): Promise<void> => {
+const generateExpenses = async (businessesData: any[], uploadedFiles: any[]): Promise<void> => {
   const generateExpensesForBusiness = async (business: Business, expenses: any[]): Promise<number> => {
     let expensesCount = 0;
     for (const expenseData of expenses) {
-      await generateExpense(business, expenseData);
+      await generateExpense(
+        business,
+        expenseData,
+        uploadedFiles.find(file => file.paths.includes('companies') && file.ref === expenseData.issuer)?.file
+      );
       expensesCount++;
     }
     return expensesCount;
   };
 
   await Promise.all(
-    xlsxData.map(async businessData => {
-      const businessExpensesGenerated = await generateExpensesForBusiness(businessData.business, businessData.expenses);
+    businessesData.map(async businessData => {
+      const businessExpensesGenerated = await generateExpensesForBusiness(
+        businessData.business,
+        businessData.data.expenses
+      );
 
       log('Expenses generated', businessExpensesGenerated, businessData.business.name);
     })

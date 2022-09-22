@@ -24,7 +24,7 @@ const generateTaxPayments = async (xlsxData: any[]): Promise<void> => {
   await Promise.all(
     xlsxData.map(async businessData => {
       const newTaxPayments = await Promise.all(
-        businessData.taxPayments.map(async taxPaymentData => {
+        businessData.data.taxPayments.map(async taxPaymentData => {
           await generateTaxPayment(businessData.business, taxPaymentData);
         })
       );

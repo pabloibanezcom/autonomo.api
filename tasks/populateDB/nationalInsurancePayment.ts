@@ -21,7 +21,7 @@ const generateNationalInsurancePayments = async (xlsxData: any[]): Promise<void>
   await Promise.all(
     xlsxData.map(async businessData => {
       const newNationalInsurancePayments = await Promise.all(
-        businessData.nationalInsurancePayments.map(async nationalInsurancePaymentData => {
+        businessData.data.nationalInsurancePayments.map(async nationalInsurancePaymentData => {
           await generateNationalInsurancePayment(businessData.business, nationalInsurancePaymentData);
         })
       );

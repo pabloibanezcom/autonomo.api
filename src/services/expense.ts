@@ -122,12 +122,7 @@ export const addExpenseFile = async (
 
   const existingFileKey = existingExpense.file?.key;
 
-  const uploadedFile = await uploadFile(file, 'expenses');
-
-  existingExpense.file = {
-    key: uploadedFile.Key,
-    location: uploadedFile.Location
-  };
+  existingExpense.file = await uploadFile(file, 'expenses');
 
   await existingExpense.save();
 

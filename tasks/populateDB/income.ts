@@ -71,17 +71,24 @@ const generateIncome = async (business: Business, incomeData: any, incomeService
     tax: generateCurrencyAmount(incomeData.subtotal * incomeData.taxPct),
     taxBaseCurrency: baseAmount(incomeData.subtotalBaseCurrency * incomeData.taxPct),
     total: generateCurrencyAmount(incomeData.subtotal + incomeData.subtotal * incomeData.taxPct),
-    totalBaseCurrency: baseAmount(incomeData.subtotalBaseCurrency + incomeData.subtotalBaseCurrency * incomeData.taxPct)
+    totalBaseCurrency: baseAmount(
+      incomeData.subtotalBaseCurrency + incomeData.subtotalBaseCurrency * incomeData.taxPct
+    ),
+    file: incomeData.file
   });
 
   return;
 };
 
-const generateIncomes = async (xlsxData: any[], incomeServices: any[]): Promise<void> => {
+const generateIncomes = async (xlsxData: any[], incomeServices: any[], uploadedFiles: any[]): Promise<void> => {
+  const getIncomeFile = (invoiceNumber: string) => {
+    return uploadedFiles.find(file => file.paths.includes('incomes') && file.ref === invoiceNumber)?.file;
+  };
+
   const generateIncomesForBusiness = async (business: Business, incomes: any[]): Promise<number> => {
     let incomesCount = 0;
     for (const incomeData of incomes) {
-      await generateIncome(business, incomeData, incomeServices);
+      await generateIncome(business, { ...incomeData, file: getIncomeFile(incomeData.number) }, incomeServices);
       incomesCount++;
     }
     return incomesCount;
@@ -89,7 +96,10 @@ const generateIncomes = async (xlsxData: any[], incomeServices: any[]): Promise<
 
   await Promise.all(
     xlsxData.map(async businessData => {
-      const businessIncomesGenerated = await generateIncomesForBusiness(businessData.business, businessData.incomes);
+      const businessIncomesGenerated = await generateIncomesForBusiness(
+        businessData.business,
+        businessData.data.incomes
+      );
 
       log('Incomes generated', businessIncomesGenerated, businessData.business.name);
     })

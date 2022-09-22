@@ -114,12 +114,7 @@ export const addIncomeFile = async (
 
   const existingFileKey = existingIncome.file?.key;
 
-  const uploadedFile = await uploadFile(file, 'incomes');
-
-  existingIncome.file = {
-    key: uploadedFile.Key,
-    location: uploadedFile.Location
-  };
+  existingIncome.file = await uploadFile(file, 'incomes');
 
   await existingIncome.save();
 

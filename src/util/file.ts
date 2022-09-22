@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { File } from '@autonomo/common';
 import S3 from 'aws-sdk/clients/s3';
 import { UploadedFile } from 'express-fileupload';
 
@@ -6,20 +9,36 @@ const s3 = new S3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-export const uploadFile = async (
-  file: UploadedFile,
-  path: string = null,
-  name: string = null
-): Promise<S3.ManagedUpload.SendData> => {
+export const transformAWSFileToFile = (awsFile: S3.ManagedUpload.SendData): File => {
+  return {
+    eTag: awsFile.ETag,
+    key: awsFile.Key,
+    location: awsFile.Location
+  };
+};
+
+const urlSafeFileName = (fileName: string): string => {
+  return fileName
+    .split('.')
+    .map(str => str.replace(/[^a-z0-9]/gi, '_').toLowerCase())
+    .join('.');
+};
+
+export const uploadFile = async (file: UploadedFile, path: string = null, name: string = null): Promise<File> => {
   const pathStr = path && !path.endsWith('/') ? `${path}/` : path || '';
 
   const uploadParams = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
-    Key: `${pathStr}${name || file.name}`,
+    Key: `${pathStr}${urlSafeFileName(name || file.name)}`,
     Body: file.data
   };
 
-  return await s3.upload(uploadParams).promise();
+  try {
+    return transformAWSFileToFile(await s3.upload(uploadParams).promise());
+  } catch (err) {
+    const aux = err;
+    return aux;
+  }
 };
 
 export const deleteFile = async (key: string): Promise<S3.DeleteObjectOutput> => {
