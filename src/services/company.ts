@@ -77,6 +77,7 @@ export const addCompanyWithoutAuth = async (businessId: string, company: Company
     ...company,
     business: new mongoose.Types.ObjectId(businessId),
     color: company.color || generateRandomColor(),
+    logoFile: company.logoFile,
     invoicesIssuedStats: generateInvoicesStats(),
     invoicesReceivedStats: generateInvoicesStats()
   });

@@ -127,4 +127,11 @@ const setBusinessCompany = async (businesses: any[]): Promise<void> => {
   }
 };
 
-export { getBusinessByName, replaceBusinessNameById, generateBusiness, setBusinessCompany };
+const setBusinessData = async (businessesData: any[]): Promise<void> => {
+  for (const businessData of businessesData) {
+    businessData.business = await BusinessDB.findOne({ name: businessData.business });
+  }
+  return;
+};
+
+export { getBusinessByName, replaceBusinessNameById, generateBusiness, setBusinessCompany, setBusinessData };

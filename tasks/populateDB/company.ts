@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Company, Currency, generateRandomColor } from '@autonomo/common';
+import { Company, Currency, File, generateRandomColor } from '@autonomo/common';
 import { Types } from 'mongoose';
 import CompanyDB from '../../src/models/company';
 import { addCompanyWithoutAuth } from '../../src/services/company';
@@ -32,7 +33,9 @@ const getCompanyByName = async (companyName: string, business: string): Promise<
   return (await CompanyDB.findOne({ name: companyName, business })) as Company;
 };
 
-const generateCompanies = async (companies: any[]): Promise<void> => {
+const generateCompanies = async (companies: any[]): Promise<any[]> => {
+  const imageFiles: any[] = [];
+
   const generateCompaniesForBusiness = async (businessCompanies: BusinessCompanies) => {
     const business = await getBusinessByName(businessCompanies.business);
     const newCompanies = await Promise.all(
@@ -43,7 +46,8 @@ const generateCompanies = async (companies: any[]): Promise<void> => {
           creationDate: company.creationDate ? new Date(company.creationDate) : undefined,
           defaultCurrency: company.defaultCurrency as Currency,
           director: await getPersonByEmail(company.director),
-          color: generateRandomColor()
+          color: generateRandomColor(),
+          logoFile: imageFiles.find(file => file.companyName === company.name)?.file
         });
         return c;
       })
@@ -55,9 +59,11 @@ const generateCompanies = async (companies: any[]): Promise<void> => {
   for (const businessCompanies of companies) {
     await generateCompaniesForBusiness(businessCompanies);
   }
+
+  return imageFiles;
 };
 
-const getCompanyOrCreate = async (companyName: string, business: string): Promise<Company> => {
+const getCompanyOrCreate = async (companyName: string, business: string, logoFile?: File): Promise<Company> => {
   const existingCompany = await getCompanyByName(companyName, business);
   if (existingCompany) {
     return existingCompany;
@@ -65,7 +71,8 @@ const getCompanyOrCreate = async (companyName: string, business: string): Promis
   return await addCompanyWithoutAuth(business, {
     business: new Types.ObjectId(business),
     name: companyName,
-    color: generateRandomColor()
+    color: generateRandomColor(),
+    logoFile
   });
 };
 

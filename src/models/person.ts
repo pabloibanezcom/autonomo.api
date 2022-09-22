@@ -1,6 +1,7 @@
 import { Person } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
 import Address from './address';
+import File from './file';
 import { ModelName } from './modelName';
 
 export const PersonSchema: Schema = new Schema(
@@ -10,7 +11,7 @@ export const PersonSchema: Schema = new Schema(
     email: { type: String, required: true },
     nif: { type: String },
     gender: { type: String },
-    picture: { type: String },
+    picture: { type: File },
     color: { type: String },
     address: { type: Address }
   },

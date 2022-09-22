@@ -14,18 +14,18 @@ import {
 } from '../../src/models';
 import { logStatus } from './log';
 
-import { generateBusiness, replaceBusinessNameById, setBusinessCompany } from './business';
+import { generateBusiness, setBusinessCompany, setBusinessData } from './business';
 import { generateCategories } from './category';
 import { generateCompanies } from './company';
 import { generateExpenses } from './expense';
+import { uploadFiles } from './files';
 import { generateIncomes } from './income';
 import { generateNationalInsurancePayments } from './nationalInsurancePayment';
 import { generatePeople } from './person';
 import { generateTaxPayments } from './taxPayment';
 import { generateTaxYears } from './taxYear';
 
-import { getDataFromDriveFiles } from './googleDrive';
-import readXlsxData from './readXlsxData';
+import { getGoogleDriveData } from './googleDrive';
 
 const generateDB = async (): Promise<void> => {
   logStatus('DB Populate job started');
@@ -49,22 +49,25 @@ const generateDB = async (): Promise<void> => {
     }
   };
 
-  const driveMockData = await getDataFromDriveFiles();
+  const googleDriveData = await getGoogleDriveData();
+  const uploadedFiles = await uploadFiles(googleDriveData.files);
 
   await connect({ db: process.env.MONGODB_URI || '' });
   await clearExistingData();
-  await generatePeople(driveMockData.people);
-  await generateBusiness(driveMockData.businesses);
-  await generateTaxYears(driveMockData['tax_years']);
-  await generateCompanies(driveMockData.companies);
-  await setBusinessCompany(driveMockData.businesses);
-  await generateCategories(driveMockData.categories);
 
-  const xlsxData = await replaceBusinessNameById(await readXlsxData());
-  await generateIncomes(xlsxData, driveMockData['incomes_services']);
-  await generateExpenses(xlsxData);
-  await generateNationalInsurancePayments(xlsxData);
-  await generateTaxPayments(xlsxData);
+  await generatePeople(googleDriveData.data.people.data);
+  await generateBusiness(googleDriveData.data.businesses.data);
+  await generateTaxYears(googleDriveData.data['tax_years'].data);
+  await generateCompanies(googleDriveData.data.companies.data);
+  await setBusinessCompany(googleDriveData.data.businesses.data);
+  await generateCategories(googleDriveData.data.categories.data);
+
+  await setBusinessData(googleDriveData.businessesData);
+
+  await generateExpenses(googleDriveData.businessesData, uploadedFiles);
+  await generateIncomes(googleDriveData.businessesData, googleDriveData.data['incomes_services'].data, uploadedFiles);
+  await generateNationalInsurancePayments(googleDriveData.businessesData);
+  await generateTaxPayments(googleDriveData.businessesData);
   logStatus('DB Populate job completed');
   process.exit();
 };

@@ -1,6 +1,7 @@
 import { Company } from '@autonomo/common';
 import mongoose, { Schema } from 'mongoose';
 import Address from './address';
+import File from './file';
 import InvoicesStats from './invoicesStats';
 import { ModelName } from './modelName';
 
@@ -14,6 +15,7 @@ export const CompanySchema: Schema = new Schema({
   director: { type: Schema.Types.ObjectId, ref: ModelName.Person },
   defaultCurrency: { type: String },
   color: { type: String },
+  logoFile: { type: File },
   invoicesIssuedStats: { type: InvoicesStats },
   invoicesReceivedStats: { type: InvoicesStats }
 });
