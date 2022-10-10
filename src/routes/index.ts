@@ -6,6 +6,7 @@ import registerExpenseRoutes from './expense';
 import registerIncomeRoutes from './income';
 import registerNationalInsurancePaymentRoutes from './nationalInsurancePayment';
 import registerPersonRoutes from './person';
+import registerTagRoutes from './tag';
 import registerTaxPaymentRoutes from './taxPayment';
 import registerTaxYearRoutes from './taxYear';
 import registerUserRoutes from './user';
@@ -19,6 +20,7 @@ const registerRoutes = (router: express.Router): void => {
   registerIncomeRoutes(router);
   registerPersonRoutes(router);
   registerNationalInsurancePaymentRoutes(router);
+  registerTagRoutes(router);
   registerTaxPaymentRoutes(router);
   registerTaxYearRoutes(router);
   registerUserRoutes(router);
