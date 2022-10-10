@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Business, Currency, CurrencyAmount, InvoiceProductOrService, roundTwoDigits } from '@autonomo/common';
 import { addIncomeWithoutAuth } from '../../src/services/income';
+import { generateFileNameFromDateAndIssuer } from '../../src/util/file';
 import { getCategoriesByName } from './category';
 import { getCompanyOrCreate } from './company';
 import { log } from './log';
@@ -81,14 +82,23 @@ const generateIncome = async (business: Business, incomeData: any, incomeService
 };
 
 const generateIncomes = async (xlsxData: any[], incomeServices: any[], uploadedFiles: any[]): Promise<void> => {
-  const getIncomeFile = (invoiceNumber: string) => {
-    return uploadedFiles.find(file => file.paths.includes('incomes') && file.ref === invoiceNumber)?.file;
+  const getIncomeFile = (businessKey: string, invoiceNumber: string, issuedDate: Date) => {
+    return uploadedFiles.find(
+      file =>
+        file.paths.includes(businessKey) &&
+        file.paths.includes('invoices') &&
+        file.ref === generateFileNameFromDateAndIssuer(issuedDate, invoiceNumber)
+    )?.file;
   };
 
   const generateIncomesForBusiness = async (business: Business, incomes: any[]): Promise<number> => {
     let incomesCount = 0;
     for (const incomeData of incomes) {
-      await generateIncome(business, { ...incomeData, file: getIncomeFile(incomeData.number) }, incomeServices);
+      await generateIncome(
+        business,
+        { ...incomeData, file: getIncomeFile(business.key, incomeData.number, incomeData.issuedDate) },
+        incomeServices
+      );
       incomesCount++;
     }
     return incomesCount;

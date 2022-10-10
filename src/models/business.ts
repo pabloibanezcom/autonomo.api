@@ -5,6 +5,7 @@ import ExchangeRate from './exchangeRate';
 import { ModelName } from './modelName';
 
 export const BusinessSchema: Schema = new Schema({
+  key: { type: String, required: true },
   name: { type: String, required: true },
   type: { type: String, required: true, enum: getEnumArray(BusinessType) },
   country: { type: String, required: true },

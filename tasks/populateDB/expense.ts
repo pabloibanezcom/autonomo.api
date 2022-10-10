@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Business, Currency, CurrencyAmount, File, InvoiceProductOrService, roundTwoDigits } from '@autonomo/common';
 import { addExpenseWithoutAuth } from '../../src/services/expense';
+import { generateFileNameFromDateAndIssuer } from '../../src/util/file';
 import { getCategoriesByName } from './category';
 import { getCompanyOrCreate } from './company';
 import { log } from './log';
 
-const generateExpense = async (business: Business, expenseData: any, companyLogoFile?: File): Promise<void> => {
+const generateExpense = async (
+  business: Business,
+  expenseData: any,
+  companyLogoFile?: File,
+  file?: File
+): Promise<void> => {
   if (!business._id) {
     return;
   }
@@ -56,7 +62,8 @@ const generateExpense = async (business: Business, expenseData: any, companyLogo
     total: generateCurrencyAmount(expenseData.subtotal + expenseData.subtotal * expenseData.taxPct),
     totalBaseCurrency: baseAmount(
       expenseData.subtotalBaseCurrency + expenseData.subtotalBaseCurrency * expenseData.taxPct
-    )
+    ),
+    file
   });
   return;
 };
@@ -68,7 +75,13 @@ const generateExpenses = async (businessesData: any[], uploadedFiles: any[]): Pr
       await generateExpense(
         business,
         expenseData,
-        uploadedFiles.find(file => file.paths.includes('companies') && file.ref === expenseData.issuer)?.file
+        uploadedFiles.find(file => file.paths.includes('companies') && file.ref === expenseData.issuer)?.file,
+        uploadedFiles.find(
+          file =>
+            file.paths.includes(business.key) &&
+            file.paths.includes('invoices') &&
+            file.ref === generateFileNameFromDateAndIssuer(expenseData.issuedDate, expenseData.issuer)
+        )?.file
       );
       expensesCount++;
     }

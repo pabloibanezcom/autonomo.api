@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Gender, generateRandomColor, Person } from '@autonomo/common';
+import { File, Gender, generateRandomColor, Person } from '@autonomo/common';
 import PersonDB from '../../src/models/person';
-import UserDB from '../../src/models/user';
 import { log } from './log';
 
 type MockPersonData = {
@@ -10,7 +9,7 @@ type MockPersonData = {
   email: string;
   nif: string;
   gender: string;
-  picture: string;
+  picture: File;
 };
 
 const getPersonByEmail = async (personEmail: string): Promise<Person | undefined> => {
@@ -21,11 +20,6 @@ const generatePeople = async (people: MockPersonData[]): Promise<void> => {
   const newPeople = await Promise.all(
     people.map(async (person): Promise<Person> => {
       const p = await PersonDB.create({ ...person, gender: person.gender as Gender, color: generateRandomColor() });
-      const user = await UserDB.findOne({ email: person.email });
-      if (user) {
-        user.person = p.id;
-        await user.save();
-      }
       return p;
     })
   );
