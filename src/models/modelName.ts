@@ -6,6 +6,7 @@ export enum ModelName {
   Income = 'Income',
   NationalInsurancePayment = 'NationalInsurancePayment',
   Person = 'Person',
+  Tag = 'Tag',
   TaxPayment = 'TaxPayment',
   TaxYear = 'TaxYear',
   User = 'User'
