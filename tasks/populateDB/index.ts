@@ -24,6 +24,7 @@ import { generateNationalInsurancePayments } from './nationalInsurancePayment';
 import { generatePeople } from './person';
 import { generateTaxPayments } from './taxPayment';
 import { generateTaxYears } from './taxYear';
+import { generateUsers } from './users';
 
 import { getGoogleDriveData } from './googleDrive';
 
@@ -40,13 +41,7 @@ const generateDB = async (): Promise<void> => {
     await CompanyDB.deleteMany({});
     await TaxYearDB.deleteMany({});
     await BusinessDB.deleteMany({});
-
-    const users = await UserDB.find({});
-    for (const user of users) {
-      user.defaultBusiness = undefined;
-      user.businesses = [];
-      await user.save();
-    }
+    await UserDB.deleteMany({});
   };
 
   const googleDriveData = await getGoogleDriveData();
@@ -56,6 +51,7 @@ const generateDB = async (): Promise<void> => {
   await clearExistingData();
 
   await generatePeople(googleDriveData.data.people.data);
+  await generateUsers(googleDriveData.data.users.data);
   await generateBusiness(googleDriveData.data.businesses.data);
   await generateTaxYears(googleDriveData.data['tax_years'].data);
   await generateCompanies(googleDriveData.data.companies.data);

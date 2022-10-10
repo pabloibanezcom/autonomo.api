@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { drive_v3, google } from 'googleapis';
 import xlsx from 'node-xlsx';
+import { logStatus } from './log';
 import parseXlsxData from './parseXlsxData';
 
 type DriveResponseType = 'arraybuffer' | 'blob' | 'json' | 'text' | 'stream';
@@ -32,9 +33,29 @@ const initDrive = () => {
   });
 };
 
+const flatFilesFolder = (folderData: any): any => {
+  const result = {};
+  const checkObject = (name: string, obj: any) => {
+    if (obj.data) {
+      result[name] = obj;
+    } else {
+      for (const [key, value] of Object.entries(obj)) {
+        checkObject(key, value);
+      }
+    }
+  };
+
+  for (const [key, value] of Object.entries(folderData)) {
+    checkObject(key, value);
+  }
+
+  return result;
+};
+
 const getGoogleDriveData = async (): Promise<any> => {
+  logStatus('Reading and processing Google Drive data. This may take a few mins...');
   const drive = initDrive();
-  const result = {
+  const rootResult = {
     businessesData: [] as any[],
     businessesSheets: {
       files: {
@@ -106,7 +127,7 @@ const getGoogleDriveData = async (): Promise<any> => {
     return {};
   };
 
-  const getFilesFromFiles = async (rootFolderId: string) => {
+  const getFilesFromFiles = async (folderId: string, rootObj = {}): Promise<any> => {
     const processFileOrFolder = async (parent: any, fileOrFolder: drive_v3.Schema$File) => {
       if (fileOrFolder.mimeType === MIMETYPES.FOLDER) {
         const folderFiles = await getFilesFromFolder(fileOrFolder.id as string);
@@ -115,17 +136,24 @@ const getGoogleDriveData = async (): Promise<any> => {
           await processFileOrFolder(parent[fileOrFolder.name as string], file);
         }
       } else {
-        const fileData = await getFileData(fileOrFolder);
-        parent[fileOrFolder.name?.split('.')[0] as string] = { name: fileOrFolder.name, data: fileData };
+        const fileData: any = await getFileData(fileOrFolder);
+        if (fileOrFolder.mimeType === MIMETYPES.JSON && fileData.folderId) {
+          parent[fileOrFolder.name?.split('.')[0] as string] = fileData.flatFolder
+            ? flatFilesFolder(await getFilesFromFiles(fileData.folderId))
+            : await getFilesFromFiles(fileData.folderId);
+        } else {
+          parent[fileOrFolder.name?.split('.')[0] as string] = { name: fileOrFolder.name, data: fileData };
+        }
       }
     };
-    const rootFiles = await getFilesFromFolder(rootFolderId);
+    const rootFiles = await getFilesFromFolder(folderId);
     for (const file of rootFiles) {
-      await processFileOrFolder(result, file);
+      await processFileOrFolder(rootObj, file);
     }
+    return rootObj;
   };
 
-  const processBusinessSheetFiles = async () => {
+  const processBusinessSheetFiles = async (result: any) => {
     const processBusinessFile = async (business: string, file: any) => {
       const sheetFileBuffer = await getFileData({ id: file.id, mimeType: MIMETYPES.SHEET });
       const data = await parseXlsxData(
@@ -151,11 +179,13 @@ const getGoogleDriveData = async (): Promise<any> => {
     for (const businessData of result.businessesSheets.files.data) {
       await processBusiness(businessData);
     }
+
+    logStatus('Google Drive processment completed!');
+    return result;
   };
 
-  await getFilesFromFiles(process.env.GOOGLE_DRIVE_MOCK_DATA_FOLDER_ID as string);
-  await processBusinessSheetFiles();
-  return result;
+  const result = await getFilesFromFiles(process.env.GOOGLE_DRIVE_MOCK_DATA_FOLDER_ID as string, rootResult);
+  return await processBusinessSheetFiles(result);
 };
 
 export { getGoogleDriveData };

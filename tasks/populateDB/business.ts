@@ -83,6 +83,7 @@ const generateBusiness = async (businesses: any[]): Promise<void> => {
     const soleTrader = await getSoleTrader(bussinessObj.soleTrader);
 
     return {
+      key: bussinessObj.key,
       name: bussinessObj.name,
       type: bussinessObj.type as BusinessType,
       country: bussinessObj.country,

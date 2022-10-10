@@ -17,7 +17,7 @@ export const transformAWSFileToFile = (awsFile: S3.ManagedUpload.SendData): File
   };
 };
 
-const urlSafeFileName = (fileName: string): string => {
+export const urlSafeFileName = (fileName: string): string => {
   return fileName
     .split('.')
     .map(str => str.replace(/[^a-z0-9]/gi, '_').toLowerCase())
@@ -53,4 +53,10 @@ export const deleteFile = async (key: string): Promise<S3.DeleteObjectOutput> =>
 export const getFileNameFromKey = (key: string): string => {
   const keyElements = key.split('/');
   return keyElements[keyElements.length - 1];
+};
+
+export const generateFileNameFromDateAndIssuer = (date: Date, issuerOrClient: string): string => {
+  return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(
+    -2
+  )}_${issuerOrClient.replace(/[^a-z0-9]/gi, '-').toLowerCase()}`;
 };
