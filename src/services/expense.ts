@@ -35,7 +35,7 @@ export const searchExpenses = async (
   authorizationHeader: string,
   businessId: string,
   searchFilter: ExpenseFilter,
-  populate = 'issuer categories'
+  populate = 'issuer categories tags'
 ): Promise<ExpenseSearchResult> => {
   await validateUser(authorizationHeader, businessId, GrantType.View);
   const totalItems = await ExpenseDB.count({
@@ -53,7 +53,7 @@ export const getExpense = async (
   authorizationHeader: string,
   businessId: string,
   expenseId: string,
-  populate = 'issuer categories'
+  populate = 'issuer categories tags'
 ): Promise<Expense> => {
   await validateUser(authorizationHeader, businessId, GrantType.View);
   const existingExpense = await ExpenseDB.findOne({ business: businessId, _id: expenseId }).populate(populate);

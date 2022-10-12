@@ -44,7 +44,7 @@ const generateDB = async (): Promise<void> => {
     await UserDB.deleteMany({});
   };
 
-  const googleDriveData = await getGoogleDriveData();
+  const googleDriveData = await getGoogleDriveData(process.env.POPULATE_FILES === 'true');
   const uploadedFiles = await uploadFiles(googleDriveData.files);
 
   await connect({ db: process.env.MONGODB_URI || '' });
