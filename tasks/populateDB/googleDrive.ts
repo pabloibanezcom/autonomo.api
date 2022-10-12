@@ -52,7 +52,7 @@ const flatFilesFolder = (folderData: any): any => {
   return result;
 };
 
-const getGoogleDriveData = async (): Promise<any> => {
+const getGoogleDriveData = async (populateFiles = false): Promise<any> => {
   logStatus('Reading and processing Google Drive data. This may take a few mins...');
   const drive = initDrive();
   const rootResult = {
@@ -138,9 +138,11 @@ const getGoogleDriveData = async (): Promise<any> => {
       } else {
         const fileData: any = await getFileData(fileOrFolder);
         if (fileOrFolder.mimeType === MIMETYPES.JSON && fileData.folderId) {
-          parent[fileOrFolder.name?.split('.')[0] as string] = fileData.flatFolder
-            ? flatFilesFolder(await getFilesFromFiles(fileData.folderId))
-            : await getFilesFromFiles(fileData.folderId);
+          if (populateFiles) {
+            parent[fileOrFolder.name?.split('.')[0] as string] = fileData.flatFolder
+              ? flatFilesFolder(await getFilesFromFiles(fileData.folderId))
+              : await getFilesFromFiles(fileData.folderId);
+          }
         } else {
           parent[fileOrFolder.name?.split('.')[0] as string] = { name: fileOrFolder.name, data: fileData };
         }

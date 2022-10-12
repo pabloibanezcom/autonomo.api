@@ -19,22 +19,23 @@
     },
     "expenses": {
       "sheetName": "Gastos",
-      "columns": 15,
+      "columns": 16,
       "fields": {
         "issuedDate": { "columnIndex": 0 },
         "description": { "columnIndex": 1 },
-        "categories": { "columnIndex": 2, "transformFunc": "wrapInArray" },
-        "issuer": { "columnIndex": 3 },
-        "baseCurrency": { "columnIndex": 4 },
-        "exchangeRate": { "columnIndex": 5 },
-        "subtotalBaseCurrency": { "columnIndex": 6, "transformFunc": "roundTwoDigits" },
-        "subtotal": { "columnIndex": 7, "transformFunc": "roundTwoDigits" },
-        "isDeductible": { "columnIndex": 8, "transformFunc": "convertSiNoToBoolean" },
-        "taxPct": { "columnIndex": 10 },
-        "tax": { "columnIndex": 11, "transformFunc": "roundTwoDigits" },
-        "deductibleTaxPct": { "columnIndex": 12 },
-        "deductibleTax": { "columnIndex": 13, "transformFunc": "roundTwoDigits" },
-        "total": { "columnIndex": 14, "transformFunc": "roundTwoDigits" }
+        "tags": { "columnIndex": 2, "transformFunc": "wrapInArray" },
+        "categories": { "columnIndex": 3, "transformFunc": "wrapInArray" },
+        "issuer": { "columnIndex": 4 },
+        "baseCurrency": { "columnIndex": 5 },
+        "exchangeRate": { "columnIndex": 6 },
+        "subtotalBaseCurrency": { "columnIndex": 7, "transformFunc": "roundTwoDigits" },
+        "subtotal": { "columnIndex": 8, "transformFunc": "roundTwoDigits" },
+        "isDeductible": { "columnIndex": 9, "transformFunc": "convertSiNoToBoolean" },
+        "taxPct": { "columnIndex": 11 },
+        "tax": { "columnIndex": 12, "transformFunc": "roundTwoDigits" },
+        "deductibleTaxPct": { "columnIndex": 13 },
+        "deductibleTax": { "columnIndex": 14, "transformFunc": "roundTwoDigits" },
+        "total": { "columnIndex": 15, "transformFunc": "roundTwoDigits" }
       }
     },
     "nationalInsurancePayments": {

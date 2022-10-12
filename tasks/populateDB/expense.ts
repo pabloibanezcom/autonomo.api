@@ -5,6 +5,7 @@ import { generateFileNameFromDateAndIssuer } from '../../src/util/file';
 import { getCategoriesByName } from './category';
 import { getCompanyOrCreate } from './company';
 import { log } from './log';
+import { getTagsByName } from './tag';
 
 const generateExpense = async (
   business: Business,
@@ -48,6 +49,7 @@ const generateExpense = async (
     issuedDate: new Date(expenseData.issuedDate),
     paymentDate: new Date(expenseData.issuedDate),
     productsOrServices: generateProductsOrServices(),
+    tags: (await getTagsByName(expenseData.tags, business._id.toString())).map(c => c._id),
     categories: (await getCategoriesByName(expenseData.categories)).map(c => c._id),
     baseCurrency: expenseData.baseCurrency,
     exchangeRate: expenseData.exchangeRate,
