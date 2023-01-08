@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { File } from '@autonomo/common';
-import S3 from 'aws-sdk/clients/s3';
+import { S3 } from 'aws-sdk';
 import { UploadedFile } from 'express-fileupload';
 
 const s3 = new S3({
@@ -27,6 +27,8 @@ export const urlSafeFileName = (fileName: string): string => {
 export const uploadFile = async (file: UploadedFile, path: string = null, name: string = null): Promise<File> => {
   const pathStr = path && !path.endsWith('/') ? `${path}/` : path || '';
 
+  console.log(s3);
+
   const uploadParams = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
     Key: `${pathStr}${urlSafeFileName(name || file.name)}`,
@@ -36,8 +38,7 @@ export const uploadFile = async (file: UploadedFile, path: string = null, name: 
   try {
     return transformAWSFileToFile(await s3.upload(uploadParams).promise());
   } catch (err) {
-    const aux = err;
-    return aux;
+    return err;
   }
 };
 

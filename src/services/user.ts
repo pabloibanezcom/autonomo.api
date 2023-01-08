@@ -35,7 +35,7 @@ export const registerUser = async (registerData: RegisterData): Promise<boolean>
     throw new UserAlreadyExistsError();
   }
   const passwordValidation = validatePassword(registerData.password);
-  if (Array.isArray(passwordValidation) && passwordValidation.length) {
+  if (passwordValidation.length) {
     throw new BadRequestError(passwordValidation.map(e => e.message).join(' | '));
   }
   await UserDB.create({
@@ -57,7 +57,7 @@ export const changePassword = async (changePasswordData: ChangePasswordData): Pr
     throw new UnauthorizedError();
   }
   const passwordValidation = validatePassword(changePasswordData.newPassword);
-  if (Array.isArray(passwordValidation) && passwordValidation.length) {
+  if (passwordValidation.length) {
     throw new BadRequestError(passwordValidation.map(e => e.message).join(' | '));
   }
   user.password = await hashPassword(changePasswordData.newPassword);
@@ -66,5 +66,5 @@ export const changePassword = async (changePasswordData: ChangePasswordData): Pr
 };
 
 export const getUser = async (authorizationHeader: string): Promise<User> => {
-  return await validateUser(authorizationHeader, null, null, true);
+  return await validateUser(authorizationHeader);
 };
